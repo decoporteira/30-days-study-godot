@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://b46xg5xug2305"]
+
+[ext_resource type="Script" uid="uid://bfrs6mt8rsflq" path="res://Scripts/enemy_life_bar.gd" id="1_ts3tj"]
+
+[sub_resource type="Theme" id="Theme_g4mm3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4mm3"]
+bg_color = Color(0.98475236, 0.5844972, 0.5588765, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ll6x3"]
+bg_color = Color(0.69012356, 0.24647051, 0.21400285, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1.0
+offset_top = 53.0
+offset_right = 41.0
+offset_bottom = 93.0
+script = ExtResource("1_ts3tj")
+
+[node name="LifeBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 0
+offset_left = 231.0
+offset_right = 381.0
+offset_bottom = 30.0
+theme = SubResource("Theme_g4mm3")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0.57728827, 0.13698697, 0.18265596, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_g4mm3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ll6x3")
+max_value = 30.0

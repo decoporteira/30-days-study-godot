@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://jh4lit2mlk55"]
+
+[ext_resource type="Script" uid="uid://cxbaa5tmra7iv" path="res://Scripts/battle_manager.gd" id="1_r0ul7"]
+
+[node name="BattleManager" type="Node"]
+script = ExtResource("1_r0ul7")

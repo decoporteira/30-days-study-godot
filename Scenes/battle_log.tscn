@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://neyyq1acgvjh"]
+
+[ext_resource type="Script" uid="uid://s2xj1sl32de4" path="res://Scripts/battle_log.gd" id="1_vyndj"]
+
+[node name="BattleLog" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_vyndj")
+
+[node name="BattleLog" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(559, 150)
+layout_mode = 0
+offset_left = 240.0
+offset_top = 238.0
+offset_right = 799.0
+offset_bottom = 318.0

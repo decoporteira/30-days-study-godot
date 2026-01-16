@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlkgdcsnk2iey"]
+
+[ext_resource type="Script" uid="uid://dpiug6sfmhdp6" path="res://Scripts/player_life_bar.gd" id="1_2ovgy"]
+
+[sub_resource type="Theme" id="Theme_g4mm3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4mm3"]
+bg_color = Color(0.10709999, 0.51, 0.28169, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ll6x3"]
+bg_color = Color(0.22419998, 0.59, 0.27297336, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_2ovgy")
+
+[node name="LifeBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 0
+offset_left = 231.0
+offset_right = 381.0
+offset_bottom = 30.0
+theme = SubResource("Theme_g4mm3")
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_outline_color = Color(0.57728827, 0.13698697, 0.18265596, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_g4mm3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ll6x3")
+max_value = 30.0
