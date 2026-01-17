@@ -18,7 +18,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="Control" type="Control"]
+[node name="EnemyLifeBar" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 1.0
@@ -27,15 +27,47 @@ offset_right = 41.0
 offset_bottom = 93.0
 script = ExtResource("1_ts3tj")
 
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+z_index = 1
+layout_mode = 0
+offset_left = 46.0
+offset_top = 34.0
+offset_right = 196.0
+offset_bottom = 62.0
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="LifeBar" type="ProgressBar" parent="."]
 custom_minimum_size = Vector2(150, 30)
 layout_mode = 0
-offset_left = 231.0
-offset_right = 381.0
-offset_bottom = 30.0
+offset_left = 46.0
+offset_top = 33.0
+offset_right = 196.0
+offset_bottom = 63.0
 theme = SubResource("Theme_g4mm3")
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_colors/font_outline_color = Color(0.57728827, 0.13698697, 0.18265596, 1)
 theme_override_styles/background = SubResource("StyleBoxFlat_g4mm3")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ll6x3")
 max_value = 30.0
+show_percentage = false
+
+[node name="Name" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 9.0
+offset_top = -6.0
+offset_right = 155.0
+offset_bottom = 34.0
+theme_override_font_sizes/normal_font_size = 23
+vertical_alignment = 1
+
+[node name="HP" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = -49.0
+offset_top = 27.0
+offset_right = 97.0
+offset_bottom = 67.0
+theme_override_font_sizes/normal_font_size = 18
+text = "HP:"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -6,6 +6,7 @@ signal item_selected(item)
 var is_showing := false
 
 func _ready():
+	
 	# Exemplo: escutar um sinal para atualizar a UI quando o inventário mudar
 	# Se não estiver usando sinais, chame update_inventory() manualmente
 	update_inventory()

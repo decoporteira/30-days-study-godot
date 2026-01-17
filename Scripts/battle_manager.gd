@@ -23,38 +23,28 @@ enum BattleState {
 var current_state : BattleState
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
-	var battle_log_scene = preload("res://Scenes/battle_log.tscn")
-	battle_log = battle_log_scene.instantiate()
-	add_child(battle_log)
+	var battle_ui_scene = preload("res://battle_ui.tscn")
+	var battle_ui = battle_ui_scene.instantiate()
+	add_child(battle_ui)
+
+	battle_log = battle_ui.get_node("MarginContainer/MainVBox/CenterArea/BattleLog")
+	enemy_life_bar = battle_ui.get_node("MarginContainer/MainVBox/TopArea/EnemyArea/EnemyLifeBar")
+	player_life_bar = battle_ui.get_node("MarginContainer/MainVBox/TopArea/PlayerArea/PlayerLifeBar")
+	battle_menu = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/BattleMenu")
+	inventory_ui = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/InventoryUI")
 
 	var player_scene = preload("res://Scenes/player.tscn")
 	player = player_scene.instantiate()
 	add_child(player)
 	
-	
 	var enemy_scene = preload("res://Scenes/enemy.tscn")
 	enemy = enemy_scene.instantiate()
 	add_child(enemy)
 	
-	
 	var inventory_scene = preload("res://Scenes/inventory.tscn")
 	inventory = inventory_scene.instantiate()
 	add_child(inventory)
-	#player life bar
-	var player_life_bar_scene = preload("res://Scenes/player_life_bar.tscn")
-	player_life_bar = player_life_bar_scene.instantiate()
-	add_child(player_life_bar)
-	
-	#enemy life bar
-	var enemy_life_bar_scene = preload("res://Scenes/enemy_life_bar.tscn")
-	enemy_life_bar = enemy_life_bar_scene.instantiate()
-	add_child(enemy_life_bar)
-	
-	#inventoty ui
-	var inventory_ui_scene = preload("res://Scenes/inventory_ui.tscn")
-	inventory_ui = inventory_ui_scene.instantiate()
-	add_child(inventory_ui)
+
 	inventory_ui.player = player
 	inventory_ui.update_inventory()
 	
@@ -74,12 +64,9 @@ func _ready() -> void:
 )
 	inventory.player = player
 	
-	var battle_menu_scene = preload("res://Scenes/battle_menu.tscn")
-	battle_menu = battle_menu_scene.instantiate()
-	add_child(battle_menu)
 	battle_menu.battle_manager = self
 	#mensagem inicial
-	battle_log.add_message("You encouter a furious " + enemy.character_name + ". It wants to fight!")
+	battle_log.add_message("You encountered a furious " + enemy.character_name + ". It wants to fight!")
 	start_battle()
 	
 # =========================
@@ -88,7 +75,7 @@ func _ready() -> void:
 func player_attack():
 	if current_state != BattleState.PLAYER_TURN:
 		return
-	
+
 	change_state(BattleState.PLAYER_ACTION)
 	attack(player, enemy)
 	
@@ -104,15 +91,18 @@ func open_inventory():
 		return
 	battle_log.add_message("Choose an item:")
 	inventory_ui.show_inventory()
-	change_state(BattleState.INVENTORY)
+	#change_state(BattleState.INVENTORY)
 	
 func run_away():
 	battle_log.add_message("You tried to escape...")
+	change_state(BattleState.PLAYER_ACTION)
 	var run_away_percentage = rng.randf_range(0.0, 100.0)
 	if run_away_percentage >= 50:
 		battle_log.add_message(".. and you were sucessful! ")
+		change_state(BattleState.END)
 	else:
 		battle_log.add_message(".. and you fail!")
+		
 # =========================
 # STATE MACHINE
 # =========================
@@ -195,11 +185,10 @@ func on_player_turn():
 	battle_log.add_message("Your turn!!!")
 	battle_menu.show_menu()
 	inventory_ui.hide_inventory()
-	
 
 func on_inventory():
 	battle_log.add_message("Choose an item:")
-	battle_menu.hide_menu()
+	#battle_menu.hide_menu()
 	inventory_ui.show_inventory()
 
 func on_player_action():
