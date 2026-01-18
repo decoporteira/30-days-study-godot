@@ -11,6 +11,10 @@ config_version=5
 [application]
 
 config/name="Study_30_days"
-run/main_scene="uid://jh4lit2mlk55"
+run/main_scene="uid://deaj1gxinqhp4"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

@@ -19,7 +19,7 @@ enum BattleState {
 	ENEMY_TURN,
 	END
 }
-
+signal battle_ended
 var current_state : BattleState
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -68,6 +68,11 @@ func _ready() -> void:
 	#mensagem inicial
 	battle_log.add_message("You encountered a furious " + enemy.character_name + ". It wants to fight!")
 	start_battle()
+	
+func start_battle():
+	player = player
+	enemy = enemy
+	change_state(BattleState.PLAYER_TURN)
 	
 # =========================
 # AÇÕES
@@ -152,8 +157,6 @@ func attack(attacker, defender) -> void:
 # =========================
 # CONTROLE DE FLUXO
 # =========================
-func start_battle():
-	change_state(BattleState.PLAYER_TURN)
 
 func check_end_or_next():
 	# Player morreu
@@ -208,3 +211,4 @@ func on_battle_end():
 	battle_menu.hide_menu()
 	inventory_ui.hide_inventory()
 	battle_log.add_message("Battle ended.")
+	emit_signal("battle_ended")
