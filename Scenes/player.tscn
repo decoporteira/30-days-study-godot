@@ -1,6 +1,40 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddhth7py67pcj"]
+[gd_scene load_steps=7 format=3 uid="uid://q1833akamrw3"]
 
-[ext_resource type="Script" uid="uid://cxypcw665eyvh" path="res://Scripts/player.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://cxypcw665eyvh" path="res://Scripts/player.gd" id="1_rk0cu"]
+[ext_resource type="Texture2D" uid="uid://dc67qj3fvgi23" path="res://Sprites/AnimationSheet_Character.png" id="1_s11dr"]
 
-[node name="Player" type="Node2D"]
-script = ExtResource("1_4flbx")
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gqcb3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rk0cu"]
+atlas = ExtResource("1_s11dr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q01tp"]
+atlas = ExtResource("1_s11dr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k8tyd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rk0cu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q01tp")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Player_World" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_rk0cu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_gqcb3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_k8tyd")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.6364333

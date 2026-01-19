@@ -1,48 +1,73 @@
 extends Node2D
 
-@onready var enemy = $Enemy_world
-@onready var player: CharacterBody2D = $Player_World
 @onready var world_map: TileMapLayer = $World_map
 var battle_manager: Node
 var transition
+var enemy
+@onready var player: CharacterBody2D = $Player_World
+@onready var orc: AnimatableBody2D = $Orc
+@onready var ghost: AnimatableBody2D = $Ghost
+
+enum GameState {
+	EXPLORATION,
+	BATTLE
+}
+
+var current_state: GameState = GameState.EXPLORATION
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$Enemy_world.battle_started.connect(_on_battle_started)
+	$Orc.battle_started.connect(_on_battle_started)
+	$Ghost.battle_started.connect(_on_battle_started)
 	var transition_scene = preload("res://transition.tscn")
 	transition = transition_scene.instantiate()
 	add_child(transition)
-	
 
-	
-func _on_battle_started(enemy):
-	print("BATALHA COM:", enemy.name)
-	start_battle(enemy)
+func _on_battle_started(current_enemy):
+	enemy = current_enemy
+	start_battle()
 
-func start_battle(enemy):
+func start_battle():
 	await transition.fade_out(0.4)
-	# esconde mundo
+	current_state = GameState.BATTLE
+	player.mode = player.PlayerMode.BATTLE
 	player.hide()
+	player.set_process(false)
+	player.set_physics_process(false)
+	# esconde mundo
+	print("Entrou na batalhaaa")
+	
 	world_map.hide()
-	enemy.hide()
+	hide_all_enemies()
 
-	print("Batalhar comecou")
-	# carrega batalha
 	var battle_scene = preload("res:////Scenes/battle_manager.tscn")
 	battle_manager = battle_scene.instantiate()
 	add_child(battle_manager)
+	battle_manager.setup(player, enemy)
+	battle_manager.initialize_battle()
 	battle_manager.battle_ended.connect(_on_battle_ended)
 
 	await transition.fade_in(0.4)
 	
 func _on_battle_ended():
-	await get_tree().create_timer(0.8).timeout
 	await transition.fade_out(0.4)
-	print("BATALHA ACabou")
+
 	battle_manager.queue_free()
+	
 	enemy.queue_free()
+	show_all_enemies()
+	player.mode = player.PlayerMode.EXPLORATION
+	player.set_process(true)
+	player.set_physics_process(true)
 	player.show()
 	world_map.show()
+	
 	await transition.fade_in(0.4)
 
-	
+func hide_all_enemies():
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		enemy.hide()
+		
+func show_all_enemies():
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		enemy.show()

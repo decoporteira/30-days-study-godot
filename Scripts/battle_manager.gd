@@ -33,42 +33,52 @@ func _ready() -> void:
 	battle_menu = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/BattleMenu")
 	inventory_ui = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/InventoryUI")
 
-	var player_scene = preload("res://Scenes/player.tscn")
-	player = player_scene.instantiate()
-	add_child(player)
+	#var player_scene = preload("res://Scenes/player.tscn")
+	#player = player_scene.instantiate()
+	#add_child(player)
 	
-	var enemy_scene = preload("res://Scenes/enemy.tscn")
-	enemy = enemy_scene.instantiate()
-	add_child(enemy)
+	#var enemy_scene = preload("res://Scenes/enemy.tscn")
+	#enemy = enemy_scene.instantiate()
+	#add_child(enemy)
 	
 	var inventory_scene = preload("res://Scenes/inventory.tscn")
 	inventory = inventory_scene.instantiate()
 	add_child(inventory)
 
+	inventory_ui.item_selected.connect(
+	Callable(self, "_on_item_selected")
+)
+
+	battle_menu.battle_manager = self
+	#mensagem inicial
+	start_battle()
+
+func setup(world_player, world_enemy):
+	player = world_player
+	enemy = world_enemy
+func initialize_battle():
 	inventory_ui.player = player
 	inventory_ui.update_inventory()
-	
+
 	player_life_bar.player = player
 	player.health_changed.connect(
 		Callable(player_life_bar, "update_life_bar")
 	)
 	player_life_bar.get_max_health()
-	
+
 	enemy_life_bar.enemy = enemy
 	enemy.health_changed.connect(
 		Callable(enemy_life_bar, "update_life_bar")
 	)
 	enemy_life_bar.get_max_health()
-	inventory_ui.item_selected.connect(
-	Callable(self, "_on_item_selected")
-)
+
 	inventory.player = player
-	
-	battle_menu.battle_manager = self
-	#mensagem inicial
-	battle_log.add_message("You encountered a furious " + enemy.character_name + ". It wants to fight!")
+
+	battle_log.add_message(
+		"You encountered a furious " + enemy.character_name + ". It wants to fight!"
+	)
+
 	start_battle()
-	
 func start_battle():
 	player = player
 	enemy = enemy

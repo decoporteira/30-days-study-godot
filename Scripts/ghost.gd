@@ -1,9 +1,9 @@
 extends AnimatableBody2D
 
 signal battle_started(enemy)
-var health = 40
-var max_health = 40
-var character_name = "Orc"
+var health = 50
+var max_health = 50
+var character_name = "Ghost"
 var type = "enemy"
 var inventory = []
 
@@ -12,12 +12,12 @@ signal health_changed(current, max)
 func _ready():
 	emit_signal("health_changed", health, max_health)
 	
-	var bat = {
-		"name": "Porrete",
+	var chain = {
+		"name": "Chain",
 		"type": "weapon",
-		"hp": 10,
+		"hp": 20,
 	}
-	inventory = [bat]
+	inventory = [chain]
 	
 func take_damage(amount):
 	health -= amount
