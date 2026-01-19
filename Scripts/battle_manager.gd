@@ -11,6 +11,7 @@ var current_turn
 var battle_log
 var inventory_ui
 var rng = RandomNumberGenerator.new()
+var enemy_sprite
 
 enum BattleState { 
 	PLAYER_TURN,
@@ -23,10 +24,11 @@ signal battle_ended
 var current_state : BattleState
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var battle_ui_scene = preload("res://battle_ui.tscn")
+	 
+	var battle_ui_scene = preload("res://Scenes/battle_ui.tscn")
 	var battle_ui = battle_ui_scene.instantiate()
 	add_child(battle_ui)
-
+	enemy_sprite = battle_ui.get_node("MarginContainer/MainVBox/TopArea/EnemyArea/EnemySprite")
 	battle_log = battle_ui.get_node("MarginContainer/MainVBox/CenterArea/BattleLog")
 	enemy_life_bar = battle_ui.get_node("MarginContainer/MainVBox/TopArea/EnemyArea/EnemyLifeBar")
 	player_life_bar = battle_ui.get_node("MarginContainer/MainVBox/TopArea/PlayerArea/PlayerLifeBar")
@@ -150,11 +152,16 @@ func attack(attacker, defender) -> void:
 	print("Ataque continua")
 	var weapon = attacker.inventory[0]
 	var damage = weapon.hp
-
+	
 	battle_log.add_message(
 		attacker.character_name + " attacked with " + weapon.name +
 		" and dealt " + str(damage) + " damage."
 	)
+	if attacker == enemy:
+		await pokemon_attack(enemy_sprite, -1)
+	else:
+		await hit_shake(enemy_sprite)
+		
 
 	defender.take_damage(damage)
 	
@@ -222,3 +229,57 @@ func on_battle_end():
 	inventory_ui.hide_inventory()
 	battle_log.add_message("Battle ended.")
 	emit_signal("battle_ended")
+	
+func pokemon_attack(attacker_sprite: AnimatedSprite2D, direction := 1):
+	# direction:
+	#  1  = atacante vai pra direita (player)
+	# -1  = atacante vai pra esquerda (enemy)
+
+	var start_pos := attacker_sprite.position
+	var advance := Vector2(30 * direction, 0)
+
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+
+	# Avança rápido
+	tween.tween_property(
+		attacker_sprite,
+		"position",
+		start_pos + advance,
+		0.08
+	)
+
+	# Volta
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property(
+		attacker_sprite,
+		"position",
+		start_pos,
+		0.12
+	)
+
+	await tween.finished
+	
+func hit_shake(target_sprite: AnimatedSprite2D):
+	var start_pos := target_sprite.position
+
+	var tween := create_tween()
+	tween.tween_property(
+		target_sprite,
+		"position",
+		start_pos + Vector2(4, 0),
+		0.03
+	)
+	tween.tween_property(
+		target_sprite,
+		"position",
+		start_pos - Vector2(4, 0),
+		0.03
+	)
+	tween.tween_property(
+		target_sprite,
+		"position",
+		start_pos,
+		0.03
+	)

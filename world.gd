@@ -65,9 +65,9 @@ func _on_battle_ended():
 	await transition.fade_in(0.4)
 
 func hide_all_enemies():
-	for enemy in get_tree().get_nodes_in_group("enemy"):
-		enemy.hide()
+	for en in get_tree().get_nodes_in_group("enemy"):
+		en.hide()
 		
 func show_all_enemies():
-	for enemy in get_tree().get_nodes_in_group("enemy"):
-		enemy.show()
+	for en in get_tree().get_nodes_in_group("enemy"):
+		en.show()

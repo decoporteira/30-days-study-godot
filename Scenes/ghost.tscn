@@ -1,24 +1,24 @@
 [gd_scene load_steps=8 format=3 uid="uid://ynyuyje65plp"]
 
 [ext_resource type="Script" uid="uid://dh64tnbr3gmlq" path="res://Scripts/ghost.gd" id="1_e3r4w"]
-[ext_resource type="Texture2D" uid="uid://dc67qj3fvgi23" path="res://Sprites/AnimationSheet_Character.png" id="2_108wt"]
+[ext_resource type="Texture2D" uid="uid://b2fvco1xyjmol" path="res://Sprites/Ghost2d.png" id="2_e3r4w"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0e48y"]
-atlas = ExtResource("2_108wt")
-region = Rect2(0, 32, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_108wt"]
+atlas = ExtResource("2_e3r4w")
+region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_epypp"]
-atlas = ExtResource("2_108wt")
-region = Rect2(32, 32, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_3btnm"]
+atlas = ExtResource("2_e3r4w")
+region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0hol4"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0e48y")
+"texture": SubResource("AtlasTexture_108wt")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_epypp")
+"texture": SubResource("AtlasTexture_3btnm")
 }],
 "loop": true,
 "name": &"idle",
@@ -29,8 +29,8 @@ animations = [{
 radius = 22.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q6r6c"]
-radius = 6.095731
-height = 34.0
+radius = 4.339619
+height = 54.999992
 
 [node name="Ghost" type="AnimatableBody2D"]
 script = ExtResource("1_e3r4w")
@@ -39,17 +39,18 @@ script = ExtResource("1_e3r4w")
 sprite_frames = SubResource("SpriteFrames_0hol4")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.6017877
+frame = 1
+frame_progress = 0.63594234
 
 [node name="Area2D" type="Area2D" parent="." groups=["enemy"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
+scale = Vector2(1.5200002, 1.5200002)
 shape = SubResource("CircleShape2D_klk41")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2.0000002)
-scale = Vector2(1.1483448, 0.80000013)
+scale = Vector2(4.6087, 0.80000013)
 shape = SubResource("CapsuleShape2D_q6r6c")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
