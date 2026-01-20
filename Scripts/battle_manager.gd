@@ -11,7 +11,8 @@ var current_turn
 var battle_log
 var inventory_ui
 var rng = RandomNumberGenerator.new()
-var enemy_sprite
+var enemy_sprite_ui: AnimatedSprite2D
+var battle_ui
 
 enum BattleState { 
 	PLAYER_TURN,
@@ -26,22 +27,13 @@ var current_state : BattleState
 func _ready() -> void:
 	 
 	var battle_ui_scene = preload("res://Scenes/battle_ui.tscn")
-	var battle_ui = battle_ui_scene.instantiate()
+	battle_ui = battle_ui_scene.instantiate()
 	add_child(battle_ui)
-	enemy_sprite = battle_ui.get_node("MarginContainer/MainVBox/TopArea/EnemyArea/EnemySprite")
 	battle_log = battle_ui.get_node("MarginContainer/MainVBox/CenterArea/BattleLog")
 	enemy_life_bar = battle_ui.get_node("MarginContainer/MainVBox/TopArea/EnemyArea/EnemyLifeBar")
 	player_life_bar = battle_ui.get_node("MarginContainer/MainVBox/TopArea/PlayerArea/PlayerLifeBar")
 	battle_menu = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/BattleMenu")
 	inventory_ui = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/InventoryUI")
-
-	#var player_scene = preload("res://Scenes/player.tscn")
-	#player = player_scene.instantiate()
-	#add_child(player)
-	
-	#var enemy_scene = preload("res://Scenes/enemy.tscn")
-	#enemy = enemy_scene.instantiate()
-	#add_child(enemy)
 	
 	var inventory_scene = preload("res://Scenes/inventory.tscn")
 	inventory = inventory_scene.instantiate()
@@ -52,16 +44,35 @@ func _ready() -> void:
 )
 
 	battle_menu.battle_manager = self
-	#mensagem inicial
-	start_battle()
 
 func setup(world_player, world_enemy):
 	player = world_player
 	enemy = world_enemy
+	
 func initialize_battle():
+	if player == null or enemy == null:
+		push_error("BattleManager initialized without player or enemy")
+		return
+	#coloca sprite na luta
+	var world_sprite = enemy.sprite
+	enemy_sprite_ui = world_sprite.duplicate()
+	enemy_sprite_ui.scale = Vector2(3, 3)
+	enemy_sprite_ui.position = Vector2(100,100)
+	enemy_sprite_ui.z_index = 5
+	enemy_sprite_ui.play(world_sprite.animation)
+
+	# Remove qualquer processamento desnecessário
+	enemy_sprite_ui.set_physics_process(false)
+	enemy_sprite_ui.set_process(false)
+
+	# Adiciona na UI
+	var holder = battle_ui.get_node(
+		"MarginContainer/MainVBox/TopArea/EnemyArea/EnemySpriteHolder"
+	)
+	holder.add_child(enemy_sprite_ui)
 	inventory_ui.player = player
 	inventory_ui.update_inventory()
-
+	#C
 	player_life_bar.player = player
 	player.health_changed.connect(
 		Callable(player_life_bar, "update_life_bar")
@@ -80,11 +91,11 @@ func initialize_battle():
 		"You encountered a furious " + enemy.character_name + ". It wants to fight!"
 	)
 
-	start_battle()
 func start_battle():
-	player = player
-	enemy = enemy
-	change_state(BattleState.PLAYER_TURN)
+	if player.status.speed > enemy.status.speed:
+		change_state(BattleState.PLAYER_TURN)
+	else:
+		change_state(BattleState.ENEMY_TURN)
 	
 # =========================
 # AÇÕES
@@ -152,25 +163,34 @@ func attack(attacker, defender) -> void:
 	print("Ataque continua")
 	var weapon = attacker.inventory[0]
 	var damage = weapon.hp
-	
+	var damage_delt = calc_damage(attacker.status.attack, damage, defender.status.defese, weapon.critical_chance)
 	battle_log.add_message(
 		attacker.character_name + " attacked with " + weapon.name +
-		" and dealt " + str(damage) + " damage."
+		" and dealt " + str(damage_delt) + " damage."
 	)
 	if attacker == enemy:
-		await pokemon_attack(enemy_sprite, -1)
+		await pokemon_attack(enemy_sprite_ui, -1)
 	else:
-		await hit_shake(enemy_sprite)
+		await hit_shake(enemy_sprite_ui)
 		
-
-	defender.take_damage(damage)
+	
+	defender.take_damage(damage_delt)
 	
 	if not defender.is_alive():
 		if defender.type == "enemy":
 			battle_log.add_message(defender.character_name + " was defeated!")
 		else:
 			battle_log.add_message("You died. Game Over!")
+			
+func calc_damage(attack: int, weapon: int, defese: int, crit_chance: int) -> int:
+	var base_damage = max(1, int(attack*weapon)/max(defese,1)) 
+	var base_damage_crit = base_damage * randf_range(0.9, 1.1) #apenas para dar aleatoridade para o ataque 
+	
+	if crit_chance > randf_range(0, 100):
+		base_damage_crit *= 1.5
 
+	return max(1, int(base_damage_crit))
+	
 # =========================
 # CONTROLE DE FLUXO
 # =========================

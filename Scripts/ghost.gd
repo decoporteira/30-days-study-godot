@@ -1,11 +1,17 @@
 extends AnimatableBody2D
 
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 signal battle_started(enemy)
 var health = 50
 var max_health = 50
 var character_name = "Ghost"
 var type = "enemy"
 var inventory = []
+var status: Dictionary = {
+	"attack": 7,
+	"defese": 3,
+	"speed": 10,
+}
 
 signal health_changed(current, max)
 
@@ -16,6 +22,7 @@ func _ready():
 		"name": "Chain",
 		"type": "weapon",
 		"hp": 20,
+		"critical_chance": 10 
 	}
 	inventory = [chain]
 	

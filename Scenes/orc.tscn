@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cayjikbjjocye"]
 
-[ext_resource type="Script" uid="uid://ddqwuofmh4n1c" path="res://Scripts/enemy.gd" id="1_7k104"]
+[ext_resource type="Script" uid="uid://ddqwuofmh4n1c" path="res://Scripts/orc.gd" id="1_7k104"]
 [ext_resource type="Texture2D" uid="uid://bb2g75idellvk" path="res://Sprites/Orc2d.png" id="2_8h1l3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6et41"]

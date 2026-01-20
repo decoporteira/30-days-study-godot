@@ -1,12 +1,19 @@
 extends AnimatableBody2D
 
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
 signal battle_started(enemy)
-var health = 40
-var max_health = 40
+var health = 60
+var max_health = 60
 var character_name = "Orc"
 var type = "enemy"
 var inventory = []
 
+var status: Dictionary = {
+	"attack": 6,
+	"defese": 5,
+	"speed": 2,
+}
 signal health_changed(current, max)
 
 func _ready():
@@ -16,6 +23,7 @@ func _ready():
 		"name": "Porrete",
 		"type": "weapon",
 		"hp": 10,
+		"critical_chance": 10 
 	}
 	inventory = [bat]
 	
@@ -41,4 +49,3 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		print("Bateu no inimigo")
 		emit_signal("battle_started", self)
-		 

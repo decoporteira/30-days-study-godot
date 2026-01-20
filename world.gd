@@ -43,8 +43,11 @@ func start_battle():
 	var battle_scene = preload("res:////Scenes/battle_manager.tscn")
 	battle_manager = battle_scene.instantiate()
 	add_child(battle_manager)
+	
 	battle_manager.setup(player, enemy)
 	battle_manager.initialize_battle()
+	battle_manager.start_battle()
+	
 	battle_manager.battle_ended.connect(_on_battle_ended)
 
 	await transition.fade_in(0.4)

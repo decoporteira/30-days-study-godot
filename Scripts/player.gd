@@ -7,13 +7,18 @@ enum PlayerMode {
 }
 
 var mode = PlayerMode.EXPLORATION
-var health = 20
-var max_health = 30
+var health = 100
+var max_health = 100
 var character_name = "Hero"
 var type = "player"
 var inventory: Array = []
 const SPEED = 200.0
 var input_vector = Vector2.ZERO
+var status: Dictionary = {
+	"attack": 8,
+	"defese": 5,
+	"speed": 3,
+}
 
 func _ready():
 	emit_signal("health_changed", health, max_health)
@@ -25,7 +30,8 @@ func _ready():
 	var sword = {
 			"name": "Short Sword",
 			"type": "weapon",
-			"hp": 20,
+			"hp": 15,
+			"critical_chance": 20 
 	}
 	inventory = [sword, potion]
 	
