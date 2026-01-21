@@ -13,8 +13,9 @@ var inventory_ui
 var rng = RandomNumberGenerator.new()
 var enemy_sprite_ui: AnimatedSprite2D
 var battle_ui
-
+var first_turn
 enum BattleState { 
+	TURN_ORDER,
 	PLAYER_TURN,
 	PLAYER_ACTION,
 	INVENTORY,
@@ -25,7 +26,7 @@ signal battle_ended
 var current_state : BattleState
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	 
+	print(self.get_path())
 	var battle_ui_scene = preload("res://Scenes/battle_ui.tscn")
 	battle_ui = battle_ui_scene.instantiate()
 	add_child(battle_ui)
@@ -92,10 +93,8 @@ func initialize_battle():
 	)
 
 func start_battle():
-	if player.status.speed > enemy.status.speed:
-		change_state(BattleState.PLAYER_TURN)
-	else:
-		change_state(BattleState.ENEMY_TURN)
+	change_state(BattleState.TURN_ORDER)
+	
 	
 # =========================
 # AÇÕES
@@ -142,6 +141,9 @@ func change_state(new_state: BattleState) -> void:
 
 		BattleState.PLAYER_ACTION:
 			on_player_action()
+		
+		BattleState.TURN_ORDER:
+			on_turn_order()
 
 		BattleState.INVENTORY:
 			on_inventory()
@@ -155,12 +157,12 @@ func change_state(new_state: BattleState) -> void:
 # COMBATE
 # =========================
 func attack(attacker, defender) -> void:
-	print("Entrou em func attack")
+	#print("Entrou em func attack")
 	if attacker.inventory.size() == 0:
 		print("Nao tem arma")
 		battle_log.add_message(attacker.character_name + " has no weapon.")
 		return
-	print("Ataque continua")
+	#print("Ataque continua")
 	var weapon = attacker.inventory[0]
 	var damage = weapon.hp
 	var damage_delt = calc_damage(attacker.status.attack, damage, defender.status.defese, weapon.critical_chance)
@@ -186,7 +188,7 @@ func calc_damage(attack: int, weapon: int, defese: int, crit_chance: int) -> int
 	var base_damage = max(1, int(attack*weapon)/max(defese,1)) 
 	var base_damage_crit = base_damage * randf_range(0.9, 1.1) #apenas para dar aleatoridade para o ataque 
 	
-	if crit_chance > randf_range(0, 100):
+	if crit_chance > randf_range(1, 100):
 		base_damage_crit *= 1.5
 
 	return max(1, int(base_damage_crit))
@@ -249,7 +251,27 @@ func on_battle_end():
 	inventory_ui.hide_inventory()
 	battle_log.add_message("Battle ended.")
 	emit_signal("battle_ended")
+
+func on_turn_order():
+	define_turn_order()
+
+func define_turn_order():
 	
+	if player.status.speed > enemy.status.speed:
+		first_turn = player
+	elif enemy.status.speed > player.status.speed:
+		first_turn = enemy
+	else:
+		first_turn = player
+
+	start_first_turn()
+	
+func start_first_turn():
+	if first_turn == player:
+		change_state(BattleState.PLAYER_TURN)
+	else:
+		change_state(BattleState.ENEMY_TURN)
+		
 func pokemon_attack(attacker_sprite: AnimatedSprite2D, direction := 1):
 	# direction:
 	#  1  = atacante vai pra direita (player)

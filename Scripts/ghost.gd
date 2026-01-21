@@ -9,8 +9,8 @@ var type = "enemy"
 var inventory = []
 var status: Dictionary = {
 	"attack": 7,
-	"defese": 3,
-	"speed": 10,
+	"defese": 10,
+	"speed": 20,
 }
 
 signal health_changed(current, max)

@@ -45,8 +45,8 @@ func _on_item_pressed(item):
 	
 	print("Usado item: " + item.name)
 	#chamar a funcao usar o item
-	if has_node("/root/BattleManager"):
-		var battle_manager = get_node("/root/BattleManager")
+	if has_node("/root/World/BattleManager"):
+		var battle_manager = get_node("/root/World/BattleManager")
 		battle_manager.inventory.use_item(player, item)
 		update_inventory()
 	else:

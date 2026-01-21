@@ -27,13 +27,18 @@ func _ready():
 			"type": "consumable",
 			"hp": 10,
 	}
+	var speed_potion = {
+			"name": "Speed Potion",
+			"type": "buff",
+			"speed": 10,
+	}
 	var sword = {
 			"name": "Short Sword",
 			"type": "weapon",
 			"hp": 15,
 			"critical_chance": 20 
 	}
-	inventory = [sword, potion]
+	inventory = [sword, potion, speed_potion]
 	
 func take_damage(amount):
 	health -= amount
@@ -46,6 +51,10 @@ func heal(amount):
 	if health > max_health:
 		health = max_health
 	emit_signal("health_changed", health, max_health)
+	
+func buff(amount):
+	status.speed += amount
+	
 	
 func is_alive() -> bool:
 	if health <= 0:

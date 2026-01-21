@@ -20,6 +20,9 @@ func use_item(character, item: Dictionary) -> void:
 		if item.type == "consumable":
 			get_cured(character, item.hp)
 			remove_item(character, item)
+		elif item.type == "buff":
+			get_buff(character, item.speed)
+			remove_item(character, item)
 		else:
 			print("Voce nao pode usar " + item.name + " nesse momento.")
 		print("-----------------------")
@@ -47,6 +50,12 @@ func get_cured(character, hitpoints):
 	print("Voce recebeu cura de " + str(hitpoints) + " pontos")
 	character.heal(hitpoints)
 	print("Pontos de vida: " + str(character.health))
+	print("-----------------------")
+	
+func get_buff(character, speed_points):
+	print("Voce recebeu buff de " + str(speed_points) + " pontos de velocidade")
+	character.buff(speed_points)
+	print("Velocidade: " + str(character.status.speed))
 	print("-----------------------")
 	
 func has_item(character, item_name: String) -> bool:
