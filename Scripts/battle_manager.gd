@@ -14,6 +14,8 @@ var rng = RandomNumberGenerator.new()
 var enemy_sprite_ui: AnimatedSprite2D
 var battle_ui
 var first_turn
+var player_used_action: bool = false
+var enemy_used_action: bool = false
 enum BattleState { 
 	TURN_ORDER,
 	PLAYER_TURN,
@@ -26,7 +28,6 @@ signal battle_ended
 var current_state : BattleState
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print(self.get_path())
 	var battle_ui_scene = preload("res://Scenes/battle_ui.tscn")
 	battle_ui = battle_ui_scene.instantiate()
 	add_child(battle_ui)
@@ -46,11 +47,11 @@ func _ready() -> void:
 
 	battle_menu.battle_manager = self
 
-func setup(world_player, world_enemy):
+func setup(world_player, world_enemy): #1
 	player = world_player
 	enemy = world_enemy
 	
-func initialize_battle():
+func initialize_battle(): #2
 	if player == null or enemy == null:
 		push_error("BattleManager initialized without player or enemy")
 		return
@@ -92,9 +93,8 @@ func initialize_battle():
 		"You encountered a furious " + enemy.character_name + ". It wants to fight!"
 	)
 
-func start_battle():
+func start_battle(): #3
 	change_state(BattleState.TURN_ORDER)
-	
 	
 # =========================
 # AÇÕES
@@ -106,19 +106,15 @@ func player_attack():
 	change_state(BattleState.PLAYER_ACTION)
 	attack(player, enemy)
 	
-	
 func _on_item_selected(item):
 	battle_log.add_message("Hero used " + item.name)
 	change_state(BattleState.PLAYER_ACTION)
-	#aplicar efeito
-	check_end_or_next()
 	
 func open_inventory():
 	if current_state != BattleState.PLAYER_TURN:
 		return
 	battle_log.add_message("Choose an item:")
 	inventory_ui.show_inventory()
-	#change_state(BattleState.INVENTORY)
 	
 func run_away():
 	battle_log.add_message("You tried to escape...")
@@ -157,12 +153,9 @@ func change_state(new_state: BattleState) -> void:
 # COMBATE
 # =========================
 func attack(attacker, defender) -> void:
-	#print("Entrou em func attack")
 	if attacker.inventory.size() == 0:
-		print("Nao tem arma")
 		battle_log.add_message(attacker.character_name + " has no weapon.")
 		return
-	#print("Ataque continua")
 	var weapon = attacker.inventory[0]
 	var damage = weapon.hp
 	var damage_delt = calc_damage(attacker.status.attack, damage, defender.status.defese, weapon.critical_chance)
@@ -184,8 +177,8 @@ func attack(attacker, defender) -> void:
 		else:
 			battle_log.add_message("You died. Game Over!")
 			
-func calc_damage(attack: int, weapon: int, defese: int, crit_chance: int) -> int:
-	var base_damage = max(1, int(attack*weapon)/max(defese,1)) 
+func calc_damage(char_attack: int, weapon: int, defese: int, crit_chance: int) -> int:
+	var base_damage = max(1, int(char_attack*weapon)/max(defese,1)) 
 	var base_damage_crit = base_damage * randf_range(0.9, 1.1) #apenas para dar aleatoridade para o ataque 
 	
 	if crit_chance > randf_range(1, 100):
@@ -198,21 +191,26 @@ func calc_damage(attack: int, weapon: int, defese: int, crit_chance: int) -> int
 # =========================
 
 func check_end_or_next():
-	# Player morreu
+	# Fim de batalha
 	if not player.is_alive():
 		change_state(BattleState.END)
-		battle_log.clear_log()
-		battle_log.add_message("You died. Game Over!")
 		return
 
-	# Enemy morreu
 	if not enemy.is_alive():
 		change_state(BattleState.END)
-		battle_log.clear_log()
-		battle_log.add_message("Enemy defeated!")
 		return
 
-	# Troca de turno baseada em quem AGIU
+	# Fim da rodada
+	if player_used_action and enemy_used_action:
+		battle_log.add_message("------ End Round ------")
+
+		player_used_action = false
+		enemy_used_action = false
+
+		change_state(BattleState.TURN_ORDER)
+		return
+
+	# Próximo turno
 	if current_state == BattleState.PLAYER_ACTION:
 		change_state(BattleState.ENEMY_TURN)
 	elif current_state == BattleState.ENEMY_TURN:
@@ -236,14 +234,19 @@ func on_inventory():
 func on_player_action():
 	battle_menu.hide_menu()
 	inventory_ui.hide_inventory()
+	
 	await get_tree().create_timer(1.5).timeout
+	player_used_action= true
 	check_end_or_next()
 		
 func on_enemy_turn():
 	battle_log.add_message("Enemy turn!")
+
 	await get_tree().create_timer(0.8).timeout
 	attack(enemy, player)
+
 	await get_tree().create_timer(1.5).timeout
+	enemy_used_action = true
 	check_end_or_next()
 
 func on_battle_end():
@@ -256,7 +259,7 @@ func on_turn_order():
 	define_turn_order()
 
 func define_turn_order():
-	
+	battle_log.add_message("------ Start Round --------")
 	if player.status.speed > enemy.status.speed:
 		first_turn = player
 	elif enemy.status.speed > player.status.speed:

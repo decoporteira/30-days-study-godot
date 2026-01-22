@@ -1,25 +1,25 @@
-[gd_scene load_steps=9 format=3 uid="uid://cayjikbjjocye"]
+[gd_scene load_steps=9 format=3 uid="uid://dais5l15y5j2r"]
 
-[ext_resource type="Script" uid="uid://ddqwuofmh4n1c" path="res://Scripts/orc.gd" id="1_7k104"]
-[ext_resource type="Resource" uid="uid://dxahx5bnfiho0" path="res://Enemies/GreenOrc.tres" id="2_6et41"]
-[ext_resource type="Texture2D" uid="uid://bb2g75idellvk" path="res://Sprites/Orc2d.png" id="2_8h1l3"]
+[ext_resource type="Script" uid="uid://ddqwuofmh4n1c" path="res://Scripts/orc.gd" id="1_mxyu1"]
+[ext_resource type="Resource" uid="uid://dynxokcdugfb0" path="res://Enemies/BlueOrc.tres" id="2_mxyu1"]
+[ext_resource type="Texture2D" uid="uid://8ilrrgxboi4s" path="res://Sprites/Orc blue.png" id="3_mxyu1"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6et41"]
-atlas = ExtResource("2_8h1l3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_x60bx"]
+atlas = ExtResource("3_mxyu1")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cwpwq"]
-atlas = ExtResource("2_8h1l3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_idgj8"]
+atlas = ExtResource("3_mxyu1")
 region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0hol4"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6et41")
+"texture": SubResource("AtlasTexture_x60bx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cwpwq")
+"texture": SubResource("AtlasTexture_idgj8")
 }],
 "loop": true,
 "name": &"idle",
@@ -34,8 +34,8 @@ radius = 6.095731
 height = 25.333664
 
 [node name="Orc" type="AnimatableBody2D"]
-script = ExtResource("1_7k104")
-data = ExtResource("2_6et41")
+script = ExtResource("1_mxyu1")
+data = ExtResource("2_mxyu1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0hol4")

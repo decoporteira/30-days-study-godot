@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=3 format=3 uid="uid://dynxokcdugfb0"]
+
+[ext_resource type="Script" uid="uid://parn6bwskhi1" path="res://Enemies/EnemyData.gd" id="1_oe8ss"]
+[ext_resource type="PackedScene" uid="uid://cayjikbjjocye" path="res://Scenes/orc.tscn" id="2_dpid8"]
+
+[resource]
+script = ExtResource("1_oe8ss")
+name = "BlueOrc"
+max_hp = 50
+attack = 10
+defense = 10
+speed = 10
+xp_reward = 10
+sprite = ExtResource("2_dpid8")
+metadata/_custom_type_script = "uid://parn6bwskhi1"

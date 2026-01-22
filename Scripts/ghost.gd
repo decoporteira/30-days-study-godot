@@ -10,7 +10,7 @@ var inventory = []
 var status: Dictionary = {
 	"attack": 7,
 	"defese": 10,
-	"speed": 20,
+	"speed": 10,
 }
 
 signal health_changed(current, max)
@@ -46,6 +46,5 @@ func is_alive() -> bool:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		print("Bateu no inimigo")
 		emit_signal("battle_started", self)
 		 

@@ -2,21 +2,31 @@ extends AnimatableBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+@export var data: EnemyData
+
 signal battle_started(enemy)
-var health = 60
-var max_health = 60
-var character_name = "Orc"
+signal health_changed(current, max)
+
+var health: int
+var max_health: int
+var character_name: String
 var type = "enemy"
 var inventory = []
 
-var status: Dictionary = {
-	"attack": 6,
-	"defese": 5,
-	"speed": 2,
-}
-signal health_changed(current, max)
+var status: Dictionary
+
 
 func _ready():
+	character_name = data.name
+	max_health = data.max_hp
+	health = data.max_hp
+	
+	status = {
+		"attack": data.attack,
+		"defese": data.defense,
+		"speed": data.speed
+	}
+	
 	emit_signal("health_changed", health, max_health)
 	
 	var bat = {

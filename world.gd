@@ -7,6 +7,7 @@ var enemy
 @onready var player: CharacterBody2D = $Player_World
 @onready var orc: AnimatableBody2D = $Orc
 @onready var ghost: AnimatableBody2D = $Ghost
+@onready var blue_orc: AnimatableBody2D = $BlueOrc
 
 enum GameState {
 	EXPLORATION,
@@ -19,6 +20,7 @@ var current_state: GameState = GameState.EXPLORATION
 func _ready() -> void:
 	$Orc.battle_started.connect(_on_battle_started)
 	$Ghost.battle_started.connect(_on_battle_started)
+	$BlueOrc.battle_started.connect(_on_battle_started)
 	var transition_scene = preload("res://transition.tscn")
 	transition = transition_scene.instantiate()
 	add_child(transition)

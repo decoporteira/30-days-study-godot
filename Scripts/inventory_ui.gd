@@ -43,7 +43,6 @@ func hide_inventory():
 func _on_item_pressed(item):
 	item_selected.emit(item)
 	
-	print("Usado item: " + item.name)
 	#chamar a funcao usar o item
 	if has_node("/root/World/BattleManager"):
 		var battle_manager = get_node("/root/World/BattleManager")
