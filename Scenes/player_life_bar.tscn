@@ -30,20 +30,22 @@ script = ExtResource("1_2ovgy")
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 z_index = 1
 layout_mode = 0
-offset_left = 42.0
-offset_top = 34.0
-offset_right = 192.0
-offset_bottom = 64.0
+offset_left = 7.0
+offset_top = 33.0
+offset_right = 157.0
+offset_bottom = 63.0
+theme_override_font_sizes/normal_font_size = 13
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LifeBar" type="ProgressBar" parent="."]
-custom_minimum_size = Vector2(150, 30)
+custom_minimum_size = Vector2(30, 10)
 layout_mode = 0
-offset_left = 42.0
-offset_top = 34.0
-offset_right = 192.0
-offset_bottom = 64.0
+offset_left = 25.000002
+offset_top = 37.0
+offset_right = 175.0
+offset_bottom = 67.0
+scale = Vector2(0.7600003, 0.71026784)
 theme = SubResource("Theme_g4mm3")
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_colors/font_outline_color = Color(0.57728827, 0.13698697, 0.18265596, 1)
@@ -54,20 +56,20 @@ show_percentage = false
 
 [node name="Name" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 9.0
-offset_top = -6.0
-offset_right = 155.0
-offset_bottom = 34.0
-theme_override_font_sizes/normal_font_size = 23
+offset_left = -1.0
+offset_top = 9.0
+offset_right = 145.0
+offset_bottom = 49.0
+theme_override_font_sizes/normal_font_size = 16
 vertical_alignment = 1
 
 [node name="HP" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = -49.0
-offset_top = 27.0
-offset_right = 97.0
-offset_bottom = 67.0
-theme_override_font_sizes/normal_font_size = 18
+offset_left = -62.0
+offset_top = 26.0
+offset_right = 84.0
+offset_bottom = 66.0
+theme_override_font_sizes/normal_font_size = 13
 text = "HP:"
 horizontal_alignment = 1
 vertical_alignment = 1

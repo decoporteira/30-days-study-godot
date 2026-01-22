@@ -7,34 +7,38 @@
 [ext_resource type="PackedScene" uid="uid://d4dthiw21376h" path="res://Scenes/inventory_ui.tscn" id="5_6lbqc"]
 
 [node name="BattleUI" type="Control"]
+custom_minimum_size = Vector2(640, 360)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(640, 360)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
 
 [node name="MainVBox" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(610, 330)
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
 [node name="TopArea" type="HBoxContainer" parent="MarginContainer/MainVBox"]
-custom_minimum_size = Vector2(0, 160)
+custom_minimum_size = Vector2(0, 110)
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_constants/separation = 24
@@ -53,26 +57,28 @@ size_flags_vertical = 3
 theme_override_constants/separation = 2
 
 [node name="EnemyLifeBar" parent="MarginContainer/MainVBox/TopArea/EnemyArea" instance=ExtResource("1_6sbxc")]
+custom_minimum_size = Vector2(30, 50)
 layout_mode = 2
 
 [node name="EnemySpriteHolder" type="Control" parent="MarginContainer/MainVBox/TopArea/EnemyArea"]
 clip_contents = true
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(130, 70)
 layout_direction = 4
 layout_mode = 2
 size_flags_horizontal = 8
-size_flags_vertical = 0
 
 [node name="CenterArea" type="HBoxContainer" parent="MarginContainer/MainVBox"]
+custom_minimum_size = Vector2(0, 110)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="BattleLog" parent="MarginContainer/MainVBox/CenterArea" instance=ExtResource("3_scq05")]
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="BottomArea" type="HBoxContainer" parent="MarginContainer/MainVBox"]
-custom_minimum_size = Vector2(0, 180)
+custom_minimum_size = Vector2(0, 110)
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_constants/separation = 16

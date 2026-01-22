@@ -12,17 +12,19 @@ script = ExtResource("1_aqk2v")
 
 [node name="Player_World" parent="." instance=ExtResource("2_tlwt5")]
 z_index = 1
-position = Vector2(442, 288)
+position = Vector2(105, 180)
 
 [node name="Orc" parent="." groups=["enemy"] instance=ExtResource("1_tlwt5")]
 z_index = 1
-position = Vector2(796, 268)
+position = Vector2(477, 213)
 
 [node name="BlueOrc" parent="." groups=["enemy"] instance=ExtResource("6_dwbse")]
-position = Vector2(543, 371)
+position = Vector2(234, 252)
 
 [node name="Ghost" parent="." groups=["enemy"] instance=ExtResource("5_036b0")]
 z_index = 1
-position = Vector2(678, 167)
+position = Vector2(298, 132)
 
 [node name="World_map" parent="." instance=ExtResource("1_fj7yv")]
+position = Vector2(-7, -28)
+tile_map_data = PackedByteArray(0, 0, 17, 0, 7, 0, 0, 0, 2, 0, 7, 0, 0, 0, 17, 0, 8, 0, 0, 0, 2, 0, 7, 0, 0, 0)

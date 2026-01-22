@@ -58,8 +58,8 @@ func initialize_battle(): #2
 	#coloca sprite na luta
 	var world_sprite = enemy.sprite
 	enemy_sprite_ui = world_sprite.duplicate()
-	enemy_sprite_ui.scale = Vector2(3, 3)
-	enemy_sprite_ui.position = Vector2(100,100)
+	enemy_sprite_ui.scale = Vector2(1, 1)
+	enemy_sprite_ui.position = Vector2(70,30)
 	enemy_sprite_ui.z_index = 5
 	enemy_sprite_ui.play(world_sprite.animation)
 
