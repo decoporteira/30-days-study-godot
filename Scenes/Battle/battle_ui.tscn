@@ -1,0 +1,93 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjhxwv6tl8u41"]
+
+[ext_resource type="PackedScene" uid="uid://b46xg5xug2305" path="res://Scenes/Battle/enemy_life_bar.tscn" id="1_6sbxc"]
+[ext_resource type="PackedScene" uid="uid://dlkgdcsnk2iey" path="res://Scenes/Battle/player_life_bar.tscn" id="2_nm010"]
+[ext_resource type="PackedScene" uid="uid://neyyq1acgvjh" path="res://Scenes/Battle/battle_log.tscn" id="3_scq05"]
+[ext_resource type="PackedScene" uid="uid://bhlw8cr8vn738" path="res://Scenes/Battle/battle_menu.tscn" id="4_d07u5"]
+[ext_resource type="PackedScene" uid="uid://d4dthiw21376h" path="res://Scenes/Battle/inventory_ui.tscn" id="5_6lbqc"]
+
+[node name="BattleUI" type="Control"]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="MainVBox" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(610, 330)
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TopArea" type="HBoxContainer" parent="MarginContainer/MainVBox"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/separation = 24
+
+[node name="PlayerArea" type="VBoxContainer" parent="MarginContainer/MainVBox/TopArea"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerLifeBar" parent="MarginContainer/MainVBox/TopArea/PlayerArea" instance=ExtResource("2_nm010")]
+layout_mode = 2
+
+[node name="EnemyArea" type="VBoxContainer" parent="MarginContainer/MainVBox/TopArea"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 2
+
+[node name="EnemyLifeBar" parent="MarginContainer/MainVBox/TopArea/EnemyArea" instance=ExtResource("1_6sbxc")]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+
+[node name="EnemySpriteHolder" type="Control" parent="MarginContainer/MainVBox/TopArea/EnemyArea"]
+clip_contents = true
+custom_minimum_size = Vector2(130, 70)
+layout_direction = 4
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="CenterArea" type="HBoxContainer" parent="MarginContainer/MainVBox"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BattleLog" parent="MarginContainer/MainVBox/CenterArea" instance=ExtResource("3_scq05")]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BottomArea" type="HBoxContainer" parent="MarginContainer/MainVBox"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/separation = 16
+
+[node name="BattleMenu" parent="MarginContainer/MainVBox/BottomArea" instance=ExtResource("4_d07u5")]
+layout_mode = 2
+size_flags_horizontal = 3
+localize_numeral_system = false
+
+[node name="InventoryUI" parent="MarginContainer/MainVBox/BottomArea" instance=ExtResource("5_6lbqc")]
+layout_mode = 2
+size_flags_horizontal = 3

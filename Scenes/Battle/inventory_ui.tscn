@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://d4dthiw21376h"]
+
+[ext_resource type="Script" uid="uid://0dhn7ou583hk" path="res://Scripts/Battle/inventory_ui.gd" id="1_5v8q7"]
+
+[sub_resource type="Theme" id="Theme_5v8q7"]
+
+[sub_resource type="Theme" id="Theme_gf3dx"]
+
+[node name="InventoryUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_5v8q7")
+script = ExtResource("1_5v8q7")
+
+[node name="ItemList" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -2.0
+offset_right = 45.0
+offset_bottom = 38.0
+theme = SubResource("Theme_gf3dx")

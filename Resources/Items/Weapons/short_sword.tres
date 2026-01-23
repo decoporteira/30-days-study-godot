@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponItemResource" load_steps=2 format=3 uid="uid://dhfqsuoeg48dy"]
+
+[ext_resource type="Script" uid="uid://dd4biu6scw0n" path="res://Resources/Items/WeaponResource.gd" id="1_bpnpr"]
+
+[resource]
+script = ExtResource("1_bpnpr")
+attack_power = 10
+weapon_type = "SWORD"
+critical_chance = 20
+name = "Short Sword"
+description = "\"A simple but reliable blade.\""
+price = 50
+metadata/_custom_type_script = "uid://dd4biu6scw0n"

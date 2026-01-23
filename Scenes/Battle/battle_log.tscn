@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://neyyq1acgvjh"]
+
+[ext_resource type="Script" uid="uid://s2xj1sl32de4" path="res://Scripts/Battle/battle_log.gd" id="1_vyndj"]
+[ext_resource type="Texture2D" uid="uid://db5ehyfjjogxh" path="res://Assets/Sprites/NinePatch.png" id="2_yu1kg"]
+
+[sub_resource type="Theme" id="Theme_guuc4"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_2agxj"]
+color = Color(0.25741604, 0.30555755, 0.96939224, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3jqaa"]
+
+[node name="BattleLog" type="Control"]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 3
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vyndj")
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer2"]
+layout_mode = 2
+texture = ExtResource("2_yu1kg")
+region_rect = Rect2(-0.01567936, -0.0096949935, 18.039398, 18.012074)
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14901961, 0.14901961, 0.5019608, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 15
+
+[node name="BattleLog" type="RichTextLabel" parent="MarginContainer"]
+z_index = 1
+clip_contents = false
+layout_mode = 2
+theme = SubResource("Theme_guuc4")
+theme_override_colors/table_border = Color(0.08840001, 0.29700658, 0.52, 1)
+theme_override_styles/background = SubResource("StyleBoxLine_2agxj")
+theme_override_styles/fill = SubResource("StyleBoxTexture_3jqaa")

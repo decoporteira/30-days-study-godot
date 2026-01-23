@@ -1,0 +1,46 @@
+[gd_scene load_steps=9 format=3 uid="uid://q1833akamrw3"]
+
+[ext_resource type="Script" uid="uid://cxypcw665eyvh" path="res://Scripts/Characters/player.gd" id="1_rk0cu"]
+[ext_resource type="Texture2D" uid="uid://bgy7w2jn6yt57" path="res://Assets/Sprites/Leora-2d.png" id="2_cvnsp"]
+[ext_resource type="Script" uid="uid://ce4p7n4d4dog1" path="res://Resources/Items/ItemResource.gd" id="2_gy20a"]
+[ext_resource type="Resource" uid="uid://dhfqsuoeg48dy" path="res://Resources/Items/Weapons/short_sword.tres" id="3_cqrjx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gqcb3"]
+radius = 18.589752
+height = 43.181816
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
+atlas = ExtResource("2_cvnsp")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgqql"]
+atlas = ExtResource("2_cvnsp")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k8tyd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6t5aa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgqql")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Player_World" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_rk0cu")
+inventory = Array[ExtResource("2_gy20a")]([ExtResource("3_cqrjx")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.5599992, 1.76)
+shape = SubResource("CapsuleShape2D_gqcb3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_k8tyd")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.6364333

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="EnemyData" load_steps=3 format=3 uid="uid://dynxokcdugfb0"]
 
 [ext_resource type="Script" uid="uid://parn6bwskhi1" path="res://Enemies/EnemyData.gd" id="1_oe8ss"]
-[ext_resource type="PackedScene" uid="uid://cayjikbjjocye" path="res://Scenes/orc.tscn" id="2_dpid8"]
+[ext_resource type="PackedScene" uid="uid://cayjikbjjocye" path="res://Scenes/Characters/orc.tscn" id="2_dpid8"]
 
 [resource]
 script = ExtResource("1_oe8ss")
