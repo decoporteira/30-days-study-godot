@@ -2,9 +2,9 @@ extends Control
 
 var player = null
 
-@onready var life_bar: ProgressBar = $LifeBar
-@onready var life_bar_numbers: RichTextLabel = $RichTextLabel
-@onready var character_name: RichTextLabel = $Name
+@onready var life_bar: ProgressBar = $HBoxContainer/LifeBar
+@onready var life_bar_numbers: RichTextLabel = $HBoxContainer/LifeBar/LifeBarNumbers
+@onready var character_name: RichTextLabel = $HBoxContainer/Name
 
 func _ready():
 	if player:

@@ -31,11 +31,12 @@ func _ready() -> void:
 	var battle_ui_scene = preload("res://Scenes/Battle/battle_ui.tscn")
 	battle_ui = battle_ui_scene.instantiate()
 	add_child(battle_ui)
-	battle_log = battle_ui.get_node("MarginContainer/MainVBox/CenterArea/BattleLog")
-	enemy_life_bar = battle_ui.get_node("MarginContainer/MainVBox/TopArea/EnemyArea/EnemyLifeBar")
-	player_life_bar = battle_ui.get_node("MarginContainer/MainVBox/TopArea/PlayerArea/PlayerLifeBar")
-	battle_menu = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/BattleMenu")
-	inventory_ui = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/InventoryUI")
+	battle_log = battle_ui.get_node("MarginContainer/MainVBox/TopArea/BattleLog")
+	enemy_life_bar = battle_ui.get_node("MarginContainer/MainVBox/CenterArea/EnemyLifeBar")
+	player_life_bar = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/PlayerLifeBar")
+											
+	battle_menu = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/BattleMenu")
+	inventory_ui = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/InventoryUI")
 	
 	var inventory_scene = preload("res://Scenes/Battle/inventory.tscn")
 	inventory = inventory_scene.instantiate()
@@ -69,7 +70,7 @@ func initialize_battle(): #2
 
 	# Adiciona na UI
 	var holder = battle_ui.get_node(
-		"MarginContainer/MainVBox/TopArea/EnemyArea/EnemySpriteHolder"
+		"MarginContainer/MainVBox/CenterArea/EnemySpriteHolder"
 	)
 	holder.add_child(enemy_sprite_ui)
 	inventory_ui.player = player

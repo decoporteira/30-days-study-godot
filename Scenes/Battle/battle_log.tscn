@@ -11,7 +11,7 @@ color = Color(0.25741604, 0.30555755, 0.96939224, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3jqaa"]
 
 [node name="BattleLog" type="Control"]
-custom_minimum_size = Vector2(0, 160)
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 3
 anchors_preset = 14
 anchor_top = 0.5

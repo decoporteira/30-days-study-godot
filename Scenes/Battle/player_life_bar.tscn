@@ -19,33 +19,29 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [node name="PlayerLifeBar" type="Control"]
+custom_minimum_size = Vector2(180, 25)
 layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+script = ExtResource("1_2ovgy")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_2ovgy")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-z_index = 1
-layout_mode = 0
-offset_left = 7.0
-offset_top = 33.0
-offset_right = 157.0
-offset_bottom = 63.0
-theme_override_font_sizes/normal_font_size = 13
-horizontal_alignment = 1
+[node name="Name" type="RichTextLabel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 16
 vertical_alignment = 1
 
-[node name="LifeBar" type="ProgressBar" parent="."]
-custom_minimum_size = Vector2(30, 10)
-layout_mode = 0
-offset_left = 25.000002
-offset_top = 37.0
-offset_right = 175.0
-offset_bottom = 67.0
-scale = Vector2(0.7600003, 0.71026784)
+[node name="LifeBar" type="ProgressBar" parent="HBoxContainer"]
+custom_minimum_size = Vector2(130, 25)
+layout_mode = 2
 theme = SubResource("Theme_g4mm3")
 theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
 theme_override_colors/font_outline_color = Color(0.57728827, 0.13698697, 0.18265596, 1)
@@ -54,22 +50,15 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ll6x3")
 max_value = 30.0
 show_percentage = false
 
-[node name="Name" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = -1.0
-offset_top = 9.0
-offset_right = 145.0
-offset_bottom = 49.0
-theme_override_font_sizes/normal_font_size = 16
-vertical_alignment = 1
-
-[node name="HP" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = -62.0
-offset_top = 26.0
-offset_right = 84.0
-offset_bottom = 66.0
+[node name="LifeBarNumbers" type="RichTextLabel" parent="HBoxContainer/LifeBar"]
+z_index = 1
+custom_minimum_size = Vector2(130, 25)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/normal_font_size = 13
-text = "HP:"
 horizontal_alignment = 1
 vertical_alignment = 1
