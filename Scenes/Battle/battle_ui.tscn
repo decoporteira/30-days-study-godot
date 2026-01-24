@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjhxwv6tl8u41"]
+[gd_scene load_steps=8 format=3 uid="uid://bjhxwv6tl8u41"]
 
 [ext_resource type="PackedScene" uid="uid://b46xg5xug2305" path="res://Scenes/Battle/enemy_life_bar.tscn" id="1_6sbxc"]
 [ext_resource type="PackedScene" uid="uid://dlkgdcsnk2iey" path="res://Scenes/Battle/player_life_bar.tscn" id="2_nm010"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://neyyq1acgvjh" path="res://Scenes/Battle/battle_log.tscn" id="3_scq05"]
 [ext_resource type="PackedScene" uid="uid://bhlw8cr8vn738" path="res://Scenes/Battle/battle_menu.tscn" id="4_d07u5"]
 [ext_resource type="PackedScene" uid="uid://d4dthiw21376h" path="res://Scenes/Battle/inventory_ui.tscn" id="5_6lbqc"]
+[ext_resource type="Texture2D" uid="uid://babu4kfk7y3w4" path="res://Assets/Sprites/1a9201d9fe16a7c3e0f19f2858525733.jpg" id="7_bxlc4"]
 
 [node name="BattleUI" type="Control"]
 custom_minimum_size = Vector2(640, 360)
@@ -20,6 +21,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
+z_index = 1
 custom_minimum_size = Vector2(640, 360)
 layout_mode = 1
 anchors_preset = 15
@@ -53,15 +55,29 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="EnemyLifeBar" parent="MarginContainer/MainVBox/CenterArea" instance=ExtResource("1_6sbxc")]
-custom_minimum_size = Vector2(30, 50)
+[node name="PlayerSpriteHolder" type="Control" parent="MarginContainer/MainVBox/CenterArea"]
 layout_mode = 2
 
 [node name="EnemySpriteHolder" type="Control" parent="MarginContainer/MainVBox/CenterArea"]
 clip_contents = true
-custom_minimum_size = Vector2(130, 60)
+custom_minimum_size = Vector2(210, 60)
 layout_mode = 2
 size_flags_horizontal = 10
+
+[node name="EnemyLifeBar" parent="MarginContainer/MainVBox/CenterArea/EnemySpriteHolder" instance=ExtResource("1_6sbxc")]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 0
+offset_left = 25.0
+offset_top = -37.5
+offset_right = 55.0
+offset_bottom = 127.5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/MainVBox/CenterArea/EnemySpriteHolder"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+text = "100"
 
 [node name="BottomArea" type="VBoxContainer" parent="MarginContainer/MainVBox"]
 custom_minimum_size = Vector2(0, 110)
@@ -96,15 +112,40 @@ localize_numeral_system = false
 
 [node name="InventoryUI" parent="MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect" instance=ExtResource("5_6lbqc")]
 layout_mode = 0
-offset_left = 379.0
-offset_top = -1.0
-offset_right = 609.0
-offset_bottom = 119.0
+offset_left = 152.0
+offset_top = 10.5
+offset_right = 382.0
+offset_bottom = 130.5
 size_flags_horizontal = 3
 
 [node name="PlayerLifeBar" parent="MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect" instance=ExtResource("2_nm010")]
 layout_mode = 0
-offset_left = 485.0
+offset_left = 413.0
 offset_top = 12.5
-offset_right = 585.0
+offset_right = 593.0
 offset_bottom = 132.5
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -5
+z_as_relative = false
+layout_mode = 0
+offset_left = -0.99999994
+offset_top = -36.499996
+offset_right = 399.0
+offset_bottom = 288.5
+scale = Vector2(1.5999994, 1.2400002)
+mouse_filter = 2
+texture = ExtResource("7_bxlc4")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+z_index = -4
+z_as_relative = false
+layout_mode = 0
+offset_top = -117.5
+offset_right = 400.0
+offset_bottom = 207.5
+scale = Vector2(1.5999994, 1.2400002)
+mouse_filter = 2
+texture = ExtResource("7_bxlc4")
+stretch_mode = 2

@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var damage_text: RichTextLabel = $DamageText
 signal health_changed(current, max)
 enum PlayerMode {
 	EXPLORATION,
@@ -22,10 +24,7 @@ var status: Dictionary = {
 }
 
 func _ready():
-	#var sword = preload("res://Resources/Items/Weapons/short_sword.tres")
 	emit_signal("health_changed", health, max_health)
-
-	#inventory = [sword]
 	
 func take_damage(amount):
 	health -= amount
@@ -41,7 +40,6 @@ func heal(amount):
 	
 func buff(amount):
 	status.speed += amount
-	
 	
 func is_alive() -> bool:
 	if health <= 0:

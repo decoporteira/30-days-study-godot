@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://q1833akamrw3"]
+[gd_scene load_steps=10 format=3 uid="uid://q1833akamrw3"]
 
 [ext_resource type="Script" uid="uid://cxypcw665eyvh" path="res://Scripts/Characters/player.gd" id="1_rk0cu"]
 [ext_resource type="Texture2D" uid="uid://bgy7w2jn6yt57" path="res://Assets/Sprites/Leora-2d.png" id="2_cvnsp"]
 [ext_resource type="Script" uid="uid://ce4p7n4d4dog1" path="res://Resources/Items/ItemResource.gd" id="2_gy20a"]
 [ext_resource type="Resource" uid="uid://dhfqsuoeg48dy" path="res://Resources/Items/Weapons/short_sword.tres" id="3_cqrjx"]
+[ext_resource type="Resource" uid="uid://bg5ecyeh07hat" path="res://Resources/Items/Consumables/health_potion.tres" id="4_cqrjx"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gqcb3"]
 radius = 18.589752
@@ -33,7 +34,17 @@ animations = [{
 
 [node name="Player_World" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_rk0cu")
-inventory = Array[ExtResource("2_gy20a")]([ExtResource("3_cqrjx")])
+inventory = Array[ExtResource("2_gy20a")]([ExtResource("3_cqrjx"), ExtResource("4_cqrjx")])
+
+[node name="DamageText" type="RichTextLabel" parent="."]
+visible = false
+z_index = 6
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 26.0
+offset_bottom = 26.0
+theme_override_colors/default_color = Color(1, 0.19, 0.19, 1)
+theme_override_font_sizes/normal_font_size = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(1.5599992, 1.76)

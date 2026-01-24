@@ -1,6 +1,7 @@
 extends AnimatableBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var damage_text: RichTextLabel = $DamageText
 
 @export var data: EnemyData
 #@export var weapon: WeaponItemResource

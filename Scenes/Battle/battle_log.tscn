@@ -60,9 +60,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
+theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_bottom = 5
 
 [node name="BattleLog" type="RichTextLabel" parent="MarginContainer"]
 z_index = 1
@@ -70,5 +70,8 @@ clip_contents = false
 layout_mode = 2
 theme = SubResource("Theme_guuc4")
 theme_override_colors/table_border = Color(0.08840001, 0.29700658, 0.52, 1)
+theme_override_font_sizes/normal_font_size = 13
 theme_override_styles/background = SubResource("StyleBoxLine_2agxj")
 theme_override_styles/fill = SubResource("StyleBoxTexture_3jqaa")
+scroll_active = false
+horizontal_alignment = 1

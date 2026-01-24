@@ -1,13 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cayjikbjjocye"]
+[gd_scene load_steps=9 format=3 uid="uid://cayjikbjjocye"]
 
 [ext_resource type="Script" uid="uid://ddqwuofmh4n1c" path="res://Scripts/Characters/orc.gd" id="1_7k104"]
 [ext_resource type="Resource" uid="uid://dxahx5bnfiho0" path="res://Enemies/GreenOrc.tres" id="2_6et41"]
 [ext_resource type="Texture2D" uid="uid://bb2g75idellvk" path="res://Assets/Sprites/Orc2d.png" id="2_8h1l3"]
-[ext_resource type="Script" uid="uid://dd4biu6scw0n" path="res://Resources/Items/WeaponResource.gd" id="3_e256h"]
-
-[sub_resource type="Resource" id="Resource_pwg3k"]
-script = ExtResource("3_e256h")
-metadata/_custom_type_script = "uid://dd4biu6scw0n"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6et41"]
 atlas = ExtResource("2_8h1l3")
@@ -41,7 +36,6 @@ height = 25.333664
 [node name="Orc" type="AnimatableBody2D"]
 script = ExtResource("1_7k104")
 data = ExtResource("2_6et41")
-weapon = SubResource("Resource_pwg3k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0hol4")

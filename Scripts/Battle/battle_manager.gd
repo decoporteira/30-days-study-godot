@@ -12,6 +12,9 @@ var battle_log
 var inventory_ui
 var rng = RandomNumberGenerator.new()
 var enemy_sprite_ui: AnimatedSprite2D
+var player_sprite_ui: AnimatedSprite2D
+var player_damage_text_ui: RichTextLabel
+var enemy_damage_text_ui: RichTextLabel
 var battle_ui
 var first_turn
 var player_used_action: bool = false
@@ -32,7 +35,7 @@ func _ready() -> void:
 	battle_ui = battle_ui_scene.instantiate()
 	add_child(battle_ui)
 	battle_log = battle_ui.get_node("MarginContainer/MainVBox/TopArea/BattleLog")
-	enemy_life_bar = battle_ui.get_node("MarginContainer/MainVBox/CenterArea/EnemyLifeBar")
+	enemy_life_bar = battle_ui.get_node("MarginContainer/MainVBox/CenterArea/EnemySpriteHolder/EnemyLifeBar")
 	player_life_bar = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/PlayerLifeBar")
 											
 	battle_menu = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/BattleMenu")
@@ -43,8 +46,8 @@ func _ready() -> void:
 	add_child(inventory)
 
 	inventory_ui.item_selected.connect(
-	Callable(self, "_on_item_selected")
-)
+		Callable(self, "_on_item_selected")
+	)
 
 	battle_menu.battle_manager = self
 
@@ -57,26 +60,54 @@ func initialize_battle(): #2
 		push_error("BattleManager initialized without player or enemy")
 		return
 	#coloca sprite na luta
-	var world_sprite = enemy.sprite
-	enemy_sprite_ui = world_sprite.duplicate()
-	enemy_sprite_ui.scale = Vector2(1, 1)
-	enemy_sprite_ui.position = Vector2(70,30)
+	var enemy_world_sprite = enemy.sprite
+	enemy_sprite_ui = enemy_world_sprite.duplicate()
+	enemy_sprite_ui.scale = Vector2(2, 2)
+	enemy_sprite_ui.position = Vector2(100, 100)
 	enemy_sprite_ui.z_index = 5
-	enemy_sprite_ui.play(world_sprite.animation)
+	enemy_sprite_ui.play(enemy_world_sprite.animation)
 
 	# Remove qualquer processamento desnecessário
 	enemy_sprite_ui.set_physics_process(false)
 	enemy_sprite_ui.set_process(false)
-
+	
+	var player_world_sprite = player.sprite
+	player_sprite_ui = player_world_sprite.duplicate()
+	player_sprite_ui.scale = Vector2(2, 2)
+	player_sprite_ui.position = Vector2(100, 100)
+	player_sprite_ui.z_index = 5
+	player_sprite_ui.play(player_world_sprite.animation)
+	
+	var player_damage_text = player.damage_text
+	player_damage_text_ui = player_damage_text.duplicate()
+	player_damage_text_ui.position = Vector2(100,100)
+	
+	var enemy_damage_text = enemy.damage_text
+	enemy_damage_text_ui = enemy_damage_text.duplicate()
+	enemy_damage_text_ui.position = Vector2(100,100)
+	
+	# Remove qualquer processamento desnecessário
+	player_sprite_ui.set_physics_process(false)
+	player_sprite_ui.set_process(false)
+	
 	# Adiciona na UI
-	var holder = battle_ui.get_node(
+	var enemy_holder = battle_ui.get_node(
 		"MarginContainer/MainVBox/CenterArea/EnemySpriteHolder"
 	)
-	holder.add_child(enemy_sprite_ui)
+	enemy_holder.add_child(enemy_sprite_ui)
+	enemy_holder.add_child(enemy_damage_text_ui)
+	
+	var player_holder = battle_ui.get_node(
+		"MarginContainer/MainVBox/CenterArea/PlayerSpriteHolder"
+	)
+	player_holder.add_child(player_sprite_ui)
+	player_holder.add_child(player_damage_text_ui)
+	
 	inventory_ui.player = player
 	inventory_ui.update_inventory()
 	#C
 	player_life_bar.player = player
+	
 	player.health_changed.connect(
 		Callable(player_life_bar, "update_life_bar")
 	)
@@ -90,9 +121,7 @@ func initialize_battle(): #2
 
 	inventory.player = player
 
-	battle_log.add_message(
-		"You encountered a furious " + enemy.character_name + ". It wants to fight!"
-	)
+	await get_tree().create_timer(1.5).timeout
 
 func start_battle(): #3
 	change_state(BattleState.TURN_ORDER)
@@ -118,14 +147,13 @@ func open_inventory():
 	inventory_ui.show_inventory()
 	
 func run_away():
-	battle_log.add_message("You tried to escape...")
 	change_state(BattleState.PLAYER_ACTION)
 	var run_away_percentage = rng.randf_range(0.0, 100.0)
 	if run_away_percentage >= 50:
-		battle_log.add_message(".. and you were sucessful! ")
+		battle_log.add_message("You tried to escape... and you were sucessful!")
 		change_state(BattleState.END)
 	else:
-		battle_log.add_message(".. and you fail!")
+		battle_log.add_message("You tried to escape... and you fail!")
 		
 # =========================
 # STATE MACHINE
@@ -167,9 +195,22 @@ func attack(attacker, defender) -> void:
 		" and dealt " + str(damage_delt) + " damage."
 	)
 	if attacker == enemy:
-		await pokemon_attack(enemy_sprite_ui, -1)
+		player_damage_text_ui.add_text(str(damage_delt))
+		player_damage_text_ui.show()
+		await animation_attack(enemy_sprite_ui, -1)
+		await hit_shake(player_sprite_ui)
+		await get_tree().create_timer(1.5).timeout
+		player_damage_text_ui.hide()
+		player_damage_text_ui.clear()
+		
 	else:
+		enemy_damage_text_ui.add_text(str(damage_delt))
+		enemy_damage_text_ui.show()
+		await animation_attack(player_sprite_ui, 1)
 		await hit_shake(enemy_sprite_ui)
+		await get_tree().create_timer(1.5).timeout
+		enemy_damage_text_ui.hide()
+		enemy_damage_text_ui.clear()
 		
 	
 	defender.take_damage(damage_delt)
@@ -195,6 +236,7 @@ func get_weapon_crit_chance(attacker):
 	for item in attacker.inventory:
 		if item is WeaponItemResource:
 			return item.critical_chance
+			
 func calc_damage(char_attack: int, weapon: int, defese: int, crit_chance: int) -> int:
 	var base_damage = max(1, int(char_attack*weapon)/max(defese,1)) 
 	var base_damage_crit = base_damage * randf_range(0.9, 1.1) #apenas para dar aleatoridade para o ataque 
@@ -220,8 +262,6 @@ func check_end_or_next():
 
 	# Fim da rodada
 	if player_used_action and enemy_used_action:
-		battle_log.add_message("------ End Round ------")
-
 		player_used_action = false
 		enemy_used_action = false
 
@@ -234,8 +274,6 @@ func check_end_or_next():
 	elif current_state == BattleState.ENEMY_TURN:
 		change_state(BattleState.PLAYER_TURN)
 	
-	
-
 # =========================
 # ESTADOS
 # =========================
@@ -259,8 +297,8 @@ func on_player_action():
 		
 func on_enemy_turn():
 	battle_log.add_message("Enemy turn!")
-
-	await get_tree().create_timer(0.8).timeout
+	
+	await get_tree().create_timer(1.5).timeout
 	attack(enemy, player)
 
 	await get_tree().create_timer(1.5).timeout
@@ -277,7 +315,6 @@ func on_turn_order():
 	define_turn_order()
 
 func define_turn_order():
-	battle_log.add_message("------ Start Round --------")
 	if player.status.speed > enemy.status.speed:
 		first_turn = player
 	elif enemy.status.speed > player.status.speed:
@@ -293,10 +330,7 @@ func start_first_turn():
 	else:
 		change_state(BattleState.ENEMY_TURN)
 		
-func pokemon_attack(attacker_sprite: AnimatedSprite2D, direction := 1):
-	# direction:
-	#  1  = atacante vai pra direita (player)
-	# -1  = atacante vai pra esquerda (enemy)
+func animation_attack(attacker_sprite: AnimatedSprite2D, direction := 1):
 
 	var start_pos := attacker_sprite.position
 	var advance := Vector2(30 * direction, 0)

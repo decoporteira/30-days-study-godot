@@ -9,7 +9,6 @@ var player = null
 func _ready():
 	if player:
 		player.health_changed.connect(update_life_bar)
-	
 
 func get_max_health():
 	if player == null:

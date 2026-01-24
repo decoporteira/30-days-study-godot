@@ -37,7 +37,6 @@ func start_battle():
 	player.set_process(false)
 	player.set_physics_process(false)
 	# esconde mundo
-	print("Entrou na batalhaaa")
 	
 	world_map.hide()
 	hide_all_enemies()

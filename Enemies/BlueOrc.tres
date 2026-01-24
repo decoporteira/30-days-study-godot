@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_oe8ss")
-name = "BlueOrc"
+name = "Blue Orc"
 max_hp = 50
 attack = 10
 defense = 10

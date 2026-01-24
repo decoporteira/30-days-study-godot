@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ConsumableItemResource" load_steps=2 format=3 uid="uid://bg5ecyeh07hat"]
+
+[ext_resource type="Script" uid="uid://dq5cdd3ny2e0u" path="res://Resources/Items/ConsumableItemResource.gd" id="1_l2ele"]
+
+[resource]
+script = ExtResource("1_l2ele")
+heal_amount = 50
+usable_in_world = true
+name = "Health Potion"
+price = 20
+metadata/_custom_type_script = "uid://dq5cdd3ny2e0u"
