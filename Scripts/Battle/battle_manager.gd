@@ -1,12 +1,10 @@
 extends Node
 
 var inventory
-
 var player
 var enemy
 var battle_menu
 var player_life_bar
-var enemy_life_bar
 var current_turn
 var battle_log
 var inventory_ui
@@ -35,7 +33,6 @@ func _ready() -> void:
 	battle_ui = battle_ui_scene.instantiate()
 	add_child(battle_ui)
 	battle_log = battle_ui.get_node("MarginContainer/MainVBox/TopArea/BattleLog")
-	enemy_life_bar = battle_ui.get_node("MarginContainer/MainVBox/CenterArea/EnemySpriteHolder/EnemyLifeBar")
 	player_life_bar = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/PlayerLifeBar")
 											
 	battle_menu = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/BattleMenu")
@@ -111,13 +108,10 @@ func initialize_battle(): #2
 	player.health_changed.connect(
 		Callable(player_life_bar, "update_life_bar")
 	)
-	player_life_bar.get_max_health()
-
-	enemy_life_bar.enemy = enemy
-	enemy.health_changed.connect(
-		Callable(enemy_life_bar, "update_life_bar")
+	player.level_up.connect(
+		Callable(self, "_on_player_level_up")
 	)
-	enemy_life_bar.get_max_health()
+	player_life_bar.get_max_health()
 
 	inventory.player = player
 
@@ -159,6 +153,8 @@ func run_away():
 # STATE MACHINE
 # =========================
 func change_state(new_state: BattleState) -> void:
+	if current_state == BattleState.END:
+		return
 	current_state = new_state
 	match current_state:
 		BattleState.PLAYER_TURN:
@@ -182,10 +178,11 @@ func change_state(new_state: BattleState) -> void:
 # COMBATE
 # =========================
 func attack(attacker, defender) -> void:
-	if attacker.inventory.size() == 0:
-		battle_log.add_message(attacker.character_name + " has no weapon.")
+	if battle_is_over():
 		return
-	
+	if not attacker.is_alive():
+		print(attacker.name, " está morto, turno ignorado")
+		return
 	var weapon_name = get_weapon_name(attacker)
 	var damage = get_weapon_damage(attacker)
 	var critical_chance = get_weapon_crit_chance(attacker)
@@ -199,6 +196,7 @@ func attack(attacker, defender) -> void:
 		player_damage_text_ui.show()
 		await animation_attack(enemy_sprite_ui, -1)
 		await hit_shake(player_sprite_ui)
+		player.attack_sfx.play()
 		await get_tree().create_timer(1.5).timeout
 		player_damage_text_ui.hide()
 		player_damage_text_ui.clear()
@@ -208,6 +206,7 @@ func attack(attacker, defender) -> void:
 		enemy_damage_text_ui.show()
 		await animation_attack(player_sprite_ui, 1)
 		await hit_shake(enemy_sprite_ui)
+		player.attack_sfx.play()
 		await get_tree().create_timer(1.5).timeout
 		enemy_damage_text_ui.hide()
 		enemy_damage_text_ui.clear()
@@ -217,22 +216,44 @@ func attack(attacker, defender) -> void:
 	
 	if not defender.is_alive():
 		if defender.type == "enemy":
+			var defender_xp = defender.xp_reward
+
 			battle_log.add_message(defender.character_name + " was defeated!")
+			await get_tree().create_timer(0.8).timeout
+
+			await enemy_defeat_effect()
+			await get_tree().create_timer(0.6).timeout
+
+			battle_log.add_message("You got " + str(defender_xp) + " XP")
+			await get_tree().create_timer(1.8).timeout
+
+			check_level(defender_xp)
+			await get_tree().create_timer(2.2).timeout
+
 		else:
 			battle_log.add_message("You died. Game Over!")
+			await get_tree().create_timer(1.5).timeout
+		
+		change_state(BattleState.END)
 
 func get_weapon_damage(attacker):
+	if attacker.inventory.size() == 0:
+		return 1
 	for item in attacker.inventory:
 		if item is WeaponItemResource:
 			return item.attack_power
 	return 1 # dano base sem arma
 	
 func get_weapon_name(attacker):
+	if attacker.inventory.size() == 0:
+		return "Hands"
 	for item in attacker.inventory:
 		if item is WeaponItemResource:
 			return item.name
 			
 func get_weapon_crit_chance(attacker):
+	if attacker.inventory.size() == 0:
+		return 1
 	for item in attacker.inventory:
 		if item is WeaponItemResource:
 			return item.critical_chance
@@ -253,10 +274,12 @@ func calc_damage(char_attack: int, weapon: int, defese: int, crit_chance: int) -
 func check_end_or_next():
 	# Fim de batalha
 	if not player.is_alive():
+		await get_tree().create_timer(5).timeout
 		change_state(BattleState.END)
 		return
 
 	if not enemy.is_alive():
+		await get_tree().create_timer(5).timeout
 		change_state(BattleState.END)
 		return
 
@@ -278,6 +301,9 @@ func check_end_or_next():
 # ESTADOS
 # =========================
 func on_player_turn():
+	if not player.is_alive():
+		change_state(BattleState.END)
+		return
 	battle_log.add_message("Your turn!!!")
 	battle_menu.show_menu()
 	inventory_ui.hide_inventory()
@@ -288,6 +314,8 @@ func on_inventory():
 	inventory_ui.show_inventory()
 
 func on_player_action():
+	if battle_is_over():
+		return
 	battle_menu.hide_menu()
 	inventory_ui.hide_inventory()
 	
@@ -296,6 +324,11 @@ func on_player_action():
 	check_end_or_next()
 		
 func on_enemy_turn():
+	if battle_is_over():
+		return
+	if not enemy.is_alive():
+		change_state(BattleState.END)
+		return
 	battle_log.add_message("Enemy turn!")
 	
 	await get_tree().create_timer(1.5).timeout
@@ -323,7 +356,10 @@ func define_turn_order():
 		first_turn = player
 
 	start_first_turn()
-	
+
+func battle_is_over() -> bool:
+	return current_state == BattleState.END
+
 func start_first_turn():
 	if first_turn == player:
 		change_state(BattleState.PLAYER_TURN)
@@ -331,14 +367,13 @@ func start_first_turn():
 		change_state(BattleState.ENEMY_TURN)
 		
 func animation_attack(attacker_sprite: AnimatedSprite2D, direction := 1):
-
 	var start_pos := attacker_sprite.position
 	var advance := Vector2(30 * direction, 0)
-
+	
 	var tween := create_tween()
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.set_ease(Tween.EASE_OUT)
-
+	
 	# Avança rápido
 	tween.tween_property(
 		attacker_sprite,
@@ -346,7 +381,7 @@ func animation_attack(attacker_sprite: AnimatedSprite2D, direction := 1):
 		start_pos + advance,
 		0.08
 	)
-
+	
 	# Volta
 	tween.set_ease(Tween.EASE_IN)
 	tween.tween_property(
@@ -380,3 +415,43 @@ func hit_shake(target_sprite: AnimatedSprite2D):
 		start_pos,
 		0.03
 	)
+func enemy_defeat_effect():
+	if enemy_sprite_ui == null:
+		return
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+
+	# Fade out
+	tween.tween_property(
+		enemy_sprite_ui,
+		"modulate:a",
+		0.0,
+		0.4
+	)
+
+	# Encolhe um pouco
+	tween.tween_property(
+		enemy_sprite_ui,
+		"scale",
+		enemy_sprite_ui.scale * 0.8,
+		0.4
+	)
+
+	# Sobe levemente
+	tween.tween_property(
+		enemy_sprite_ui,
+		"position",
+		enemy_sprite_ui.position + Vector2(0, -10),
+		0.4
+	)
+
+	await tween.finished
+	enemy_sprite_ui.hide()
+
+func check_level(xp_reward) -> void:
+	player.get_xp(xp_reward)
+	print(str(player.xp))
+	
+func _on_player_level_up(new_level: int) -> void:
+	battle_log.add_message("🎉 Level up! You reached level " + str(new_level))

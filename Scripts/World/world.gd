@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var music: AudioStreamPlayer = $AudioStreamPlayer
 @onready var world_map: TileMapLayer = $World_map
 var battle_manager: Node
 var transition
@@ -28,6 +29,7 @@ func _ready() -> void:
 func _on_battle_started(current_enemy):
 	enemy = current_enemy
 	start_battle()
+	music.stop()
 
 func start_battle():
 	await transition.fade_out(0.4)
@@ -57,6 +59,7 @@ func _on_battle_ended():
 	await transition.fade_out(0.4)
 
 	battle_manager.queue_free()
+	music.play()
 	
 	enemy.queue_free()
 	show_all_enemies()

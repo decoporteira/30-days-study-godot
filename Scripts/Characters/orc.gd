@@ -4,7 +4,6 @@ extends AnimatableBody2D
 @onready var damage_text: RichTextLabel = $DamageText
 
 @export var data: EnemyData
-#@export var weapon: WeaponItemResource
 
 signal battle_started(enemy)
 signal health_changed(current, max)
@@ -16,11 +15,9 @@ var type = "enemy"
 @export var inventory: Array[ItemResource] = []
 
 var status: Dictionary
-
+var xp_reward
 
 func _ready():
-	#var sword = preload("res://Resources/Items/Weapons/short_sword.tres")
-	#inventory.append(weapon)
 	character_name = data.name
 	max_health = data.max_hp
 	health = data.max_hp
@@ -30,6 +27,7 @@ func _ready():
 		"defese": data.defense,
 		"speed": data.speed
 	}
+	xp_reward = data.xp_reward
 	
 	emit_signal("health_changed", health, max_health)
 		

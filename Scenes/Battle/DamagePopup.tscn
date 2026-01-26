@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvd2wb8yljx23"]
+
+[ext_resource type="Script" uid="uid://5jy1u87et6xw" path="res://Scenes/Battle/damage_popup.gd" id="1_5wnpq"]
+
+[node name="DamagePopup" type="RichTextLabel"]
+theme_override_colors/default_color = Color(1, 0.029999971, 0.029999971, 1)
+theme_override_font_sizes/normal_font_size = 18
+script = ExtResource("1_5wnpq")

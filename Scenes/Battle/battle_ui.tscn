@@ -1,6 +1,5 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjhxwv6tl8u41"]
+[gd_scene load_steps=7 format=3 uid="uid://bjhxwv6tl8u41"]
 
-[ext_resource type="PackedScene" uid="uid://b46xg5xug2305" path="res://Scenes/Battle/enemy_life_bar.tscn" id="1_6sbxc"]
 [ext_resource type="PackedScene" uid="uid://dlkgdcsnk2iey" path="res://Scenes/Battle/player_life_bar.tscn" id="2_nm010"]
 [ext_resource type="Texture2D" uid="uid://db5ehyfjjogxh" path="res://Assets/Sprites/NinePatch.png" id="3_2jogr"]
 [ext_resource type="PackedScene" uid="uid://neyyq1acgvjh" path="res://Scenes/Battle/battle_log.tscn" id="3_scq05"]
@@ -63,14 +62,6 @@ clip_contents = true
 custom_minimum_size = Vector2(210, 60)
 layout_mode = 2
 size_flags_horizontal = 10
-
-[node name="EnemyLifeBar" parent="MarginContainer/MainVBox/CenterArea/EnemySpriteHolder" instance=ExtResource("1_6sbxc")]
-custom_minimum_size = Vector2(30, 50)
-layout_mode = 0
-offset_left = 25.0
-offset_top = -37.5
-offset_right = 55.0
-offset_bottom = 127.5
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/MainVBox/CenterArea/EnemySpriteHolder"]
 visible = false

@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://q1833akamrw3"]
+[gd_scene load_steps=11 format=3 uid="uid://q1833akamrw3"]
 
 [ext_resource type="Script" uid="uid://cxypcw665eyvh" path="res://Scripts/Characters/player.gd" id="1_rk0cu"]
 [ext_resource type="Texture2D" uid="uid://bgy7w2jn6yt57" path="res://Assets/Sprites/Leora-2d.png" id="2_cvnsp"]
 [ext_resource type="Script" uid="uid://ce4p7n4d4dog1" path="res://Resources/Items/ItemResource.gd" id="2_gy20a"]
 [ext_resource type="Resource" uid="uid://dhfqsuoeg48dy" path="res://Resources/Items/Weapons/short_sword.tres" id="3_cqrjx"]
 [ext_resource type="Resource" uid="uid://bg5ecyeh07hat" path="res://Resources/Items/Consumables/health_potion.tres" id="4_cqrjx"]
+[ext_resource type="AudioStream" uid="uid://c3g3dipiwvkko" path="res://Audio/SFX/attack_sfx.mp3" id="6_khnq4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gqcb3"]
-radius = 18.589752
-height = 43.181816
+radius = 10.227272
+height = 20.454544
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
 atlas = ExtResource("2_cvnsp")
@@ -47,7 +48,8 @@ theme_override_colors/default_color = Color(1, 0.19, 0.19, 1)
 theme_override_font_sizes/normal_font_size = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(1.5599992, 1.76)
+position = Vector2(0, 9)
+scale = Vector2(1.5599992, 2.16)
 shape = SubResource("CapsuleShape2D_gqcb3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -55,3 +57,6 @@ sprite_frames = SubResource("SpriteFrames_k8tyd")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.6364333
+
+[node name="AttackSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_khnq4")

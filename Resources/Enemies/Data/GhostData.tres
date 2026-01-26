@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3 uid="uid://cdtp8537ukip0"]
+
+[ext_resource type="Script" uid="uid://parn6bwskhi1" path="res://Resources/Enemies/EnemyData.gd" id="1_i03qy"]
+
+[resource]
+script = ExtResource("1_i03qy")
+name = "Blue Ghost"
+max_hp = 7
+attack = 5
+defense = 5
+speed = 1
+xp_reward = 5
+metadata/_custom_type_script = "uid://parn6bwskhi1"

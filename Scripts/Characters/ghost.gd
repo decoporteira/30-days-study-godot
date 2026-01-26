@@ -1,31 +1,36 @@
 extends AnimatableBody2D
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-signal battle_started(enemy)
-var health = 50
-var max_health = 50
-var character_name = "Ghost"
-var type = "enemy"
-var inventory = []
-var status: Dictionary = {
-	"attack": 7,
-	"defese": 10,
-	"speed": 10,
-}
+@onready var damage_text: RichTextLabel = $DamageText
 
+@export var data: EnemyData
+
+signal battle_started(enemy)
 signal health_changed(current, max)
 
+var health: int
+var max_health: int
+var character_name: String
+var type = "enemy"
+@export var inventory: Array[ItemResource] = []
+
+var status: Dictionary
+var xp_reward
+
 func _ready():
-	emit_signal("health_changed", health, max_health)
+	character_name = data.name
+	max_health = data.max_hp
+	health = data.max_hp
 	
-	var chain = {
-		"name": "Chain",
-		"type": "weapon",
-		"hp": 20,
-		"critical_chance": 10 
+	status = {
+		"attack": data.attack,
+		"defese": data.defense,
+		"speed": data.speed
 	}
-	inventory = [chain]
+	xp_reward = data.xp_reward
 	
+	emit_signal("health_changed", health, max_health)
+		
 func take_damage(amount):
 	health -= amount
 	if health < 0:
@@ -47,4 +52,3 @@ func is_alive() -> bool:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		emit_signal("battle_started", self)
-		 

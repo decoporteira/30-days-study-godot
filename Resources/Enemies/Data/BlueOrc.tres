@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3 uid="uid://dynxokcdugfb0"]
+
+[ext_resource type="Script" uid="uid://parn6bwskhi1" path="res://Resources/Enemies/EnemyData.gd" id="1_oe8ss"]
+
+[resource]
+script = ExtResource("1_oe8ss")
+name = "Blue Orc"
+max_hp = 50
+attack = 10
+defense = 10
+speed = 10
+xp_reward = 10
+metadata/_custom_type_script = "uid://parn6bwskhi1"

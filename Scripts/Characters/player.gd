@@ -1,15 +1,17 @@
 extends CharacterBody2D
 
+@onready var attack_sfx: AudioStreamPlayer = $AttackSFX
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var damage_text: RichTextLabel = $DamageText
 signal health_changed(current, max)
+signal level_up(current_level)
 enum PlayerMode {
 	EXPLORATION,
 	BATTLE
 }
 
 var mode = PlayerMode.EXPLORATION
-var health = 100
+var health = 60
 var max_health = 100
 var character_name = "Hero"
 var type = "player"
@@ -22,6 +24,8 @@ var status: Dictionary = {
 	"defese": 5,
 	"speed": 3,
 }
+var xp = 3
+var player_level = 1
 
 func _ready():
 	emit_signal("health_changed", health, max_health)
@@ -66,3 +70,22 @@ func get_input_direction() -> Vector2:
 		return Vector2.UP
 
 	return Vector2.ZERO
+
+func get_xp(xp_reward) -> void:
+	xp += xp_reward
+	if xp >= 5:
+		player_level += 1
+		emit_signal("level_up", player_level)
+		update_status()
+		update_max_health()
+		print('level up no player script')
+
+func update_status() -> void:
+	status.attack += 1
+	status.defese += 1
+	status.speed += 1
+	
+func update_max_health() -> void:
+	max_health += 10
+	health = max_health
+	emit_signal("health_changed", health, max_health)

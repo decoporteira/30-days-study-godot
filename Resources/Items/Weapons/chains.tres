@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponItemResource" load_steps=2 format=3 uid="uid://bdcvlwks0kf2k"]
+
+[ext_resource type="Script" uid="uid://dd4biu6scw0n" path="res://Resources/Items/WeaponResource.gd" id="1_yrjpm"]
+
+[resource]
+script = ExtResource("1_yrjpm")
+attack_power = 5
+weapon_type = "SWORD"
+critical_chance = 4
+name = "Chains"
+description = "Rust chains"
+price = 3
+metadata/_custom_type_script = "uid://dd4biu6scw0n"
