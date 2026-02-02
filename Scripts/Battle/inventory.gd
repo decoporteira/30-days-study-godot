@@ -14,6 +14,9 @@ func use_item(character, item: ItemResource) -> void:
 func remove_item(character, item: ItemResource) -> void:
 	var item_index = find_item_index(character, item.name)
 	character.inventory.remove_at(item_index)
+
+func add_item(character, item: ItemResource) -> void:
+	character.inventory.append(item)
 	
 func get_cured(character, hitpoints):
 	character.heal(hitpoints)

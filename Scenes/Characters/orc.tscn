@@ -29,10 +29,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_klk41"]
-radius = 22.0
+radius = 14.864378
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q6r6c"]
-radius = 6.095731
+radius = 4.869287
 height = 25.333664
 
 [node name="Orc" type="AnimatableBody2D"]
@@ -59,12 +59,12 @@ frame_progress = 0.6017877
 [node name="Area2D" type="Area2D" parent="." groups=["enemy"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-scale = Vector2(-1.7491482, 2.075874)
+scale = Vector2(-1.7491482, 1.915875)
 shape = SubResource("CircleShape2D_klk41")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2.0000002)
-scale = Vector2(3.4912708, 2.36839)
+scale = Vector2(3.4912708, 1.76839)
 shape = SubResource("CapsuleShape2D_q6r6c")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -27,14 +27,14 @@ enum BattleState {
 }
 signal battle_ended
 var current_state : BattleState
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	var battle_ui_scene = preload("res://Scenes/Battle/battle_ui.tscn")
 	battle_ui = battle_ui_scene.instantiate()
 	add_child(battle_ui)
 	battle_log = battle_ui.get_node("MarginContainer/MainVBox/TopArea/BattleLog")
 	player_life_bar = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/PlayerLifeBar")
-											
+	
 	battle_menu = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/BattleMenu")
 	inventory_ui = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/InventoryUI")
 	
@@ -62,6 +62,7 @@ func initialize_battle(): #2
 	enemy_sprite_ui.scale = Vector2(2, 2)
 	enemy_sprite_ui.position = Vector2(100, 100)
 	enemy_sprite_ui.z_index = 5
+	enemy_sprite_ui.flip_h = false
 	enemy_sprite_ui.play(enemy_world_sprite.animation)
 
 	# Remove qualquer processamento desnecessário
@@ -73,6 +74,7 @@ func initialize_battle(): #2
 	player_sprite_ui.scale = Vector2(2, 2)
 	player_sprite_ui.position = Vector2(100, 100)
 	player_sprite_ui.z_index = 5
+	player_sprite_ui.flip_h = false
 	player_sprite_ui.play(player_world_sprite.animation)
 	
 	var player_damage_text = player.damage_text
@@ -229,6 +231,8 @@ func attack(attacker, defender) -> void:
 
 			check_level(defender_xp)
 			await get_tree().create_timer(2.2).timeout
+			get_loot()
+			await get_tree().create_timer(2.2).timeout
 
 		else:
 			battle_log.add_message("You died. Game Over!")
@@ -270,7 +274,6 @@ func calc_damage(char_attack: int, weapon: int, defese: int, crit_chance: int) -
 # =========================
 # CONTROLE DE FLUXO
 # =========================
-
 func check_end_or_next():
 	# Fim de batalha
 	if not player.is_alive():
@@ -310,7 +313,6 @@ func on_player_turn():
 
 func on_inventory():
 	battle_log.add_message("Choose an item:")
-	#battle_menu.hide_menu()
 	inventory_ui.show_inventory()
 
 func on_player_action():
@@ -451,7 +453,11 @@ func enemy_defeat_effect():
 
 func check_level(xp_reward) -> void:
 	player.get_xp(xp_reward)
-	print(str(player.xp))
 	
 func _on_player_level_up(new_level: int) -> void:
 	battle_log.add_message("🎉 Level up! You reached level " + str(new_level))
+
+func get_loot() -> void:
+	print(enemy.loot_inventory[0])
+	inventory.add_item(player, enemy.loot_inventory[0])
+	print(player.inventory)

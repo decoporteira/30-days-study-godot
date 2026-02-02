@@ -26,16 +26,28 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_108wt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3btnm")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_klk41"]
-radius = 22.0
+radius = 16.447365
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q6r6c"]
 radius = 4.339619
 height = 54.999992
 
 [node name="Ghost" type="AnimatableBody2D"]
+sync_to_physics = false
 script = ExtResource("1_e3r4w")
 data = ExtResource("2_x30m3")
 inventory = Array[ExtResource("3_epiv1")]([ExtResource("4_8fh04")])
@@ -52,10 +64,8 @@ theme_override_font_sizes/normal_font_size = 18
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0hol4")
-animation = &"idle"
+animation = &"walking"
 autoplay = "idle"
-frame = 1
-frame_progress = 0.63594234
 
 [node name="Area2D" type="Area2D" parent="." groups=["enemy"]]
 
@@ -65,7 +75,9 @@ shape = SubResource("CircleShape2D_klk41")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2.0000002)
-scale = Vector2(4.6087, 0.80000013)
+scale = Vector2(2.8277447, 0.81297415)
 shape = SubResource("CapsuleShape2D_q6r6c")
+
+[node name="Timer" type="Timer" parent="."]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

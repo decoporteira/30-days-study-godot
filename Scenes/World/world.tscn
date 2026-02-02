@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://deaj1gxinqhp4"]
+[gd_scene load_steps=10 format=3 uid="uid://deaj1gxinqhp4"]
 
 [ext_resource type="Script" uid="uid://di7igg1fp8uya" path="res://Scripts/World/world.gd" id="1_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://bgb1kn8oskst1" path="res://Scenes/World/world_map.tscn" id="1_fj7yv"]
@@ -6,24 +6,28 @@
 [ext_resource type="PackedScene" uid="uid://q1833akamrw3" path="res://Scenes/Characters/player.tscn" id="2_adcqc"]
 [ext_resource type="PackedScene" uid="uid://ynyuyje65plp" path="res://Scenes/Characters/ghost.tscn" id="5_036b0"]
 [ext_resource type="PackedScene" uid="uid://dais5l15y5j2r" path="res://Scenes/Characters/blue_orc.tscn" id="6_dwbse"]
+[ext_resource type="Script" uid="uid://ce4p7n4d4dog1" path="res://Resources/Items/ItemResource.gd" id="6_y0d6x"]
 [ext_resource type="AudioStream" uid="uid://dj85l215lofnd" path="res://Audio/Music/calm-bay-469507.mp3" id="7_7staa"]
+[ext_resource type="Resource" uid="uid://bg5ecyeh07hat" path="res://Resources/Items/Consumables/health_potion.tres" id="7_ugf0j"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_aqk2v")
 
 [node name="Player_World" parent="." instance=ExtResource("2_adcqc")]
+z_index = 2
 position = Vector2(147, 248)
 
 [node name="Orc" parent="." groups=["enemy"] instance=ExtResource("1_tlwt5")]
 z_index = 1
-position = Vector2(506, 176)
+position = Vector2(311, 239)
 
 [node name="BlueOrc" parent="." groups=["enemy"] instance=ExtResource("6_dwbse")]
-position = Vector2(353, 248)
+position = Vector2(514, 84)
 
 [node name="Ghost" parent="." groups=["enemy"] instance=ExtResource("5_036b0")]
 z_index = 1
-position = Vector2(227, 222)
+position = Vector2(154, 133)
+loot_inventory = Array[ExtResource("6_y0d6x")]([ExtResource("7_ugf0j")])
 
 [node name="World_map" parent="." instance=ExtResource("1_fj7yv")]
 position = Vector2(-7, -28)

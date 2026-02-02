@@ -13,6 +13,7 @@ var max_health: int
 var character_name: String
 var type = "enemy"
 @export var inventory: Array[ItemResource] = []
+@export var loot_inventory: Array[ItemResource] = []
 
 var status: Dictionary
 var xp_reward

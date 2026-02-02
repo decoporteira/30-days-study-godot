@@ -60,17 +60,28 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	
 func get_input_direction() -> Vector2:
+	
+	var direction := Vector2.ZERO
+
 	if Input.is_action_pressed("ui_right"):
-		return Vector2.RIGHT
+		direction = Vector2.RIGHT
+		sprite.flip_h = false
 	elif Input.is_action_pressed("ui_left"):
-		return Vector2.LEFT
+		direction = Vector2.LEFT
+		sprite.flip_h = true
 	elif Input.is_action_pressed("ui_down"):
-		return Vector2.DOWN
+		direction = Vector2.DOWN
 	elif Input.is_action_pressed("ui_up"):
-		return Vector2.UP
+		direction = Vector2.UP
 
-	return Vector2.ZERO
+	if direction != Vector2.ZERO:
+		if sprite.animation != "walking":
+			sprite.play("walking")
+	else:
+		if sprite.animation != "idle":
+			sprite.play("idle")
 
+	return direction
 func get_xp(xp_reward) -> void:
 	xp += xp_reward
 	if xp >= 5:
@@ -78,7 +89,6 @@ func get_xp(xp_reward) -> void:
 		emit_signal("level_up", player_level)
 		update_status()
 		update_max_health()
-		print('level up no player script')
 
 func update_status() -> void:
 	status.attack += 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://q1833akamrw3"]
+[gd_scene load_steps=19 format=3 uid="uid://q1833akamrw3"]
 
 [ext_resource type="Script" uid="uid://cxypcw665eyvh" path="res://Scripts/Characters/player.gd" id="1_rk0cu"]
 [ext_resource type="Texture2D" uid="uid://bgy7w2jn6yt57" path="res://Assets/Sprites/Leora-2d.png" id="2_cvnsp"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://dhfqsuoeg48dy" path="res://Resources/Items/Weapons/short_sword.tres" id="3_cqrjx"]
 [ext_resource type="Resource" uid="uid://bg5ecyeh07hat" path="res://Resources/Items/Consumables/health_potion.tres" id="4_cqrjx"]
 [ext_resource type="AudioStream" uid="uid://c3g3dipiwvkko" path="res://Audio/SFX/attack_sfx.mp3" id="6_khnq4"]
+[ext_resource type="Texture2D" uid="uid://cwtgcyfp1gxmx" path="res://Assets/Sprites/Leora.png" id="6_utp2y"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gqcb3"]
 radius = 10.227272
@@ -19,6 +20,34 @@ region = Rect2(0, 0, 64, 64)
 atlas = ExtResource("2_cvnsp")
 region = Rect2(64, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdgf0"]
+atlas = ExtResource("6_utp2y")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xo8ps"]
+atlas = ExtResource("6_utp2y")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcmex"]
+atlas = ExtResource("6_utp2y")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25bbb"]
+atlas = ExtResource("6_utp2y")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cueqf"]
+atlas = ExtResource("6_utp2y")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01b8d"]
+atlas = ExtResource("6_utp2y")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xccyk"]
+atlas = ExtResource("6_utp2y")
+region = Rect2(0, 128, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_k8tyd"]
 animations = [{
 "frames": [{
@@ -30,6 +59,32 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.71,
+"texture": SubResource("AtlasTexture_gdgf0")
+}, {
+"duration": 0.71,
+"texture": SubResource("AtlasTexture_xo8ps")
+}, {
+"duration": 0.71,
+"texture": SubResource("AtlasTexture_fcmex")
+}, {
+"duration": 0.71,
+"texture": SubResource("AtlasTexture_25bbb")
+}, {
+"duration": 0.71,
+"texture": SubResource("AtlasTexture_cueqf")
+}, {
+"duration": 0.71,
+"texture": SubResource("AtlasTexture_01b8d")
+}, {
+"duration": 0.71,
+"texture": SubResource("AtlasTexture_xccyk")
+}],
+"loop": true,
+"name": &"walking",
 "speed": 5.0
 }]
 
@@ -48,15 +103,16 @@ theme_override_colors/default_color = Color(1, 0.19, 0.19, 1)
 theme_override_font_sizes/normal_font_size = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 9)
-scale = Vector2(1.5599992, 2.16)
+position = Vector2(0, 15)
+scale = Vector2(1.5599992, 1.6800001)
 shape = SubResource("CapsuleShape2D_gqcb3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_k8tyd")
-animation = &"idle"
+animation = &"walking"
 autoplay = "idle"
-frame_progress = 0.6364333
+frame = 4
+frame_progress = 0.2533218
 
 [node name="AttackSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_khnq4")
