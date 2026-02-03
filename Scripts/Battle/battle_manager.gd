@@ -232,10 +232,8 @@ func attack(attacker, defender) -> void:
 	if not defender.is_alive():
 		if defender == enemy:
 			change_state(BattleState.VICTORY)
-			return
 		else:
 			change_state(BattleState.DEFEAT)
-			return
 
 		return # deveria cortar o fluxo
 
@@ -368,7 +366,10 @@ func on_defeat():
 	await get_tree().create_timer(1.5).timeout
 
 	change_state(BattleState.END)
+	queue_free()
+	get_tree().change_scene_to_file("res://Scenes/Game_over.tscn")
 	
+
 func on_battle_end():
 	battle_menu.hide_menu()
 	inventory_ui.hide_inventory()

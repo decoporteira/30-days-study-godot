@@ -9,6 +9,9 @@ var enemy
 @onready var orc: AnimatableBody2D = $Orc
 @onready var ghost: AnimatableBody2D = $Ghost
 @onready var blue_orc: AnimatableBody2D = $BlueOrc
+@export var character_menu_scene: PackedScene
+
+var character_menu: Control
 
 enum GameState {
 	EXPLORATION,
@@ -57,8 +60,9 @@ func start_battle():
 	
 func _on_battle_ended():
 	await transition.fade_out(0.4)
-
+	
 	battle_manager.queue_free()
+	
 	music.play()
 	
 	enemy.queue_free()
@@ -78,3 +82,21 @@ func hide_all_enemies():
 func show_all_enemies():
 	for en in get_tree().get_nodes_in_group("enemy"):
 		en.show()
+		
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_character_menu"):
+		toggle_character_menu()
+
+
+func toggle_character_menu():
+	if character_menu and is_instance_valid(character_menu):
+		character_menu.close()
+		character_menu = null
+	else:
+		open_character_menu()
+
+func open_character_menu():
+	character_menu = character_menu_scene.instantiate()
+	character_menu.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(character_menu)
+	character_menu.open()

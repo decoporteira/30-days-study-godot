@@ -11,7 +11,7 @@ enum PlayerMode {
 }
 
 var mode = PlayerMode.EXPLORATION
-var health = 60
+var health = 2
 var max_health = 100
 var character_name = "Hero"
 var type = "player"

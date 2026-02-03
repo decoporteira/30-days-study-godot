@@ -11,6 +11,12 @@ func _ready() -> void:
 	transition = transition_scene.instantiate()
 	add_child(transition)
 
+func start_blink():
+	var tween = create_tween()
+	tween.set_loops() # infinito
+	tween.tween_property(press_start, "modulate:a", 0.0, 0.6)
+	tween.tween_property(press_start, "modulate:a", 2.0, 0.6)
+	
 func start_descend():
 	var start_pos := title.position
 
@@ -22,11 +28,6 @@ func start_descend():
 		4
 	)
 
-func start_blink():
-	var tween = create_tween()
-	tween.set_loops() # infinito
-	tween.tween_property(press_start, "modulate:a", 0.0, 0.6)
-	tween.tween_property(press_start, "modulate:a", 1.0, 0.6)
 	
 func _on_button_button_down() -> void:
 

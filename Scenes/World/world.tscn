@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://deaj1gxinqhp4"]
+[gd_scene load_steps=12 format=3 uid="uid://deaj1gxinqhp4"]
 
 [ext_resource type="Script" uid="uid://di7igg1fp8uya" path="res://Scripts/World/world.gd" id="1_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://bgb1kn8oskst1" path="res://Scenes/World/world_map.tscn" id="1_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://cayjikbjjocye" path="res://Scenes/Characters/orc.tscn" id="1_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://djhhxorr16w15" path="res://character_menu.tscn" id="2_0ph6x"]
 [ext_resource type="PackedScene" uid="uid://q1833akamrw3" path="res://Scenes/Characters/player.tscn" id="2_adcqc"]
 [ext_resource type="Resource" uid="uid://dhfqsuoeg48dy" path="res://Resources/Items/Weapons/short_sword.tres" id="4_ugf0j"]
 [ext_resource type="PackedScene" uid="uid://ynyuyje65plp" path="res://Scenes/Characters/ghost.tscn" id="5_036b0"]
@@ -13,6 +14,7 @@
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_aqk2v")
+character_menu_scene = ExtResource("2_0ph6x")
 
 [node name="Player_World" parent="." instance=ExtResource("2_adcqc")]
 z_index = 2
