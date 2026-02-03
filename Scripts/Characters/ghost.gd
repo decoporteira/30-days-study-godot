@@ -27,6 +27,7 @@ var type := "enemy"
 
 @export var inventory: Array[ItemResource] = []
 @export var loot_inventory: Array[ItemResource] = []
+
 var status: Dictionary
 var xp_reward
 
@@ -146,3 +147,6 @@ func _on_timer_timeout():
 		direction = Vector2.ZERO
 	else:
 		_pick_random_direction()
+
+func drop_loot() -> Array:
+	return loot_inventory

@@ -23,6 +23,8 @@ enum BattleState {
 	PLAYER_ACTION,
 	INVENTORY,
 	ENEMY_TURN,
+	VICTORY,
+	DEFEAT,
 	END
 }
 signal battle_ended
@@ -157,14 +159,16 @@ func run_away():
 func change_state(new_state: BattleState) -> void:
 	if current_state == BattleState.END:
 		return
+
 	current_state = new_state
+
 	match current_state:
 		BattleState.PLAYER_TURN:
 			on_player_turn()
 
 		BattleState.PLAYER_ACTION:
 			on_player_action()
-		
+
 		BattleState.TURN_ORDER:
 			on_turn_order()
 
@@ -173,6 +177,12 @@ func change_state(new_state: BattleState) -> void:
 
 		BattleState.ENEMY_TURN:
 			on_enemy_turn()
+
+		BattleState.VICTORY:
+			on_victory()
+
+		BattleState.DEFEAT:
+			on_defeat()
 
 		BattleState.END:
 			on_battle_end()
@@ -199,6 +209,7 @@ func attack(attacker, defender) -> void:
 		await animation_attack(enemy_sprite_ui, -1)
 		await hit_shake(player_sprite_ui)
 		player.attack_sfx.play()
+		player.take_damage(damage_delt)
 		await get_tree().create_timer(1.5).timeout
 		player_damage_text_ui.hide()
 		player_damage_text_ui.clear()
@@ -209,36 +220,24 @@ func attack(attacker, defender) -> void:
 		await animation_attack(player_sprite_ui, 1)
 		await hit_shake(enemy_sprite_ui)
 		player.attack_sfx.play()
+		enemy.take_damage(damage_delt)
+		
 		await get_tree().create_timer(1.5).timeout
 		enemy_damage_text_ui.hide()
 		enemy_damage_text_ui.clear()
 		
 	
-	defender.take_damage(damage_delt)
+	#defender.take_damage(damage_delt)
 	
 	if not defender.is_alive():
-		if defender.type == "enemy":
-			var defender_xp = defender.xp_reward
-
-			battle_log.add_message(defender.character_name + " was defeated!")
-			await get_tree().create_timer(0.8).timeout
-
-			await enemy_defeat_effect()
-			await get_tree().create_timer(0.6).timeout
-
-			battle_log.add_message("You got " + str(defender_xp) + " XP")
-			await get_tree().create_timer(1.8).timeout
-
-			check_level(defender_xp)
-			await get_tree().create_timer(2.2).timeout
-			get_loot()
-			await get_tree().create_timer(2.2).timeout
-
+		if defender == enemy:
+			change_state(BattleState.VICTORY)
+			return
 		else:
-			battle_log.add_message("You died. Game Over!")
-			await get_tree().create_timer(1.5).timeout
-		
-		change_state(BattleState.END)
+			change_state(BattleState.DEFEAT)
+			return
+
+		return # deveria cortar o fluxo
 
 func get_weapon_damage(attacker):
 	if attacker.inventory.size() == 0:
@@ -275,6 +274,8 @@ func calc_damage(char_attack: int, weapon: int, defese: int, crit_chance: int) -
 # CONTROLE DE FLUXO
 # =========================
 func check_end_or_next():
+	if current_state in [BattleState.VICTORY, BattleState.DEFEAT, BattleState.END]:
+		return
 	# Fim de batalha
 	if not player.is_alive():
 		await get_tree().create_timer(5).timeout
@@ -326,11 +327,9 @@ func on_player_action():
 	check_end_or_next()
 		
 func on_enemy_turn():
-	if battle_is_over():
+	if battle_is_over() or not enemy.is_alive():
 		return
-	if not enemy.is_alive():
-		change_state(BattleState.END)
-		return
+	print('Entrou no turno do inimigo!')
 	battle_log.add_message("Enemy turn!")
 	
 	await get_tree().create_timer(1.5).timeout
@@ -340,6 +339,36 @@ func on_enemy_turn():
 	enemy_used_action = true
 	check_end_or_next()
 
+func on_victory():
+	battle_menu.hide_menu()
+	inventory_ui.hide_inventory()
+
+	battle_log.add_message(enemy.character_name + " was defeated!")
+	await get_tree().create_timer(0.8).timeout
+
+	await enemy_defeat_effect()
+	await get_tree().create_timer(0.6).timeout
+
+	battle_log.add_message("You got " + str(enemy.xp_reward) + " XP")
+	await get_tree().create_timer(1.2).timeout
+
+	check_level(enemy.xp_reward)
+	await get_tree().create_timer(0.8).timeout
+
+	await get_loot()
+	await get_tree().create_timer(1.0).timeout
+
+	change_state(BattleState.END)
+
+func on_defeat():
+	battle_menu.hide_menu()
+	inventory_ui.hide_inventory()
+
+	battle_log.add_message("You died. Game Over!")
+	await get_tree().create_timer(1.5).timeout
+
+	change_state(BattleState.END)
+	
 func on_battle_end():
 	battle_menu.hide_menu()
 	inventory_ui.hide_inventory()
@@ -457,7 +486,8 @@ func check_level(xp_reward) -> void:
 func _on_player_level_up(new_level: int) -> void:
 	battle_log.add_message("🎉 Level up! You reached level " + str(new_level))
 
-func get_loot() -> void:
-	print(enemy.loot_inventory[0])
-	inventory.add_item(player, enemy.loot_inventory[0])
-	print(player.inventory)
+func get_loot():
+	for item in enemy.drop_loot():
+		inventory.add_item(player, item)
+		battle_log.add_message("Você obteve %s" % item.name)
+		await get_tree().create_timer(0.8).timeout
