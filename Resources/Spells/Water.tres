@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=2 format=3 uid="uid://ddlj4r67trpqt"]
+
+[ext_resource type="Script" uid="uid://bhan2eypsimht" path="res://Scripts/Spell/spell.gd" id="1_lw73v"]
+
+[resource]
+script = ExtResource("1_lw73v")
+id = "water"
+name = "Water"
+element = 1
+mp_cost = 6
+power = 28
+description = "Deals water damage to one enemy."
+metadata/_custom_type_script = "uid://bhan2eypsimht"

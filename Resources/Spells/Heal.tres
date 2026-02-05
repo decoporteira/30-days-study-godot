@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=2 format=3 uid="uid://12yx6fvvravd"]
+
+[ext_resource type="Script" uid="uid://bhan2eypsimht" path="res://Scripts/Spell/spell.gd" id="1_li5jl"]
+
+[resource]
+script = ExtResource("1_li5jl")
+id = "heal"
+name = "Heal"
+element = 4
+mp_cost = 5
+power = 25
+description = "Restores HP to one ally."
+metadata/_custom_type_script = "uid://bhan2eypsimht"

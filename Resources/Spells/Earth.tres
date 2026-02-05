@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=2 format=3 uid="uid://dx4xwso2g352o"]
+
+[ext_resource type="Script" uid="uid://bhan2eypsimht" path="res://Scripts/Spell/spell.gd" id="1_8q6cu"]
+
+[resource]
+script = ExtResource("1_8q6cu")
+id = "earth"
+name = "Earth"
+element = 2
+mp_cost = 7
+power = 35
+description = "Heavy earth damage."
+metadata/_custom_type_script = "uid://bhan2eypsimht"

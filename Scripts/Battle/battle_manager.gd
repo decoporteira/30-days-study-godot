@@ -27,10 +27,15 @@ enum BattleState {
 	DEFEAT,
 	END
 }
+var transition
 signal battle_ended
 var current_state : BattleState
 
 func _ready() -> void:
+	var transition_scene = preload("res://Scenes/Battle/transition.tscn")
+	transition = transition_scene.instantiate()
+	add_child(transition)
+	
 	var battle_ui_scene = preload("res://Scenes/Battle/battle_ui.tscn")
 	battle_ui = battle_ui_scene.instantiate()
 	add_child(battle_ui)
@@ -361,14 +366,17 @@ func on_victory():
 func on_defeat():
 	battle_menu.hide_menu()
 	inventory_ui.hide_inventory()
+	await get_tree().create_timer(0.8).timeout
 
 	battle_log.add_message("You died. Game Over!")
 	await get_tree().create_timer(1.5).timeout
-
-	change_state(BattleState.END)
-	queue_free()
-	get_tree().change_scene_to_file("res://Scenes/Game_over.tscn")
 	
+	await transition.fade_in(0.4)
+
+	var game_over_scene = preload("res://Scenes/Game_over.tscn")
+	var game_over_node = game_over_scene.instantiate()
+	get_tree().root.add_child(game_over_node)
+	queue_free()
 
 func on_battle_end():
 	battle_menu.hide_menu()
@@ -490,5 +498,5 @@ func _on_player_level_up(new_level: int) -> void:
 func get_loot():
 	for item in enemy.drop_loot():
 		inventory.add_item(player, item)
-		battle_log.add_message("Você obteve %s" % item.name)
+		battle_log.add_message("You got %s" % item.name)
 		await get_tree().create_timer(0.8).timeout

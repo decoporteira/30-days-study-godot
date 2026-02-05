@@ -16,7 +16,7 @@
 script = ExtResource("1_aqk2v")
 character_menu_scene = ExtResource("2_0ph6x")
 
-[node name="Player_World" parent="." instance=ExtResource("2_adcqc")]
+[node name="Player" parent="." instance=ExtResource("2_adcqc")]
 z_index = 2
 position = Vector2(147, 248)
 inventory = Array[ExtResource("6_y0d6x")]([ExtResource("4_ugf0j")])

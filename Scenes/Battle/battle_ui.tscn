@@ -117,6 +117,7 @@ offset_right = 593.0
 offset_bottom = 132.5
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 z_index = -5
 z_as_relative = false
 layout_mode = 0
@@ -130,6 +131,7 @@ texture = ExtResource("7_bxlc4")
 stretch_mode = 2
 
 [node name="TextureRect2" type="TextureRect" parent="."]
+visible = false
 z_index = -4
 z_as_relative = false
 layout_mode = 0

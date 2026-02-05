@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=2 format=3 uid="uid://ctcfixqamyc2h"]
+
+[ext_resource type="Script" uid="uid://bhan2eypsimht" path="res://Scripts/Spell/spell.gd" id="1_sc0jx"]
+
+[resource]
+script = ExtResource("1_sc0jx")
+id = "wind"
+name = "Wing"
+element = 3
+mp_cost = 4
+power = 22
+description = "Fast wind attack."
+metadata/_custom_type_script = "uid://bhan2eypsimht"

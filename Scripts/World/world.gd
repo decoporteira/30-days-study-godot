@@ -5,7 +5,7 @@ extends Node2D
 var battle_manager: Node
 var transition
 var enemy
-@onready var player: CharacterBody2D = $Player_World
+@onready var player: CharacterBody2D = $Player
 @onready var orc: AnimatableBody2D = $Orc
 @onready var ghost: AnimatableBody2D = $Ghost
 @onready var blue_orc: AnimatableBody2D = $BlueOrc
@@ -86,8 +86,7 @@ func show_all_enemies():
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_character_menu"):
 		toggle_character_menu()
-
-
+		
 func toggle_character_menu():
 	if character_menu and is_instance_valid(character_menu):
 		character_menu.close()
@@ -98,5 +97,6 @@ func toggle_character_menu():
 func open_character_menu():
 	character_menu = character_menu_scene.instantiate()
 	character_menu.process_mode = Node.PROCESS_MODE_ALWAYS
+	character_menu.player = player
 	add_child(character_menu)
 	character_menu.open()
