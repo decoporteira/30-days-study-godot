@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjhxwv6tl8u41"]
+[gd_scene load_steps=8 format=3 uid="uid://bjhxwv6tl8u41"]
 
 [ext_resource type="PackedScene" uid="uid://dlkgdcsnk2iey" path="res://Scenes/Battle/player_life_bar.tscn" id="2_nm010"]
 [ext_resource type="Texture2D" uid="uid://db5ehyfjjogxh" path="res://Assets/Sprites/NinePatch.png" id="3_2jogr"]
 [ext_resource type="PackedScene" uid="uid://neyyq1acgvjh" path="res://Scenes/Battle/battle_log.tscn" id="3_scq05"]
+[ext_resource type="PackedScene" uid="uid://nn8rdtjiws7m" path="res://Scenes/Battle/spell_ui.tscn" id="4_bxlc4"]
 [ext_resource type="PackedScene" uid="uid://bhlw8cr8vn738" path="res://Scenes/Battle/battle_menu.tscn" id="4_d07u5"]
 [ext_resource type="PackedScene" uid="uid://d4dthiw21376h" path="res://Scenes/Battle/inventory_ui.tscn" id="5_6lbqc"]
 [ext_resource type="Texture2D" uid="uid://babu4kfk7y3w4" path="res://Assets/Sprites/1a9201d9fe16a7c3e0f19f2858525733.jpg" id="7_bxlc4"]
@@ -101,11 +102,25 @@ offset_bottom = 129.5
 size_flags_horizontal = 3
 localize_numeral_system = false
 
-[node name="InventoryUI" parent="MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect" instance=ExtResource("5_6lbqc")]
+[node name="SpellUI" parent="MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect" instance=ExtResource("4_bxlc4")]
+z_index = 6
 layout_mode = 0
-offset_left = 152.0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 170.0
 offset_top = 10.5
-offset_right = 382.0
+offset_right = 170.0
+offset_bottom = 10.5
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="InventoryUI" parent="MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect" instance=ExtResource("5_6lbqc")]
+custom_minimum_size = Vector2(230, 90)
+layout_mode = 0
+offset_left = 160.0
+offset_top = 10.5
+offset_right = 390.0
 offset_bottom = 130.5
 size_flags_horizontal = 3
 
@@ -117,7 +132,6 @@ offset_right = 593.0
 offset_bottom = 132.5
 
 [node name="TextureRect" type="TextureRect" parent="."]
-visible = false
 z_index = -5
 z_as_relative = false
 layout_mode = 0
@@ -131,7 +145,6 @@ texture = ExtResource("7_bxlc4")
 stretch_mode = 2
 
 [node name="TextureRect2" type="TextureRect" parent="."]
-visible = false
 z_index = -4
 z_as_relative = false
 layout_mode = 0

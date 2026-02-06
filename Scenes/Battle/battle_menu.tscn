@@ -29,6 +29,12 @@ layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_mybmv")
 text = "Attack"
 
+[node name="Button (Spells)" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_mybmv")
+text = "Spells"
+
 [node name="Button (Item)" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
@@ -42,5 +48,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_6k22c")
 text = "Run"
 
 [connection signal="pressed" from="VBoxContainer/Button (Attack)" to="." method="_on_button_attack_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button (Spells)" to="." method="_on_button_spells_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button (Item)" to="." method="_on_button_item_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button (Run)" to="." method="_on_button_run_pressed"]

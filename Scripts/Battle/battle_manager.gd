@@ -8,6 +8,7 @@ var player_life_bar
 var current_turn
 var battle_log
 var inventory_ui
+var spell_book_ui
 var rng = RandomNumberGenerator.new()
 var enemy_sprite_ui: AnimatedSprite2D
 var player_sprite_ui: AnimatedSprite2D
@@ -44,7 +45,7 @@ func _ready() -> void:
 	
 	battle_menu = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/BattleMenu")
 	inventory_ui = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/InventoryUI")
-	
+	spell_book_ui = battle_ui.get_node("MarginContainer/MainVBox/BottomArea/Margin/NinePatchRect/SpellUI")
 	var inventory_scene = preload("res://Scenes/Battle/inventory.tscn")
 	inventory = inventory_scene.instantiate()
 	add_child(inventory)
@@ -111,7 +112,9 @@ func initialize_battle(): #2
 	
 	inventory_ui.player = player
 	inventory_ui.update_inventory()
-	#C
+	
+	spell_book_ui.player = player
+	spell_book_ui.update_spells()
 	player_life_bar.player = player
 	
 	player.health_changed.connect(
@@ -139,6 +142,13 @@ func player_attack():
 	change_state(BattleState.PLAYER_ACTION)
 	attack(player, enemy)
 	
+func player_cast_spell():
+	if current_state != BattleState.PLAYER_TURN:
+		return
+
+	change_state(BattleState.PLAYER_ACTION)
+	spell(player, enemy, spell)
+	
 func _on_item_selected(item):
 	battle_log.add_message("Hero used " + item.name)
 	change_state(BattleState.PLAYER_ACTION)
@@ -148,6 +158,14 @@ func open_inventory():
 		return
 	battle_log.add_message("Choose an item:")
 	inventory_ui.show_inventory()
+	
+func open_spell_book():
+	
+	if current_state != BattleState.PLAYER_TURN:
+		return
+	print('Entrou em open_spell_book em Battle Manager')
+	battle_log.add_message("Choose an spell:")
+	spell_book_ui.show_spells()
 	
 func run_away():
 	change_state(BattleState.PLAYER_ACTION)
@@ -194,6 +212,7 @@ func change_state(new_state: BattleState) -> void:
 # =========================
 # COMBATE
 # =========================
+
 func attack(attacker, defender) -> void:
 	if battle_is_over():
 		return
@@ -242,6 +261,7 @@ func attack(attacker, defender) -> void:
 
 		return # deveria cortar o fluxo
 
+
 func get_weapon_damage(attacker):
 	if attacker.inventory.size() == 0:
 		return 1
@@ -272,7 +292,9 @@ func calc_damage(char_attack: int, weapon: int, defese: int, crit_chance: int) -
 		base_damage_crit *= 1.5
 
 	return max(1, int(base_damage_crit))
-	
+
+func spell(attacker, defender, spell):
+	print('usou spell')
 # =========================
 # CONTROLE DE FLUXO
 # =========================

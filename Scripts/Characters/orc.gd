@@ -54,3 +54,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		print("Bateu no inimigo")
 		emit_signal("battle_started", self)
+		
+func drop_loot() -> Array:
+	return loot_inventory
