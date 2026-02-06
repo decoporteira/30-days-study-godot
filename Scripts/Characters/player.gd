@@ -15,10 +15,10 @@ var health = 2
 var max_health = 100
 var mana = 20
 var max_mana = 40
-var character_name = "Hero"
+var character_name = "Leora"
 var type = "player"
 @export var inventory: Array[ItemResource] = []
-#@export var spell: Array[Spell] = []
+@export var spell: Array[Spell] = []
 const SPEED = 200.0
 var input_vector = Vector2.ZERO
 var status: Dictionary = {
@@ -30,11 +30,6 @@ var xp = 3
 var player_level = 1
 
 func _ready():
-	print("Scene:", get_scene_file_path())
-	print("Inventory size:", inventory.size())
-
-	for item in inventory:
-		print("Item:", item, "name:", item.name)
 	emit_signal("health_changed", health, max_health)
 	
 func take_damage(amount):

@@ -6,14 +6,11 @@
 
 [node name="CharacterMenu" type="Control"]
 z_index = 7
+layout_direction = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 320.0
-offset_top = 180.0
-offset_right = 320.0
-offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6tlbt")
@@ -41,13 +38,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2.0
-offset_top = -2.0
-offset_right = 512.0
-offset_bottom = 336.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 2
+theme_override_constants/separation = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer"]
 layout_mode = 2
@@ -58,6 +52,11 @@ theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer"]
 layout_mode = 2
+
+[node name="bt_status" type="Button" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Status"
 
 [node name="bt_item" type="Button" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
@@ -74,11 +73,6 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Equip"
 
-[node name="bt_status" type="Button" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "Status"
-
 [node name="bt_save" type="Button" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -89,27 +83,27 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Exit"
 
-[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer"]
+[node name="StatusContent" type="MarginContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer"]
 custom_minimum_size = Vector2(400, 350)
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer2"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/StatusContent"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer2/VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2"]
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer2/VBoxContainer2/HBoxContainer"]
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(140, 140)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer2/VBoxContainer2/HBoxContainer/ColorRect"]
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/ColorRect"]
 position = Vector2(-15, 69)
 scale = Vector2(4.3125, 4.3125)
 texture = ExtResource("2_8miaq")
@@ -117,48 +111,77 @@ offset = Vector2(20, 0)
 region_enabled = true
 region_rect = Rect2(23.813, 1.027, 29.45251, 28.791824)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer2/VBoxContainer2/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(130, 130)
 layout_mode = 2
 
-[node name="Name" type="RichTextLabel" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer2/VBoxContainer2/HBoxContainer/VBoxContainer"]
+[node name="Name" type="RichTextLabel" parent="HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(200, 30)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 20
 scroll_active = false
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer2/VBoxContainer2/HBoxContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer"]
 clip_contents = true
 custom_minimum_size = Vector2(130, 200)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 11
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer2/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Level" type="RichTextLabel" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer2/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Level" type="RichTextLabel" parent="HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(130, 25)
 layout_mode = 2
 fit_content = true
 scroll_active = false
 
-[node name="HP" type="RichTextLabel" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer2/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="HP" type="RichTextLabel" parent="HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(130, 25)
 layout_mode = 2
 fit_content = true
 scroll_active = false
 
-[node name="MP" type="RichTextLabel" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer2/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="MP" type="RichTextLabel" parent="HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(130, 25)
 layout_mode = 2
 fit_content = true
 scroll_active = false
 
+[node name="InventoryContent" type="MarginContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(400, 350)
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/InventoryContent"]
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/InventoryContent/ScrollContainer"]
+layout_mode = 2
+
+[node name="SpellContent" type="MarginContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(400, 350)
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/SpellContent"]
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/SpellContent/ScrollContainer"]
+layout_mode = 2
+
+[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_status" to="." method="_on_bt_status_pressed"]
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_item" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_spell" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_item" to="." method="_on_bt_item_pressed"]
+[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_spell" to="." method="_on_bt_spell_pressed"]
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_equip" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_status" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_save" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_exit" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_exit" to="." method="_on_bt_exit_pressed"]

@@ -10,6 +10,7 @@ var enemy
 @onready var ghost: AnimatableBody2D = $Ghost
 @onready var blue_orc: AnimatableBody2D = $BlueOrc
 @export var character_menu_scene: PackedScene
+@onready var ui_layer: CanvasLayer = $UI
 
 var character_menu: Control
 
@@ -98,5 +99,5 @@ func open_character_menu():
 	character_menu = character_menu_scene.instantiate()
 	character_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 	character_menu.player = player
-	add_child(character_menu)
+	ui_layer.add_child(character_menu)
 	character_menu.open()
