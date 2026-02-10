@@ -12,3 +12,5 @@ enum ItemType {
 	ARMOR,
 	CONSUMABLE
 }
+
+@export var item_type: ItemType

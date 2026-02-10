@@ -19,6 +19,8 @@ var character_name = "Leora"
 var type = "player"
 @export var inventory: Array[ItemResource] = []
 @export var spells: Array[Spell] = []
+@onready var equipment_holder: EquipmentHolder = $EquipmentHolder
+
 const SPEED = 200.0
 var input_vector = Vector2.ZERO
 var status: Dictionary = {
@@ -30,8 +32,9 @@ var xp = 3
 var player_level = 1
 
 func _ready():
-	emit_signal("health_changed", health, max_health)
 	
+	emit_signal("health_changed", health, max_health)
+	$EquipmentHolder.equipment_changed.connect(_on_equipment_changed)
 func take_damage(amount):
 	health -= amount
 	if health < 0:
@@ -101,3 +104,7 @@ func update_max_health() -> void:
 	max_health += 10
 	health = max_health
 	emit_signal("health_changed", health, max_health)
+
+func _on_equipment_changed():
+	#stats.recalculate()
+	print('Equipou')

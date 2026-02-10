@@ -2,4 +2,11 @@ extends ItemResource
 class_name ArmorItemResource
 
 @export var defense: int
-@export var slot: String # head, body, etc
+@export var slot: ArmorSlot # head, body, etc
+
+enum ArmorSlot {
+	HEAD,
+	BODY,
+	LEGS,
+	ACCESSORY
+}

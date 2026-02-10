@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_bpnpr")
 attack_power = 10
-weapon_type = "SWORD"
 critical_chance = 20
+id = "1"
 name = "Short Sword"
 description = "\"A simple but reliable blade.\""
 price = 50

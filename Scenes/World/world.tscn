@@ -5,11 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://cayjikbjjocye" path="res://Scenes/Characters/orc.tscn" id="1_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://djhhxorr16w15" path="res://character_menu.tscn" id="2_0ph6x"]
 [ext_resource type="PackedScene" uid="uid://q1833akamrw3" path="res://Scenes/Characters/player.tscn" id="2_adcqc"]
-[ext_resource type="Resource" uid="uid://dhfqsuoeg48dy" path="res://Resources/Items/Weapons/short_sword.tres" id="4_ugf0j"]
 [ext_resource type="PackedScene" uid="uid://ynyuyje65plp" path="res://Scenes/Characters/ghost.tscn" id="5_036b0"]
 [ext_resource type="PackedScene" uid="uid://dais5l15y5j2r" path="res://Scenes/Characters/blue_orc.tscn" id="6_dwbse"]
-[ext_resource type="Resource" uid="uid://c6d2xln1ncfos" path="res://Resources/Items/Weapons/knife.tres" id="6_pvt60"]
+[ext_resource type="Resource" uid="uid://dhfqsuoeg48dy" path="res://Resources/Items/Weapons/short_sword.tres" id="6_hiquf"]
 [ext_resource type="Script" uid="uid://ce4p7n4d4dog1" path="res://Resources/Items/ItemResource.gd" id="6_y0d6x"]
+[ext_resource type="Resource" uid="uid://c6d2xln1ncfos" path="res://Resources/Items/Weapons/knife.tres" id="7_7c7np"]
 [ext_resource type="AudioStream" uid="uid://dj85l215lofnd" path="res://Audio/Music/calm-bay-469507.mp3" id="7_7staa"]
 [ext_resource type="Resource" uid="uid://bg5ecyeh07hat" path="res://Resources/Items/Consumables/health_potion.tres" id="7_ugf0j"]
 [ext_resource type="Script" uid="uid://bhan2eypsimht" path="res://Scripts/Spell/spells.gd" id="8_dbvd7"]
@@ -26,7 +26,7 @@ character_menu_scene = ExtResource("2_0ph6x")
 [node name="Player" parent="." instance=ExtResource("2_adcqc")]
 z_index = 2
 position = Vector2(147, 248)
-inventory = Array[ExtResource("6_y0d6x")]([ExtResource("4_ugf0j"), ExtResource("6_pvt60"), ExtResource("7_ugf0j")])
+inventory = Array[ExtResource("6_y0d6x")]([ExtResource("7_ugf0j"), ExtResource("6_hiquf"), ExtResource("7_7c7np")])
 spells = Array[ExtResource("8_dbvd7")]([ExtResource("13_owiee"), ExtResource("12_6paci"), ExtResource("11_7ubof"), ExtResource("10_xatfh"), ExtResource("9_7c7np")])
 
 [node name="Orc" parent="." groups=["enemy"] instance=ExtResource("1_tlwt5")]

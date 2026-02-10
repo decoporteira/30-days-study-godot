@@ -3,6 +3,7 @@ extends Control
 var player
 @onready var grid_inventory: GridContainer = $HBoxContainer/NinePatchRect/HBoxContainer/InventoryContent/ScrollContainer/Grid
 @onready var grid_spell: GridContainer = $HBoxContainer/NinePatchRect/HBoxContainer/SpellContent/ScrollContainer/Grid
+@onready var grid_equipment: GridContainer = $HBoxContainer/NinePatchRect/HBoxContainer/EquipmentContent/ScrollContainer/Grid
 	
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -30,6 +31,7 @@ func update_ui():
 func _on_bt_item_pressed() -> void:
 	$HBoxContainer/NinePatchRect/HBoxContainer/StatusContent.hide()
 	$HBoxContainer/NinePatchRect/HBoxContainer/SpellContent.hide()
+	$HBoxContainer/NinePatchRect/HBoxContainer/EquipmentContent.hide()
 	$HBoxContainer/NinePatchRect/HBoxContainer/InventoryContent.show()
 	for child in grid_inventory.get_children():
 		child.queue_free()
@@ -43,18 +45,38 @@ func _on_bt_item_pressed() -> void:
 func _on_bt_status_pressed() -> void:
 	$HBoxContainer/NinePatchRect/HBoxContainer/InventoryContent.hide()
 	$HBoxContainer/NinePatchRect/HBoxContainer/SpellContent.hide()
+	$HBoxContainer/NinePatchRect/HBoxContainer/EquipmentContent.hide()
 	$HBoxContainer/NinePatchRect/HBoxContainer/StatusContent.show()
 
 func _on_bt_spell_pressed() -> void:
 	$HBoxContainer/NinePatchRect/HBoxContainer/InventoryContent.hide()
 	$HBoxContainer/NinePatchRect/HBoxContainer/StatusContent.hide()
+	$HBoxContainer/NinePatchRect/HBoxContainer/EquipmentContent.hide()
 	$HBoxContainer/NinePatchRect/HBoxContainer/SpellContent.show()
-	for spell in player.spell:
-		print(str(spell.name))
+	
 	for child in grid_spell.get_children():
 		child.queue_free()
 	var spell_slot_scene = preload("res://Scenes/UI/SpellSlot.tscn")
-	for spell in player.spell:
+	for spell in player.spells:
 		var slot = spell_slot_scene.instantiate()
 		grid_spell.add_child(slot)
 		slot.setup(spell)
+
+
+func _on_bt_equip_pressed() -> void:
+	$HBoxContainer/NinePatchRect/HBoxContainer/InventoryContent.hide()
+	$HBoxContainer/NinePatchRect/HBoxContainer/StatusContent.hide()
+	$HBoxContainer/NinePatchRect/HBoxContainer/SpellContent.hide()
+	$HBoxContainer/NinePatchRect/HBoxContainer/EquipmentContent.show()
+	for child in grid_equipment.get_children():
+		child.queue_free()
+	var equipment_slot_scene = preload("res://Scenes/UI/EquipmentSlot.tscn")
+	for item in player.inventory:
+		if item is WeaponItemResource:
+			print('entrou')
+			var slot = equipment_slot_scene.instantiate()
+			grid_equipment.add_child(slot)
+			slot.setup(item)
+		else:
+			print('nada')
+			

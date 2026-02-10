@@ -178,10 +178,24 @@ layout_mode = 2
 [node name="Grid" type="GridContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/SpellContent/ScrollContainer"]
 layout_mode = 2
 
+[node name="EquipmentContent" type="MarginContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(400, 350)
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/EquipmentContent"]
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/EquipmentContent/ScrollContainer"]
+layout_mode = 2
+
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_status" to="." method="_on_bt_status_pressed"]
-[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_item" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_item" to="." method="_on_bt_item_pressed"]
+[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_item" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_spell" to="." method="_on_bt_spell_pressed"]
-[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_equip" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_equip" to="." method="_on_bt_equip_pressed"]
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_save" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_exit" to="." method="_on_bt_exit_pressed"]
