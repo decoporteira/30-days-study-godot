@@ -25,8 +25,8 @@ func _on_bt_exit_pressed() -> void:
 func update_ui():
 	$HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer/Name.text = player.character_name
 	$HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/Level.text = "Level: " + str(player.player_level)
-	$HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HP.text = "HP: " + str(player.health) + " / " + str(player.max_health)
-	$HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/MP.text = "MP: " + str(player.mana) + " / " + str(player.max_mana)
+	$HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/HP.text = "HP: " + str(player.stats.health) + " / " + str(player.stats.max_health)
+	$HBoxContainer/NinePatchRect/HBoxContainer/StatusContent/VBoxContainer2/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/MP.text = "MP: " + str(player.stats.mp) + " / " + str(player.stats.max_mp)
 
 func _on_bt_item_pressed() -> void:
 	$HBoxContainer/NinePatchRect/HBoxContainer/StatusContent.hide()
@@ -73,10 +73,8 @@ func _on_bt_equip_pressed() -> void:
 	var equipment_slot_scene = preload("res://Scenes/UI/EquipmentSlot.tscn")
 	for item in player.inventory:
 		if item is WeaponItemResource:
-			print('entrou')
+			
 			var slot = equipment_slot_scene.instantiate()
 			grid_equipment.add_child(slot)
 			slot.setup(item)
-		else:
-			print('nada')
 			

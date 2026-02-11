@@ -222,7 +222,7 @@ func attack(attacker, defender) -> void:
 	var weapon_name = get_weapon_name(attacker)
 	var damage = get_weapon_damage(attacker)
 	var critical_chance = get_weapon_crit_chance(attacker)
-	var damage_delt = calc_damage(attacker.status.attack, damage, defender.status.defese, critical_chance)
+	var damage_delt = calc_damage(attacker.stats.attack, damage, defender.stats.defense, critical_chance)
 	battle_log.add_message(
 		attacker.character_name + " attacked with " + weapon_name +
 		" and dealt " + str(damage_delt) + " damage."
@@ -284,8 +284,8 @@ func get_weapon_crit_chance(attacker):
 		if item is WeaponItemResource:
 			return item.critical_chance
 			
-func calc_damage(char_attack: int, weapon: int, defese: int, crit_chance: int) -> int:
-	var base_damage = max(1, int(char_attack*weapon)/max(defese,1)) 
+func calc_damage(char_attack: int, weapon: int, defense: int, crit_chance: int) -> int:
+	var base_damage = max(1, int(char_attack*weapon)/max(defense,1)) 
 	var base_damage_crit = base_damage * randf_range(0.9, 1.1) #apenas para dar aleatoridade para o ataque 
 	
 	if crit_chance > randf_range(1, 100):
@@ -410,9 +410,9 @@ func on_turn_order():
 	define_turn_order()
 
 func define_turn_order():
-	if player.status.speed > enemy.status.speed:
+	if player.stats.speed > enemy.stats.speed:
 		first_turn = player
-	elif enemy.status.speed > player.status.speed:
+	elif enemy.stats.speed > player.stats.speed:
 		first_turn = enemy
 	else:
 		first_turn = player

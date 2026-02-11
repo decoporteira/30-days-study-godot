@@ -27,7 +27,7 @@ var type := "enemy"
 
 @export var inventory: Array[ItemResource] = []
 @export var loot_inventory: Array[ItemResource] = []
-
+@export var stats: StatsResource
 var status: Dictionary
 var xp_reward
 
