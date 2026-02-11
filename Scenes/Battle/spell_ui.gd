@@ -46,11 +46,12 @@ func hide_spells():
 	
 func _on_spell_pressed(spell):
 	spell_selected.emit(spell)
-	
+	hide_spells()
 	#chamar a funcao usar o item
 	if has_node("/root/World/BattleManager"):
 		var battle_manager = get_node("/root/World/BattleManager")
-		battle_manager.spells.use_spell(player, spell)
-		update_spells()
+		battle_manager.player_cast_spell(spell)
+		#update_spells()
 	else:
 		print("Nao achou a funcao")
+		

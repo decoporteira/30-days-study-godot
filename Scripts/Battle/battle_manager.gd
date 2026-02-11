@@ -142,12 +142,12 @@ func player_attack():
 	change_state(BattleState.PLAYER_ACTION)
 	attack(player, enemy)
 	
-func player_cast_spell():
+func player_cast_spell(spell):
 	if current_state != BattleState.PLAYER_TURN:
 		return
-
+	
 	change_state(BattleState.PLAYER_ACTION)
-	spell(player, enemy, spell)
+	spell_cast(player, enemy, spell)
 	
 func _on_item_selected(item):
 	battle_log.add_message("Hero used " + item.name)
@@ -160,10 +160,8 @@ func open_inventory():
 	inventory_ui.show_inventory()
 	
 func open_spell_book():
-	
 	if current_state != BattleState.PLAYER_TURN:
 		return
-	print('Entrou em open_spell_book em Battle Manager')
 	battle_log.add_message("Choose an spell:")
 	spell_book_ui.show_spells()
 	
@@ -293,8 +291,66 @@ func calc_damage(char_attack: int, weapon: int, defense: int, crit_chance: int) 
 
 	return max(1, int(base_damage_crit))
 
-func spell(attacker, defender, spell):
-	print('usou spell')
+func spell_cast(attacker, defender, spell):
+	if battle_is_over():
+		return
+	if not attacker.is_alive():
+		print(attacker.name, " está morto, turno ignorado")
+		return
+	if player.stats.mp < spell.mp_cost:
+		battle_log.add_message(
+		attacker.character_name + " doenst have mana points enough to cast the spell."
+		)
+		return
+	else:
+		print(player.stats.mp)
+		player.stats.mp = player.stats.mp - spell.mp_cost
+		print(player.stats.mp)
+		
+	if spell.element == Spell.Element.HEAL:
+		player.heal(spell.power)
+		battle_log.add_message(
+		attacker.character_name + " cast " + spell.name +
+			" and recovered " + str(spell.power) + " health points."
+		)
+		return
+		
+	var damage_delt = calc_damage(attacker.stats.inteligence, spell.power, defender.stats.defense, 1)
+	battle_log.add_message(
+		attacker.character_name + " attacked with " + spell.name +
+		" and dealt " + str(damage_delt) + " damage."
+	)
+	if attacker == enemy:
+		player_damage_text_ui.add_text(str(damage_delt))
+		player_damage_text_ui.show()
+		await animation_attack(enemy_sprite_ui, -1)
+		await hit_shake(player_sprite_ui)
+		player.attack_sfx.play()
+		player.take_damage(damage_delt)
+		await get_tree().create_timer(1.5).timeout
+		player_damage_text_ui.hide()
+		player_damage_text_ui.clear()
+		
+	else:
+		enemy_damage_text_ui.add_text(str(damage_delt))
+		enemy_damage_text_ui.show()
+		await animation_attack(player_sprite_ui, 1)
+		await hit_shake(enemy_sprite_ui)
+		player.attack_sfx.play()
+		enemy.take_damage(damage_delt)
+		
+		await get_tree().create_timer(1.5).timeout
+		enemy_damage_text_ui.hide()
+		enemy_damage_text_ui.clear()
+	
+	if not defender.is_alive():
+		if defender == enemy:
+			change_state(BattleState.VICTORY)
+		else:
+			change_state(BattleState.DEFEAT)
+
+		return
+	
 # =========================
 # CONTROLE DE FLUXO
 # =========================

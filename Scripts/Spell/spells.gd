@@ -8,6 +8,7 @@ class_name Spell
 @export var power: int = 0
 @export var description: String
 @export var icon: Texture2D
+@export var spell_context: SpellContext
 
 enum Element {
 	FIRE,
@@ -16,3 +17,17 @@ enum Element {
 	WIND,
 	HEAL
 }
+
+enum SpellContext {
+	BATTLE,
+	MENU
+}
+
+func can_be_used(context: SpellContext) -> bool:
+	match context:
+		SpellContext.BATTLE:
+			return true
+		SpellContext.MENU:
+			return element == Element.HEAL
+	
+	return false
