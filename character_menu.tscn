@@ -81,6 +81,11 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Save"
 
+[node name="bt_load" type="Button" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Load"
+
 [node name="bt_exit" type="Button" parent="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -217,5 +222,6 @@ vertical_alignment = 1
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_item" to="." method="_on_bt_item_pressed"]
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_spell" to="." method="_on_bt_spell_pressed"]
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_equip" to="." method="_on_bt_equip_pressed"]
-[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_save" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_save" to="." method="_on_bt_save_pressed"]
+[connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_load" to="." method="_on_bt_load_pressed"]
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_exit" to="." method="_on_bt_exit_pressed"]

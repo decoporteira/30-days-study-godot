@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_yrjpm")
 attack_power = 5
-weapon_type = "SWORD"
 critical_chance = 4
+id = "chains"
 name = "Chains"
 description = "Rust chains"
 price = 3

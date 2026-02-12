@@ -6,6 +6,7 @@
 script = ExtResource("1_l2ele")
 heal_amount = 50
 usable_in_world = true
+id = "health_potion"
 name = "Health Potion"
 price = 20
 metadata/_custom_type_script = "uid://dq5cdd3ny2e0u"

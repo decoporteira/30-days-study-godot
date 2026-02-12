@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_h0rbw")
 attack_power = 7
-weapon_type = "SWORD"
 critical_chance = 3
+id = "knife"
 name = "Knife"
 description = "\"A small knife\""
 price = 3

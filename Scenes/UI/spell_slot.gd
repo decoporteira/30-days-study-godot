@@ -15,6 +15,5 @@ func setup(spell: Spell) -> void:
 	$TextureButton.texture_pressed = spell.icon
 	
 func _on_texture_button_pressed() -> void:
-	print("CLIQUE FUNCIONOU")
 	emit_signal("spell_selected", spell_data)
 	

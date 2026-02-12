@@ -39,6 +39,7 @@ func _on_bt_item_pressed() -> void:
 	var item_slot_scene = preload("res://Scenes/UI/ItemSlot.tscn")
 	for item in player.inventory:
 		var slot = item_slot_scene.instantiate()
+		slot.item_selected.connect(_on_item_selected)
 		grid_inventory.add_child(slot)
 		slot.setup(item)
 
@@ -96,3 +97,38 @@ func _on_spell_selected(spell: Spell) -> void:
 		label.show()
 		await get_tree().create_timer(2).timeout
 		label.hide()
+func _on_item_selected(item) -> void:
+	print("usou um item " + item.name)
+	use_item_in_menu(item)
+	
+func use_item_in_menu(item: ItemResource) -> void:
+	if item is ConsumableItemResource:
+		player.heal(item.heal_amount)
+		player.inventory.erase(item)
+		update_ui()
+		_on_bt_item_pressed()
+		label.text = "The character regained " + str(item.heal_amount) + " health points." 
+		label.show()
+		await get_tree().create_timer(2).timeout
+		label.hide()
+	elif item is WeaponItemResource:
+		label.text = "You cant use it here." 
+		label.show()
+		await get_tree().create_timer(2).timeout
+		label.hide()
+	
+func _on_bt_save_pressed() -> void:
+	SaveManager.save_game(player)
+	label.text = "The game was successfully saved." 
+	label.show()
+	await get_tree().create_timer(2).timeout
+	label.hide()
+	
+func _on_bt_load_pressed() -> void:
+	SaveManager.load_game(player)
+	update_ui()
+	label.text = "The game was successfully loaded." 
+	label.show()
+	await get_tree().create_timer(2).timeout
+	label.hide()
+	close()
