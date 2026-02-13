@@ -97,6 +97,7 @@ layout_mode = 2
 localize_numeral_system = false
 
 [node name="StatusContent" type="MarginContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(490, 280)
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -197,7 +198,6 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="EquipmentContent" type="MarginContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(400, 280)
 layout_mode = 2
 theme_override_constants/margin_left = 10

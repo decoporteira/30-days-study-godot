@@ -97,6 +97,7 @@ func _on_spell_selected(spell: Spell) -> void:
 		label.show()
 		await get_tree().create_timer(2).timeout
 		label.hide()
+		
 func _on_item_selected(item) -> void:
 	print("usou um item " + item.name)
 	use_item_in_menu(item)

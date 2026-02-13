@@ -27,6 +27,7 @@ var player_level = 1
 func _ready():
 	emit_signal("health_changed", stats.health, stats.max_health)
 	$EquipmentHolder.equipment_changed.connect(_on_equipment_changed)
+	
 
 func take_damage(amount):
 	stats.health -= amount
