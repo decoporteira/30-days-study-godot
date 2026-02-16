@@ -1,13 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://lrl8qdi2lfyc"]
 
-[ext_resource type="Script" uid="uid://b70gq2nqsvfx5" path="res://Scenes/UI/item_slot.gd" id="1_o0ubt"]
+[ext_resource type="Script" uid="uid://bslg43delfmg6" path="res://Scenes/UI/equipment_buttons.gd" id="1_rpwi4"]
 
-[node name="EquipmentSlot" type="Control"]
+[node name="EquipmentButtons" type="Control"]
 custom_minimum_size = Vector2(130, 40)
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
-script = ExtResource("1_o0ubt")
+script = ExtResource("1_rpwi4")
 
 [node name="TextureButton" type="TextureButton" parent="."]
 layout_mode = 1

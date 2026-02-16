@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArmorItemResource" load_steps=2 format=3 uid="uid://dvgwc7itqikik"]
+
+[ext_resource type="Script" uid="uid://c2cy7kaba1o0" path="res://Resources/Items/ArmorItemResource.gd" id="1_oevu6"]
+
+[resource]
+script = ExtResource("1_oevu6")
+defense_power = 9
+slot = 1
+id = "7"
+name = "Iron Plate"
+price = 200
+item_type = 1
+metadata/_custom_type_script = "uid://c2cy7kaba1o0"

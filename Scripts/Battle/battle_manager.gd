@@ -220,7 +220,7 @@ func attack(attacker, defender) -> void:
 	var weapon_name = get_weapon_name(attacker)
 	var damage = get_weapon_damage(attacker)
 	var critical_chance = get_weapon_crit_chance(attacker)
-	var damage_delt = calc_damage(attacker.stats.attack, damage, defender.stats.defense, critical_chance)
+	var damage_delt = calc_damage(attacker.stats.get_attack(), damage, defender.stats.get_defense(), critical_chance)
 	battle_log.add_message(
 		attacker.character_name + " attacked with " + weapon_name +
 		" and dealt " + str(damage_delt) + " damage."
@@ -261,26 +261,25 @@ func attack(attacker, defender) -> void:
 
 
 func get_weapon_damage(attacker):
-	if attacker.inventory.size() == 0:
+	var slot = attacker.equipment_holder.slots[EquipmentHolder.SlotType.HAND]
+	if slot == null:
 		return 1
-	for item in attacker.inventory:
-		if item is WeaponItemResource:
-			return item.attack_power
-	return 1 # dano base sem arma
+	else:
+		return slot.equipped_item.attack_power
 	
 func get_weapon_name(attacker):
-	if attacker.inventory.size() == 0:
+	var slot = attacker.equipment_holder.slots[EquipmentHolder.SlotType.HAND]
+	if slot == null:
 		return "Hands"
-	for item in attacker.inventory:
-		if item is WeaponItemResource:
-			return item.name
+	else:
+		return slot.equipped_item.name
 			
 func get_weapon_crit_chance(attacker):
-	if attacker.inventory.size() == 0:
-		return 1
-	for item in attacker.inventory:
-		if item is WeaponItemResource:
-			return item.critical_chance
+	var slot = attacker.equipment_holder.slots[EquipmentHolder.SlotType.HAND]
+	if slot == null:
+		return 0
+	else:
+		return slot.equipped_item.critical_chance
 			
 func calc_damage(char_attack: int, weapon: int, defense: int, crit_chance: int) -> int:
 	var base_damage = max(1, int(char_attack*weapon)/max(defense,1)) 
@@ -466,9 +465,9 @@ func on_turn_order():
 	define_turn_order()
 
 func define_turn_order():
-	if player.stats.speed > enemy.stats.speed:
+	if player.stats.get_speed() > enemy.stats.get_speed():
 		first_turn = player
-	elif enemy.stats.speed > player.stats.speed:
+	elif enemy.stats.get_speed() > player.stats.get_speed():
 		first_turn = enemy
 	else:
 		first_turn = player

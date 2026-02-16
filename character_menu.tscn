@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://djhhxorr16w15"]
+[gd_scene load_steps=5 format=3 uid="uid://djhhxorr16w15"]
 
 [ext_resource type="Script" uid="uid://bp7yq75r4msys" path="res://character_menu.gd" id="1_6tlbt"]
 [ext_resource type="Texture2D" uid="uid://bgy7w2jn6yt57" path="res://Assets/Sprites/Leora-2d.png" id="2_8miaq"]
 [ext_resource type="Texture2D" uid="uid://db5ehyfjjogxh" path="res://Assets/Sprites/NinePatch.png" id="2_pi0qd"]
+[ext_resource type="AudioStream" uid="uid://bw3vyf8v1bo04" path="res://Audio/SFX/equip_sfx.mp3" id="4_5thor"]
 
 [node name="CharacterMenu" type="Control"]
 z_index = 7
@@ -14,7 +15,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-mouse_default_cursor_shape = 14
 script = ExtResource("1_6tlbt")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -98,7 +98,7 @@ localize_numeral_system = false
 
 [node name="StatusContent" type="MarginContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer"]
 visible = false
-custom_minimum_size = Vector2(490, 280)
+custom_minimum_size = Vector2(400, 280)
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -204,18 +204,103 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent"]
 layout_mode = 2
 
-[node name="Grid" type="GridContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/ScrollContainer"]
+[node name="Control" type="Control" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer"]
+custom_minimum_size = Vector2(450, 140)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 23
+
+[node name="StatusLabels" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/StatusLabels"]
+layout_mode = 2
+text = "Name:"
+
+[node name="Attack" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/StatusLabels"]
+layout_mode = 2
+text = "Attack:"
+
+[node name="Defense" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/StatusLabels"]
+layout_mode = 2
+text = "Defense:"
+
+[node name="Inteligence" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/StatusLabels"]
+layout_mode = 2
+text = "Inteligence:"
+
+[node name="Speed" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/StatusLabels"]
+layout_mode = 2
+text = "Speed:"
+
+[node name="Status" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/Status"]
+layout_mode = 2
+text = "Leora"
+
+[node name="Attack" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/Status"]
+layout_mode = 2
+
+[node name="Defense" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/Status"]
+layout_mode = 2
+
+[node name="Inteligence" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/Status"]
+layout_mode = 2
+
+[node name="Speed" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/Status"]
+layout_mode = 2
+
+[node name="EquipmentLabels" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Weapon" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/EquipmentLabels"]
+layout_mode = 2
+text = "Hand:"
+
+[node name="Armor" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/EquipmentLabels"]
+layout_mode = 2
+text = "Armor:"
+
+[node name="Accessory" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/EquipmentLabels"]
+layout_mode = 2
+text = "Accessory:"
+
+[node name="Equipment" type="VBoxContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="Weapon" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/Equipment"]
+layout_mode = 2
+
+[node name="Armor" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/Equipment"]
+layout_mode = 2
+
+[node name="Accessory" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/Control/HBoxContainer/Equipment"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer"]
+custom_minimum_size = Vector2(450, 150)
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer/EquipmentContent/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/NinePatchRect/HBoxContainer/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="EquipSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_5thor")
 
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_status" to="." method="_on_bt_status_pressed"]
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/HBoxContainer/MarginContainer/VBoxContainer/bt_item" to="." method="_on_button_pressed"]

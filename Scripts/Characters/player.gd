@@ -25,9 +25,12 @@ var xp = 3
 var player_level = 1
 
 func _ready():
-	emit_signal("health_changed", stats.health, stats.max_health)
+	emit_signal("health_changed", stats.health, stats.base_max_health)
 	$EquipmentHolder.equipment_changed.connect(_on_equipment_changed)
 	
+func equip_item(item: ItemResource):
+	equipment_holder.equip(item)
+	#update_stats()
 
 func take_damage(amount):
 	stats.health -= amount
@@ -90,15 +93,29 @@ func get_xp(xp_reward) -> void:
 		update_max_health()
 
 func update_status() -> void:
-	stats.attack += 1
-	stats.defense += 1
-	stats.speed += 1
+	stats.base_attack += 1
+	stats.base_defense += 1
+	stats.base_speed += 1
 	
 func update_max_health() -> void:
-	stats.max_health += 10
-	stats.health = stats.max_health
-	emit_signal("health_changed", stats.health, stats.max_health)
+	stats.base_max_health += 10
+	stats.health = stats.base_max_health
+	emit_signal("health_changed", stats.health, stats.base_max_health)
 
 func _on_equipment_changed():
-	#stats.recalculate()
-	print('Equipou')
+	recalculate_stats()
+	
+func recalculate_stats():
+
+	stats.bonus_attack = 0
+	stats.bonus_defense = 0
+	
+	for slot in equipment_holder.slots.values():
+		if slot.equipped_item:
+			
+			if slot.equipped_item is WeaponItemResource:
+				stats.bonus_attack += slot.equipped_item.attack_power
+				print(stats.bonus_attack)			
+			if slot.equipped_item is ArmorItemResource:
+				stats.bonus_defense += slot.equipped_item.defense_power
+				print(stats.bonus_defense)

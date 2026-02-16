@@ -5,6 +5,8 @@ var items = {
 	"short_sword": preload("res://Resources/Items/Weapons/short_sword.tres"),
 	"bat": preload("res://Resources/Items/Weapons/bat.tres"),
 	"knife": preload("res://Resources/Items/Weapons/knife.tres"),
+	"iron_plate": preload("res://Resources/Items/Armors/iron_plate.tres"),
+	"defense_ring": preload("res://Resources/Items/Armors/defense_ring.tres")
 	
 }
 

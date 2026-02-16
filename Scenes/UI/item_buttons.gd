@@ -1,5 +1,5 @@
 extends Control
-
+#item_slot.gd item e equipment estao dividindo o mesmo script para criar os botoes
 var item_data
 signal item_selected(item)
 
@@ -11,3 +11,4 @@ func setup(item):
 
 func _on_texture_button_pressed() -> void:
 	emit_signal("item_selected", item_data)
+	print(item_data)

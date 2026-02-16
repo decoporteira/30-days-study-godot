@@ -89,8 +89,6 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_rk0cu")
-inventory = null
-spells = null
 stats = ExtResource("2_khnq4")
 
 [node name="DamageText" type="RichTextLabel" parent="."]

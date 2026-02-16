@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ArmorItemResource" load_steps=2 format=3 uid="uid://c1bq0iu8ut3u7"]
+
+[ext_resource type="Script" uid="uid://c2cy7kaba1o0" path="res://Resources/Items/ArmorItemResource.gd" id="1_f27g2"]
+
+[resource]
+script = ExtResource("1_f27g2")
+defense_power = 5
+slot = 3
+id = "9"
+name = "Defense Ring"
+price = 5
+item_type = 1
+metadata/_custom_type_script = "uid://c2cy7kaba1o0"

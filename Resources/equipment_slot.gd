@@ -1,3 +1,4 @@
+#equipment_slot.gd
 class_name EquipmentSlot
 
 var equipped_item: ItemResource = null
