@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://cayjikbjjocye"]
+[gd_scene load_steps=12 format=3 uid="uid://cayjikbjjocye"]
 
 [ext_resource type="Script" uid="uid://ddqwuofmh4n1c" path="res://Scripts/Characters/orc.gd" id="1_7k104"]
-[ext_resource type="Resource" uid="uid://dxahx5bnfiho0" path="res://Resources/Enemies/Data/GreenOrc.tres" id="2_6et41"]
 [ext_resource type="Texture2D" uid="uid://bb2g75idellvk" path="res://Assets/Sprites/Orc2d.png" id="2_8h1l3"]
+[ext_resource type="Resource" uid="uid://b76wspyhrlhkb" path="res://Resources/green_orc.tres" id="3_dm0ex"]
 [ext_resource type="Script" uid="uid://ce4p7n4d4dog1" path="res://Resources/Items/ItemResource.gd" id="3_pwg3k"]
 [ext_resource type="Resource" uid="uid://d2n6so0om0dhb" path="res://Resources/Items/Weapons/bat.tres" id="4_dm0ex"]
+[ext_resource type="Script" uid="uid://vlbsbfoc1pky" path="res://Scripts/equipment_holder.gd" id="6_dm0ex"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6et41"]
 atlas = ExtResource("2_8h1l3")
@@ -37,8 +38,9 @@ height = 25.333664
 
 [node name="Orc" type="AnimatableBody2D"]
 script = ExtResource("1_7k104")
-data = ExtResource("2_6et41")
+stats = ExtResource("3_dm0ex")
 inventory = Array[ExtResource("3_pwg3k")]([ExtResource("4_dm0ex")])
+starting_weapon = ExtResource("4_dm0ex")
 
 [node name="DamageText" type="RichTextLabel" parent="."]
 visible = false
@@ -66,5 +68,8 @@ shape = SubResource("CircleShape2D_klk41")
 position = Vector2(-1, 2.0000002)
 scale = Vector2(3.4912708, 1.76839)
 shape = SubResource("CapsuleShape2D_q6r6c")
+
+[node name="EquipmentHolder" type="Node" parent="."]
+script = ExtResource("6_dm0ex")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

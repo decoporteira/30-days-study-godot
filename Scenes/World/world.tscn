@@ -1,10 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://deaj1gxinqhp4"]
+[gd_scene load_steps=25 format=3 uid="uid://deaj1gxinqhp4"]
 
 [ext_resource type="Script" uid="uid://di7igg1fp8uya" path="res://Scripts/World/world.gd" id="1_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://bgb1kn8oskst1" path="res://Scenes/World/world_map.tscn" id="1_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://cayjikbjjocye" path="res://Scenes/Characters/orc.tscn" id="1_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://djhhxorr16w15" path="res://character_menu.tscn" id="2_0ph6x"]
 [ext_resource type="PackedScene" uid="uid://q1833akamrw3" path="res://Scenes/Characters/player.tscn" id="2_adcqc"]
+[ext_resource type="Script" uid="uid://cqou1e5m2uvb1" path="res://Scenes/World/dialogue_ui.gd" id="3_owiee"]
 [ext_resource type="PackedScene" uid="uid://ynyuyje65plp" path="res://Scenes/Characters/ghost.tscn" id="5_036b0"]
 [ext_resource type="PackedScene" uid="uid://dais5l15y5j2r" path="res://Scenes/Characters/blue_orc.tscn" id="6_dwbse"]
 [ext_resource type="Resource" uid="uid://dhfqsuoeg48dy" path="res://Resources/Items/Weapons/short_sword.tres" id="6_hiquf"]
@@ -20,14 +21,69 @@
 [ext_resource type="Resource" uid="uid://ddlj4r67trpqt" path="res://Resources/Spells/Water.tres" id="11_7ubof"]
 [ext_resource type="Resource" uid="uid://dx4xwso2g352o" path="res://Resources/Spells/Earth.tres" id="12_6paci"]
 [ext_resource type="Resource" uid="uid://bxe48xw31ixei" path="res://Resources/Spells/Fire.tres" id="13_owiee"]
+[ext_resource type="Resource" uid="uid://ckaj3r0ldsvno" path="res://Resources/blue_orc.tres" id="18_7ubof"]
+[ext_resource type="Texture2D" uid="uid://db5ehyfjjogxh" path="res://Assets/Sprites/NinePatch.png" id="22_6paci"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ubof"]
+size = Vector2(81, 57)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_aqk2v")
 character_menu_scene = ExtResource("2_0ph6x")
 
+[node name="DialogueUI" type="CanvasLayer" parent="."]
+script = ExtResource("3_owiee")
+
+[node name="Control" type="Control" parent="DialogueUI"]
+custom_minimum_size = Vector2(600, 120)
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -120.0
+offset_right = 300.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+
+[node name="NinePatchRect" type="NinePatchRect" parent="DialogueUI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("22_6paci")
+region_rect = Rect2(-0.01567936, -0.0096949935, 18.039398, 18.012074)
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="Margin" type="MarginContainer" parent="DialogueUI/Control/NinePatchRect"]
+custom_minimum_size = Vector2(580, 120)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="DialogueUI/Control/NinePatchRect/Margin"]
+layout_mode = 2
+text = " "
+
 [node name="Player" parent="." instance=ExtResource("2_adcqc")]
 z_index = 2
-position = Vector2(147, 248)
+position = Vector2(19, 204)
 inventory = Array[ExtResource("6_y0d6x")]([ExtResource("7_ugf0j"), ExtResource("6_hiquf"), ExtResource("7_7c7np"), ExtResource("8_7c7np"), ExtResource("9_xatfh")])
 spells = Array[ExtResource("8_dbvd7")]([ExtResource("13_owiee"), ExtResource("12_6paci"), ExtResource("11_7ubof"), ExtResource("10_xatfh"), ExtResource("9_7c7np")])
 
@@ -36,16 +92,17 @@ z_index = 1
 position = Vector2(311, 239)
 
 [node name="BlueOrc" parent="." groups=["enemy"] instance=ExtResource("6_dwbse")]
-position = Vector2(514, 84)
+position = Vector2(599, 61)
+stats = ExtResource("18_7ubof")
+starting_weapon = ExtResource("7_7c7np")
 
 [node name="Ghost" parent="." groups=["enemy"] instance=ExtResource("5_036b0")]
 z_index = 1
-position = Vector2(154, 133)
+position = Vector2(154, 134)
 loot_inventory = Array[ExtResource("6_y0d6x")]([ExtResource("7_ugf0j")])
 
 [node name="World_map" parent="." instance=ExtResource("1_fj7yv")]
 position = Vector2(-7, -28)
-tile_map_data = PackedByteArray(0, 0, 17, 0, 7, 0, 0, 0, 2, 0, 7, 0, 0, 0, 17, 0, 8, 0, 0, 0, 2, 0, 7, 0, 0, 0)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_7staa")
@@ -53,3 +110,11 @@ volume_db = -20.265
 autoplay = true
 
 [node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(506.5, 69.5)
+shape = SubResource("RectangleShape2D_7ubof")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

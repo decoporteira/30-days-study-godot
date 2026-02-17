@@ -262,21 +262,21 @@ func attack(attacker, defender) -> void:
 
 func get_weapon_damage(attacker):
 	var slot = attacker.equipment_holder.slots[EquipmentHolder.SlotType.HAND]
-	if slot == null:
+	if slot.equipped_item == null:
 		return 1
 	else:
 		return slot.equipped_item.attack_power
 	
 func get_weapon_name(attacker):
 	var slot = attacker.equipment_holder.slots[EquipmentHolder.SlotType.HAND]
-	if slot == null:
+	if slot.equipped_item == null:
 		return "Hands"
 	else:
 		return slot.equipped_item.name
 			
 func get_weapon_crit_chance(attacker):
 	var slot = attacker.equipment_holder.slots[EquipmentHolder.SlotType.HAND]
-	if slot == null:
+	if slot.equipped_item == null:
 		return 0
 	else:
 		return slot.equipped_item.critical_chance
@@ -296,15 +296,14 @@ func spell_cast(attacker, defender, spell):
 	if not attacker.is_alive():
 		print(attacker.name, " está morto, turno ignorado")
 		return
-	if player.stats.mp < spell.mp_cost:
+	if player.stats.mana < spell.mp_cost:
 		battle_log.add_message(
 		attacker.character_name + " doenst have mana points enough to cast the spell."
 		)
 		return
 	else:
-		print(player.stats.mp)
-		player.stats.mp = player.stats.mp - spell.mp_cost
-		print(player.stats.mp)
+		player.stats.mana = player.stats.mana - spell.mp_cost
+
 		
 	if spell.element == Spell.Element.HEAL:
 		player.heal(spell.power)
@@ -314,7 +313,7 @@ func spell_cast(attacker, defender, spell):
 		)
 		return
 		
-	var damage_delt = calc_damage(attacker.stats.inteligence, spell.power, defender.stats.defense, 1)
+	var damage_delt = calc_damage(attacker.stats.get_inteligence(), spell.power, defender.stats.get_defense(), 1)
 	battle_log.add_message(
 		attacker.character_name + " attacked with " + spell.name +
 		" and dealt " + str(damage_delt) + " damage."

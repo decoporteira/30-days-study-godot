@@ -3,8 +3,6 @@ extends AnimatableBody2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var damage_text: RichTextLabel = $DamageText
 
-@export var data: EnemyData
-
 signal battle_started(enemy)
 signal health_changed(current, max)
 
@@ -12,26 +10,24 @@ var health: int
 var max_health: int
 var character_name: String
 var type = "enemy"
+@export var stats: StatsResource
 @export var inventory: Array[ItemResource] = []
 @export var loot_inventory: Array[ItemResource] = []
-
+@onready var equipment_holder: EquipmentHolder = $EquipmentHolder
+@export var starting_weapon: WeaponItemResource
 var status: Dictionary
 var xp_reward
 
 func _ready():
-	character_name = data.name
-	max_health = data.max_hp
-	health = data.max_hp
-	
-	status = {
-		"attack": data.attack,
-		"defese": data.defense,
-		"speed": data.speed
-	}
-	xp_reward = data.xp_reward
-	
+	character_name = stats.name
+	max_health = stats.get_max_health()
+	health = stats.get_max_health()
+	xp_reward = stats.xp_reward
 	emit_signal("health_changed", health, max_health)
-		
+
+func equip_item(item: ItemResource):
+	equipment_holder.equip(item)
+	
 func take_damage(amount):
 	health -= amount
 	if health < 0:

@@ -15,7 +15,7 @@ var stop_moving := false
 @onready var damage_text: RichTextLabel = $DamageText
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-@export var data: EnemyData
+#@export var data: EnemyData
 
 signal battle_started(enemy)
 signal health_changed(current, max)
@@ -30,29 +30,27 @@ var type := "enemy"
 @export var stats: StatsResource
 var status: Dictionary
 var xp_reward
-
+@onready var equipment_holder: EquipmentHolder = $EquipmentHolder
+@export var starting_weapon: WeaponItemResource
+	
 var has_battle_started := false
 
 func _ready():
 	_pick_random_direction()
-
+	if starting_weapon:
+		equip_item(starting_weapon)
 	timer.wait_time = change_dir_time
 	timer.one_shot = false
 	timer.start()
 
-	character_name = data.name
-	max_health = data.max_hp
-	health = data.max_hp
-
-	status = {
-		"attack": data.attack,
-		"defese": data.defense,
-		"speed": data.speed
-	}
-	xp_reward = data.xp_reward
-
+	character_name = stats.name
+	max_health = stats.get_max_health()
+	health = stats.get_max_health()
+	xp_reward = stats.xp_reward
 	emit_signal("health_changed", health, max_health)
 
+func equip_item(item: ItemResource):
+	equipment_holder.equip(item)
 ##############################################
 # COMBATE / STATUS
 ##############################################
@@ -89,6 +87,13 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 ##############################################
 
 func _physics_process(delta):
+	var world = get_tree().current_scene
+	
+	if world.current_state != world.GameState.EXPLORATION:
+		direction = Vector2.ZERO
+		sprite.play("idle")
+		return
+		
 	if stop_moving:
 		sprite.play("idle")
 		return

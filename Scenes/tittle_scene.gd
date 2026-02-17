@@ -32,7 +32,4 @@ func _on_button_button_down() -> void:
 
 	await transition.fade_in(0.4)
 
-	var game_scene = preload("res://Scenes/World/world.tscn")
-	var world_scene = game_scene.instantiate()
-	get_tree().root.add_child(world_scene)
-	queue_free()
+	get_tree().change_scene_to_file("res://Scenes/World/world.tscn")

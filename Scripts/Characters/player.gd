@@ -9,6 +9,7 @@ enum PlayerMode {
 	EXPLORATION,
 	BATTLE
 }
+@export var starting_weapon: WeaponItemResource
 
 var mode = PlayerMode.EXPLORATION
 
@@ -20,11 +21,14 @@ var type = "player"
 @export var stats: StatsResource
 const SPEED = 200.0
 var input_vector = Vector2.ZERO
-
+var can_move := true
+#var velocity := Vector2.ZERO
 var xp = 3
 var player_level = 1
 
 func _ready():
+	if starting_weapon:
+		equip_item(starting_weapon)
 	emit_signal("health_changed", stats.health, stats.base_max_health)
 	$EquipmentHolder.equipment_changed.connect(_on_equipment_changed)
 	
@@ -36,13 +40,13 @@ func take_damage(amount):
 	stats.health -= amount
 	if stats.health < 0:
 		stats.health = 0
-	emit_signal("health_changed", stats.health, stats.max_health)
+	emit_signal("health_changed", stats.health, stats.get_max_health())
 
 func heal(amount):
 	stats.health += amount
-	if stats.health > stats.max_health:
-		stats.health = stats.max_health
-	emit_signal("health_changed", stats.health, stats.max_health)
+	if stats.health > stats.get_max_health():
+		stats.health = stats.get_max_health()
+	emit_signal("health_changed", stats.health, stats.get_max_health())
 	
 func buff(amount):
 	stats.speed += amount
@@ -54,9 +58,17 @@ func is_alive() -> bool:
 		return true
 		
 func _physics_process(_delta: float) -> void:
-	if mode != PlayerMode.EXPLORATION:
+	var world = get_tree().current_scene
+	
+	if world.current_state != world.GameState.EXPLORATION:
 		velocity = Vector2.ZERO
+		move_and_slide()
+		
+		if sprite.animation != "idle":
+			sprite.play("idle")
+		
 		return
+
 	var dir = get_input_direction()
 	velocity = dir * SPEED
 	move_and_slide()
@@ -84,6 +96,7 @@ func get_input_direction() -> Vector2:
 			sprite.play("idle")
 
 	return direction
+	
 func get_xp(xp_reward) -> void:
 	xp += xp_reward
 	if xp >= 5:

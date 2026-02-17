@@ -4,4 +4,6 @@
 
 [resource]
 script = ExtResource("1_l4bbr")
+name = "Ghost"
+xp_reward = 200
 metadata/_custom_type_script = "uid://d3uiyhxh51r6m"

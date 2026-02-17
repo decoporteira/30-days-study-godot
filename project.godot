@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Study_30_days"
-run/main_scene="uid://deaj1gxinqhp4"
+run/main_scene="uid://culx31x27gjw8"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -4,7 +4,6 @@
 
 [resource]
 script = ExtResource("1_f27g2")
-defense_power = 5
 slot = 3
 id = "9"
 name = "Defense Ring"

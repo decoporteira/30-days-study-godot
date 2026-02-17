@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="StatsResource" load_steps=2 format=3 uid="uid://b76wspyhrlhkb"]
+
+[ext_resource type="Script" uid="uid://d3uiyhxh51r6m" path="res://Resources/stats_resource.gd" id="1_e0xxf"]
+
+[resource]
+script = ExtResource("1_e0xxf")
+name = "Green Orc"
+base_max_health = 15
+xp_reward = 200
+metadata/_custom_type_script = "uid://d3uiyhxh51r6m"
