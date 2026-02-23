@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://nn8rdtjiws7m" path="res://Scenes/Battle/spell_ui.tscn" id="4_bxlc4"]
 [ext_resource type="PackedScene" uid="uid://bhlw8cr8vn738" path="res://Scenes/Battle/battle_menu.tscn" id="4_d07u5"]
 [ext_resource type="PackedScene" uid="uid://d4dthiw21376h" path="res://Scenes/Battle/inventory_ui.tscn" id="5_6lbqc"]
-[ext_resource type="Texture2D" uid="uid://babu4kfk7y3w4" path="res://Assets/Sprites/1a9201d9fe16a7c3e0f19f2858525733.jpg" id="7_bxlc4"]
+[ext_resource type="Texture2D" uid="uid://bujcqvflnvyiy" path="res://Assets/Backgrounds/Battlebg.png" id="7_axp3r"]
 
 [node name="BattleUI" type="Control"]
 custom_minimum_size = Vector2(640, 360)
@@ -134,24 +134,11 @@ offset_bottom = 132.5
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = -5
 z_as_relative = false
-layout_mode = 0
-offset_left = -0.99999994
-offset_top = -36.499996
-offset_right = 399.0
-offset_bottom = 288.5
-scale = Vector2(1.5999994, 1.2400002)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("7_bxlc4")
-stretch_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="."]
-z_index = -4
-z_as_relative = false
-layout_mode = 0
-offset_top = -117.5
-offset_right = 400.0
-offset_bottom = 207.5
-scale = Vector2(1.5999994, 1.2400002)
-mouse_filter = 2
-texture = ExtResource("7_bxlc4")
-stretch_mode = 2
+texture = ExtResource("7_axp3r")

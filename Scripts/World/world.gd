@@ -50,7 +50,7 @@ func start_battle():
 	world_map.hide()
 	hide_all_enemies()
 
-	var battle_scene = preload("res:////Scenes/Battle/battle_manager.tscn")
+	var battle_scene = preload("res://Scenes/Battle/battle_manager.tscn")
 	battle_manager = battle_scene.instantiate()
 	add_child(battle_manager)
 	
@@ -64,7 +64,6 @@ func start_battle():
 	
 func _on_battle_ended():
 	current_state = GameState.EXPLORATION
-	print("Estado agora:", GameState.keys()[current_state])
 	await transition.fade_out(0.4)
 	
 	battle_manager.queue_free()
@@ -114,17 +113,17 @@ func open_character_menu():
 	character_menu.player = player
 	ui_layer.add_child(character_menu)
 	character_menu.open()
-
-
-func _on_area_2d_body_entered(_body: Node2D) -> void:
-	$DialogueUI.start_dialogue([
-	"Hello, hero.",
-	"I'll destroy your village",
-	"Defeat me if you can!"
-])
+	
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		$DialogueUI.start_dialogue([
+		"Hello, hero.",
+		"I'll destroy your village",
+		"Defeat me if you can!"
+	])
 func _on_dialogue_finished():
 	_on_battle_started(blue_orc)
 
 func start_credits():
 	await transition.fade_out(0.4)
-	get_tree().change_scene_to_file("res://credits.tscn")
+	get_tree().change_scene_to_file("res://cre#dits.tscn")

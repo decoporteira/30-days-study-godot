@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bp7yq75r4msys" path="res://character_menu.gd" id="1_6tlbt"]
 [ext_resource type="Texture2D" uid="uid://bgy7w2jn6yt57" path="res://Assets/Sprites/Leora-2d.png" id="2_8miaq"]
 [ext_resource type="Texture2D" uid="uid://db5ehyfjjogxh" path="res://Assets/Sprites/NinePatch.png" id="2_pi0qd"]
-[ext_resource type="AudioStream" uid="uid://bw3vyf8v1bo04" path="res://Audio/SFX/equip_sfx.mp3" id="4_5thor"]
+[ext_resource type="AudioStream" uid="uid://eq0mnmepqd1o" path="res://Audio/SFX/freesound_community-item-equip-6904.mp3" id="4_5thor"]
 
 [node name="CharacterMenu" type="Control"]
 z_index = 7

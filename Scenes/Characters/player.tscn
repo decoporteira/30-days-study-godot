@@ -5,8 +5,8 @@
 [ext_resource type="Resource" uid="uid://clpxxn3r3t5dx" path="res://Resources/player_stats.tres" id="2_khnq4"]
 [ext_resource type="Resource" uid="uid://dhfqsuoeg48dy" path="res://Resources/Items/Weapons/short_sword.tres" id="2_utp2y"]
 [ext_resource type="Script" uid="uid://vlbsbfoc1pky" path="res://Scripts/equipment_holder.gd" id="6_gdgf0"]
-[ext_resource type="AudioStream" uid="uid://c3g3dipiwvkko" path="res://Audio/SFX/attack_sfx.mp3" id="6_khnq4"]
 [ext_resource type="Texture2D" uid="uid://cwtgcyfp1gxmx" path="res://Assets/Sprites/Leora.png" id="6_utp2y"]
+[ext_resource type="AudioStream" uid="uid://dyur6hv0tt5nl" path="res://Audio/SFX/freesound_crunchpixstudio-attack-release-384909.mp3" id="6_xo8ps"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gqcb3"]
 radius = 10.227272
@@ -116,7 +116,7 @@ frame = 4
 frame_progress = 0.2533218
 
 [node name="AttackSFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_khnq4")
+stream = ExtResource("6_xo8ps")
 
 [node name="EquipmentHolder" type="Node" parent="."]
 script = ExtResource("6_gdgf0")

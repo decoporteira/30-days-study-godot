@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5tuhyn05ngw5"
-path="res://.godot/imported/tiles.png-b55e1ea9ed0066a714a8d5e91fe44ac3.ctex"
+uid="uid://bujcqvflnvyiy"
+path="res://.godot/imported/Battlebg.png-1c96be17e34f0d33d1719a9542694031.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/tiles.png"
-dest_files=["res://.godot/imported/tiles.png-b55e1ea9ed0066a714a8d5e91fe44ac3.ctex"]
+source_file="res://Assets/Backgrounds/Battlebg.png"
+dest_files=["res://.godot/imported/Battlebg.png-1c96be17e34f0d33d1719a9542694031.ctex"]
 
 [params]
 
