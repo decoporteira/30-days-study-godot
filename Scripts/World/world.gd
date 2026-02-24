@@ -32,6 +32,7 @@ func _ready() -> void:
 	transition = transition_scene.instantiate()
 	add_child(transition)
 	dialogue_ui.dialogue_finished.connect(_on_dialogue_finished)
+	
 
 func _on_battle_started(current_enemy):
 	enemy = current_enemy
@@ -58,8 +59,9 @@ func start_battle():
 	battle_manager.initialize_battle()
 	battle_manager.start_battle()
 	
-	battle_manager.battle_ended.connect(_on_battle_ended)
-
+	#battle_manager.battle_ended.connect(_on_battle_ended)
+	#battle_manager.escaped_battle.connect(_on_escaped_battle)
+	battle_manager.battle_finished.connect(_on_battle_finished)
 	await transition.fade_in(0.4)
 	
 func _on_battle_ended():
@@ -83,7 +85,51 @@ func _on_battle_ended():
 	await transition.fade_in(0.4)
 	if end_game == true:
 		start_credits()
+		
+func _on_escaped_battle():
+	
+	current_state = GameState.EXPLORATION
+	await transition.fade_out(0.4)
+	
+	battle_manager.queue_free()
+	
+	music.play()
+	
+	show_all_enemies()
+	player.mode = player.PlayerMode.EXPLORATION
+	player.set_process(true)
+	player.set_physics_process(true)
+	player.show()
+	world_map.show()
+	print("on-escaped-battle")
+	
+func _on_battle_finished(result):
+	current_state = GameState.EXPLORATION
+	await transition.fade_out(0.4)
 
+	if result == "victory":
+		enemy.queue_free()
+	
+	battle_manager.queue_free()
+
+	restore_world()
+	
+func restore_world():
+	music.play()
+	var end_game = false
+	if enemy.stats.is_final_boss:
+		end_game = true
+	
+	show_all_enemies()
+	player.mode = player.PlayerMode.EXPLORATION
+	player.set_process(true)
+	player.set_physics_process(true)
+	player.show()
+	world_map.show()
+	
+	await transition.fade_in(0.4)
+	if end_game == true:
+		start_credits()
 func hide_all_enemies():
 	for en in get_tree().get_nodes_in_group("enemy"):
 		en.hide()
@@ -126,4 +172,4 @@ func _on_dialogue_finished():
 
 func start_credits():
 	await transition.fade_out(0.4)
-	get_tree().change_scene_to_file("res://cre#dits.tscn")
+	get_tree().change_scene_to_file("res://credits.tscn")

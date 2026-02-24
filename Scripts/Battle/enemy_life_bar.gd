@@ -16,7 +16,6 @@ func get_max_health():
 	if enemy == null:
 		return
 	character_name.append_text(enemy.character_name)
-	print(enemy.character_name)
 	str_health = str(enemy.health) + "/" + str(enemy.max_health)
 	life_bar_numbers.append_text(str_health)
 	life_bar.max_value = enemy.max_health

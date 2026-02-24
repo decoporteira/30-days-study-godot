@@ -11,4 +11,3 @@ func setup(equipment):
 
 func _on_texture_button_pressed() -> void:
 	emit_signal("equipment_selected", equipment_data)
-	print(equipment_data)

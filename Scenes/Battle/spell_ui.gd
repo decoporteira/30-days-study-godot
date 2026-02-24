@@ -31,14 +31,12 @@ func update_spells():
 		btn.custom_minimum_size = Vector2(60, 20)
 
 func show_spells():
-	print('Entrou em show_spells em battle_ui')
 	if is_showing == true:
 		hide()
 		is_showing = false
 	else:
 		show()
 		is_showing = true
-	print("Quantidade de botões:", spell_list.get_child_count())
 
 func hide_spells():
 	hide()

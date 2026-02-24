@@ -27,10 +27,12 @@ var xp = 3
 var player_level = 1
 
 func _ready():
+	$EquipmentHolder.equipment_changed.connect(_on_equipment_changed)
+
 	if starting_weapon:
 		equip_item(starting_weapon)
+
 	emit_signal("health_changed", stats.health, stats.base_max_health)
-	$EquipmentHolder.equipment_changed.connect(_on_equipment_changed)
 	
 func equip_item(item: ItemResource):
 	equipment_holder.equip(item)
@@ -128,7 +130,6 @@ func recalculate_stats():
 			
 			if slot.equipped_item is WeaponItemResource:
 				stats.bonus_attack += slot.equipped_item.attack_power
-				print(stats.bonus_attack)			
+		
 			if slot.equipped_item is ArmorItemResource:
 				stats.bonus_defense += slot.equipped_item.defense_power
-				print(stats.bonus_defense)

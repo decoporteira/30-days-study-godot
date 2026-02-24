@@ -23,11 +23,9 @@ func save_game(player: Node) -> void:
 	file.store_string(JSON.stringify(save_data))
 	file.close()
 	
-	print("Game Saved!")
 
 func load_game(player: Node) -> void:
 	if not FileAccess.file_exists(SAVE_PATH):
-		print("No save file found.")
 		return
 	
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
@@ -35,21 +33,17 @@ func load_game(player: Node) -> void:
 	file.close()
 	
 	var data = JSON.parse_string(content)
-	print(data)
 	player.stats.health = data["hp"]
 	player.stats.mp = data["mana"]
 	player.player_level = int(data["level"])
 	#limpar inventario
 	player.inventory.clear()
 	for item_id in data["inventory"]:
-		print("ID:", item_id)
 		var item_data = ItemDatabase.get_item(item_id)
-		print("From database:", item_data)
 
 		if item_data:
 			var item = item_data.duplicate(true)
 			player.inventory.append(item)
-			print("Added:", item)
 		else:
 			print("NOT FOUND IN DATABASE")
 			
@@ -58,4 +52,3 @@ func load_game(player: Node) -> void:
 		data["position"]["y"]
 	)
 	
-	print("Game Loaded!")

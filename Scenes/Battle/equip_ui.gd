@@ -31,14 +31,12 @@ func update_equipments():
 		btn.custom_minimum_size = Vector2(60, 20)
 
 func show_equipments():
-	print('Entrou em show_equipments em battle_ui')
 	if is_showing == true:
 		hide()
 		is_showing = false
 	else:
 		show()
 		is_showing = true
-	print("Quantidade de botões:", equipment_list.get_child_count())
 
 func hide_equipments():
 	hide()

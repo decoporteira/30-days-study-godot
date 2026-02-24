@@ -26,10 +26,11 @@ enum BattleState {
 	ENEMY_TURN,
 	VICTORY,
 	DEFEAT,
+	ESCAPED,
 	END
 }
 var transition
-signal battle_ended
+signal battle_finished(result)
 var current_state : BattleState
 
 func _ready() -> void:
@@ -170,7 +171,7 @@ func run_away():
 	var run_away_percentage = rng.randf_range(0.0, 100.0)
 	if run_away_percentage >= 50:
 		battle_log.add_message("You tried to escape... and you were sucessful!")
-		change_state(BattleState.END)
+		change_state(BattleState.ESCAPED)
 	else:
 		battle_log.add_message("You tried to escape... and you fail!")
 		
@@ -204,6 +205,9 @@ func change_state(new_state: BattleState) -> void:
 
 		BattleState.DEFEAT:
 			on_defeat()
+			
+		BattleState.ESCAPED:
+			on_escaped()
 
 		BattleState.END:
 			on_battle_end()
@@ -215,7 +219,7 @@ func attack(attacker, defender) -> void:
 	if battle_is_over():
 		return
 	if not attacker.is_alive():
-		print(attacker.name, " está morto, turno ignorado")
+
 		return
 	var weapon_name = get_weapon_name(attacker)
 	var damage = get_weapon_damage(attacker)
@@ -294,7 +298,6 @@ func spell_cast(attacker, defender, spell):
 	if battle_is_over():
 		return
 	if not attacker.is_alive():
-		print(attacker.name, " está morto, turno ignorado")
 		return
 	if player.stats.mana < spell.mp_cost:
 		battle_log.add_message(
@@ -408,7 +411,6 @@ func on_player_action():
 func on_enemy_turn():
 	if battle_is_over() or not enemy.is_alive():
 		return
-	print('Entrou no turno do inimigo!')
 	battle_log.add_message("Enemy turn!")
 	
 	await get_tree().create_timer(1.5).timeout
@@ -438,7 +440,8 @@ func on_victory():
 	await get_tree().create_timer(1.0).timeout
 
 	change_state(BattleState.END)
-
+	emit_signal("battle_finished", "victory")
+	
 func on_defeat():
 	battle_menu.hide_menu()
 	inventory_ui.hide_inventory()
@@ -453,12 +456,25 @@ func on_defeat():
 	var game_over_node = game_over_scene.instantiate()
 	get_tree().root.add_child(game_over_node)
 	queue_free()
+	
+func on_escaped():
+	battle_menu.hide_menu()
+	inventory_ui.hide_inventory()
+	await get_tree().create_timer(0.8).timeout
 
+	battle_log.add_message("You escaped")
+	await get_tree().create_timer(1.5).timeout
+	
+	await transition.fade_in(0.4)
+	change_state(BattleState.END)
+	emit_signal("battle_finished", "escaped")
+	print('emitiu sinal')
+	
 func on_battle_end():
 	battle_menu.hide_menu()
 	inventory_ui.hide_inventory()
 	battle_log.add_message("Battle ended.")
-	emit_signal("battle_ended")
+	#emit_signal("battle_ended")
 
 func on_turn_order():
 	define_turn_order()

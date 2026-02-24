@@ -1,11 +1,13 @@
 [gd_resource type="Resource" script_class="StatsResource" load_steps=2 format=3 uid="uid://ckaj3r0ldsvno"]
 
-[ext_resource type="Script" uid="uid://d3uiyhxh51r6m" path="res://Resources/stats_resource.gd" id="1_bt3fc"]
+[ext_resource type="Script" uid="uid://d3uiyhxh51r6m" path="res://Resources/stats_resource.gd" id="1_agj57"]
 
 [resource]
-script = ExtResource("1_bt3fc")
+script = ExtResource("1_agj57")
 name = "Green Orc"
-base_max_health = 15
+base_attack = 10
+base_defense = 10
+base_speed = 1
 xp_reward = 200
 is_final_boss = true
 metadata/_custom_type_script = "uid://d3uiyhxh51r6m"

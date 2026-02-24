@@ -38,6 +38,8 @@ height = 25.333664
 [node name="Orc" type="AnimatableBody2D"]
 script = ExtResource("1_mxyu1")
 inventory = Array[ExtResource("3_klvb3")]([ExtResource("3_8gohi")])
+loot_inventory = Array[ExtResource("3_klvb3")]([ExtResource("3_8gohi")])
+starting_weapon = ExtResource("3_8gohi")
 
 [node name="DamageText" type="RichTextLabel" parent="."]
 visible = false

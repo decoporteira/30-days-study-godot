@@ -140,12 +140,10 @@ func _on_bt_equip_pressed() -> void:
 			
 func _on_spell_selected(spell: Spell) -> void:
 	if player.stats.mp < spell.mp_cost:
-		print("nao tem mp suficiente")
 		return
 	if spell.name == "Heal":
 		player.heal(spell.power)
 		player.stats.mp -= spell.mp_cost
-		print("Healed " + str(spell.power))
 		_on_bt_status_pressed()
 
 		update_ui()
@@ -155,7 +153,6 @@ func _on_spell_selected(spell: Spell) -> void:
 		label.hide()
 		
 func _on_item_selected(item) -> void:
-	print("usou um item " + item.name)
 	use_item_in_menu(item)
 	
 func use_item_in_menu(item: ItemResource) -> void:

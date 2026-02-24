@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://deaj1gxinqhp4"]
+[gd_scene load_steps=24 format=3 uid="uid://deaj1gxinqhp4"]
 
 [ext_resource type="Script" uid="uid://di7igg1fp8uya" path="res://Scripts/World/world.gd" id="1_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://bgb1kn8oskst1" path="res://Scenes/World/world_map.tscn" id="1_fj7yv"]
@@ -10,10 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://dais5l15y5j2r" path="res://Scenes/Characters/blue_orc.tscn" id="6_dwbse"]
 [ext_resource type="Resource" uid="uid://dhfqsuoeg48dy" path="res://Resources/Items/Weapons/short_sword.tres" id="6_hiquf"]
 [ext_resource type="Script" uid="uid://ce4p7n4d4dog1" path="res://Resources/Items/ItemResource.gd" id="6_y0d6x"]
-[ext_resource type="Resource" uid="uid://c6d2xln1ncfos" path="res://Resources/Items/Weapons/knife.tres" id="7_7c7np"]
 [ext_resource type="AudioStream" uid="uid://dj85l215lofnd" path="res://Audio/Music/calm-bay-469507.mp3" id="7_7staa"]
 [ext_resource type="Resource" uid="uid://bg5ecyeh07hat" path="res://Resources/Items/Consumables/health_potion.tres" id="7_ugf0j"]
-[ext_resource type="Resource" uid="uid://dvgwc7itqikik" path="res://Resources/Items/Armors/iron_plate.tres" id="8_7c7np"]
 [ext_resource type="Script" uid="uid://bhan2eypsimht" path="res://Scripts/Spell/spells.gd" id="8_dbvd7"]
 [ext_resource type="Resource" uid="uid://12yx6fvvravd" path="res://Resources/Spells/Heal.tres" id="9_7c7np"]
 [ext_resource type="Resource" uid="uid://c1bq0iu8ut3u7" path="res://Resources/Items/Armors/defense_ring.tres" id="9_xatfh"]
@@ -21,7 +19,8 @@
 [ext_resource type="Resource" uid="uid://ddlj4r67trpqt" path="res://Resources/Spells/Water.tres" id="11_7ubof"]
 [ext_resource type="Resource" uid="uid://dx4xwso2g352o" path="res://Resources/Spells/Earth.tres" id="12_6paci"]
 [ext_resource type="Resource" uid="uid://bxe48xw31ixei" path="res://Resources/Spells/Fire.tres" id="13_owiee"]
-[ext_resource type="Resource" uid="uid://ckaj3r0ldsvno" path="res://Resources/blue_orc.tres" id="18_7ubof"]
+[ext_resource type="Resource" uid="uid://ckaj3r0ldsvno" path="res://Resources/blue_orc_stats.tres" id="18_7ubof"]
+[ext_resource type="Resource" uid="uid://clpxxn3r3t5dx" path="res://Resources/player_stats.tres" id="18_vgy1r"]
 [ext_resource type="Texture2D" uid="uid://db5ehyfjjogxh" path="res://Assets/Sprites/NinePatch.png" id="22_6paci"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ubof"]
@@ -85,8 +84,9 @@ text = " "
 [node name="Player" parent="." instance=ExtResource("2_adcqc")]
 z_index = 2
 position = Vector2(29, 148)
-inventory = Array[ExtResource("6_y0d6x")]([ExtResource("7_ugf0j"), ExtResource("6_hiquf"), ExtResource("7_7c7np"), ExtResource("8_7c7np"), ExtResource("9_xatfh")])
+inventory = Array[ExtResource("6_y0d6x")]([ExtResource("7_ugf0j"), ExtResource("6_hiquf"), ExtResource("9_xatfh")])
 spells = Array[ExtResource("8_dbvd7")]([ExtResource("13_owiee"), ExtResource("12_6paci"), ExtResource("11_7ubof"), ExtResource("10_xatfh"), ExtResource("9_7c7np")])
+stats = ExtResource("18_vgy1r")
 
 [node name="Orc" parent="." groups=["enemy"] instance=ExtResource("1_tlwt5")]
 z_index = 1
@@ -96,11 +96,11 @@ position = Vector2(311, 239)
 z_index = 1
 position = Vector2(561, 151)
 stats = ExtResource("18_7ubof")
-starting_weapon = ExtResource("7_7c7np")
 
 [node name="Ghost" parent="." groups=["enemy"] instance=ExtResource("5_036b0")]
 z_index = 1
 position = Vector2(154, 134)
+inventory = Array[ExtResource("6_y0d6x")]([])
 loot_inventory = Array[ExtResource("6_y0d6x")]([ExtResource("7_ugf0j")])
 
 [node name="World_map" parent="." instance=ExtResource("1_fj7yv")]

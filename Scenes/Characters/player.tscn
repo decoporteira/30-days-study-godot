@@ -1,12 +1,16 @@
-[gd_scene load_steps=19 format=3 uid="uid://q1833akamrw3"]
+[gd_scene load_steps=20 format=3 uid="uid://q1833akamrw3"]
 
 [ext_resource type="Script" uid="uid://cxypcw665eyvh" path="res://Scripts/Characters/player.gd" id="1_rk0cu"]
 [ext_resource type="Texture2D" uid="uid://bgy7w2jn6yt57" path="res://Assets/Sprites/Leora-2d.png" id="2_cvnsp"]
-[ext_resource type="Resource" uid="uid://clpxxn3r3t5dx" path="res://Resources/player_stats.tres" id="2_khnq4"]
 [ext_resource type="Resource" uid="uid://dhfqsuoeg48dy" path="res://Resources/Items/Weapons/short_sword.tres" id="2_utp2y"]
+[ext_resource type="Script" uid="uid://d3uiyhxh51r6m" path="res://Resources/stats_resource.gd" id="3_utp2y"]
 [ext_resource type="Script" uid="uid://vlbsbfoc1pky" path="res://Scripts/equipment_holder.gd" id="6_gdgf0"]
 [ext_resource type="Texture2D" uid="uid://cwtgcyfp1gxmx" path="res://Assets/Sprites/Leora.png" id="6_utp2y"]
 [ext_resource type="AudioStream" uid="uid://dyur6hv0tt5nl" path="res://Audio/SFX/freesound_crunchpixstudio-attack-release-384909.mp3" id="6_xo8ps"]
+
+[sub_resource type="Resource" id="Resource_gdgf0"]
+script = ExtResource("3_utp2y")
+metadata/_custom_type_script = "uid://d3uiyhxh51r6m"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gqcb3"]
 radius = 10.227272
@@ -91,7 +95,7 @@ animations = [{
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_rk0cu")
 starting_weapon = ExtResource("2_utp2y")
-stats = ExtResource("2_khnq4")
+stats = SubResource("Resource_gdgf0")
 
 [node name="DamageText" type="RichTextLabel" parent="."]
 visible = false

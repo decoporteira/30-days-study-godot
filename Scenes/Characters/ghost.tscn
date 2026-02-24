@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://ynyuyje65plp"]
+[gd_scene load_steps=12 format=3 uid="uid://ynyuyje65plp"]
 
 [ext_resource type="Script" uid="uid://dh64tnbr3gmlq" path="res://Scripts/Characters/ghost.gd" id="1_e3r4w"]
 [ext_resource type="Texture2D" uid="uid://b2fvco1xyjmol" path="res://Assets/Sprites/Ghost2d.png" id="2_e3r4w"]
+[ext_resource type="Script" uid="uid://ce4p7n4d4dog1" path="res://Resources/Items/ItemResource.gd" id="2_ykty0"]
 [ext_resource type="Resource" uid="uid://bdcvlwks0kf2k" path="res://Resources/Items/Weapons/chains.tres" id="4_8fh04"]
 [ext_resource type="Resource" uid="uid://b3qxix5uij4o4" path="res://Resources/ghost_stats.tres" id="5_ykty0"]
 [ext_resource type="Script" uid="uid://vlbsbfoc1pky" path="res://Scripts/equipment_holder.gd" id="7_wge8i"]
@@ -49,6 +50,7 @@ height = 46.74195
 [node name="Ghost" type="AnimatableBody2D"]
 sync_to_physics = false
 script = ExtResource("1_e3r4w")
+inventory = Array[ExtResource("2_ykty0")]([ExtResource("4_8fh04")])
 stats = ExtResource("5_ykty0")
 starting_weapon = ExtResource("4_8fh04")
 

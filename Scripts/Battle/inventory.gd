@@ -8,8 +8,7 @@ func use_item(character, item: ItemResource) -> void:
 	if item is ConsumableItemResource:
 		get_cured(character, item.heal_amount)
 		remove_item(character, item)
-	elif item is WeaponItemResource:
-		print("Equipou com o item") #preciso fazer equipar
+	
 		
 func remove_item(character, item: ItemResource) -> void:
 	var item_index = find_item_index(character, item.name)

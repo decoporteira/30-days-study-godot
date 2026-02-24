@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ddqwuofmh4n1c" path="res://Scripts/Characters/orc.gd" id="1_7k104"]
 [ext_resource type="Texture2D" uid="uid://bb2g75idellvk" path="res://Assets/Sprites/Orc2d.png" id="2_8h1l3"]
-[ext_resource type="Resource" uid="uid://b76wspyhrlhkb" path="res://Resources/green_orc.tres" id="3_dm0ex"]
+[ext_resource type="Resource" uid="uid://b76wspyhrlhkb" path="res://Resources/green_orc_stats.tres" id="3_dm0ex"]
 [ext_resource type="Script" uid="uid://ce4p7n4d4dog1" path="res://Resources/Items/ItemResource.gd" id="3_pwg3k"]
 [ext_resource type="Resource" uid="uid://d2n6so0om0dhb" path="res://Resources/Items/Weapons/bat.tres" id="4_dm0ex"]
 [ext_resource type="Script" uid="uid://vlbsbfoc1pky" path="res://Scripts/equipment_holder.gd" id="6_dm0ex"]

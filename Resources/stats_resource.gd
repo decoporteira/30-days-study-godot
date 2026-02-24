@@ -2,12 +2,12 @@ class_name StatsResource
 extends Resource
 
 @export var name: String
-@export var base_max_health: int = 10
-@export var base_attack: int = 2
-@export var base_defense: int = 1
-@export var base_inteligence: int = 1
-@export var base_speed: int = 1
-@export var base_max_mana: int = 10
+@export var base_max_health: int = 50
+@export var base_attack: int = 15
+@export var base_defense: int = 15
+@export var base_inteligence: int = 6
+@export var base_speed: int = 7
+@export var base_max_mana: int = 20
 @export var xp_reward: int
 @export var is_final_boss := false
 @export var sprite: PackedScene
